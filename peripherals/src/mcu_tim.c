@@ -1,0 +1,151 @@
+#include "main.h"
+#include "stm32f10x.h"
+
+void init_tim(){
+
+
+    // Конфигурация таймера
+    TIM_TimeBaseInitTypeDef TIM_BaseConfig;
+    // Конфигурация выхода таймера
+    TIM_OCInitTypeDef TIM_OCConfig;
+
+    //TIM_TimeBaseStructInit(&TIM_BaseConfig);
+    //TIM_OCStructInit(&TIM_OCConfig);
+
+    // Запускаем таймер на тактовой частоте в 4800 kHz
+    TIM_BaseConfig.TIM_Prescaler = 23999;
+    TIM_BaseConfig.TIM_Period = 1000;
+    TIM_BaseConfig.TIM_ClockDivision = 0;
+    // Отсчет от нуля до TIM_Period
+    TIM_BaseConfig.TIM_CounterMode = TIM_CounterMode_Up;
+
+    // Инициализируем таймер №3 (его выходы как раз на порту A)
+    TIM_TimeBaseInit(TIM3, &TIM_BaseConfig);
+
+    // Конфигурируем выход таймера, режим - PWM1
+    TIM_OCConfig.TIM_OCMode = TIM_OCMode_PWM1;
+    // Собственно - выход включен
+    TIM_OCConfig.TIM_OutputState = TIM_OutputState_Enable;
+    // Пульс длинной 500 тактов => 500/1000 = 50%
+    TIM_OCConfig.TIM_Pulse = 500;
+    // Полярность => пульс - это единица (+3.3V)
+    TIM_OCConfig.TIM_OCPolarity = TIM_OCPolarity_High;
+
+    // Инициализируем 4й выход таймера №3 (у HD это PA6)
+    TIM_OC4Init(TIM3, &TIM_OCConfig);
+
+    // Конфигурируем второй выход таймера
+    TIM_OCConfig.TIM_OCMode = TIM_OCMode_PWM1;
+    TIM_OCConfig.TIM_OutputState = TIM_OutputState_Enable;
+    // Пульс длинной 500 тактов => 500/1000 = 50%
+    TIM_OCConfig.TIM_Pulse = 500;
+    // Ради эксперемента, меняем полярность (пульс - 0V).
+    TIM_OCConfig.TIM_OCPolarity = TIM_OCPolarity_Low;
+
+    // Инициализируем второй выход таймера №3 (PA7)
+    TIM_OC4Init(TIM3, &TIM_OCConfig);
+
+    // Как я понял - автоматическая перезарядка таймера, если неправ - поправте.
+    //TIM_OC3PreloadConfig(TIM3, TIM_OCPreload_Enable);
+    //TIM_OC4PreloadConfig(TIM3, TIM_OCPreload_Enable);
+    //TIM_ARRPreloadConfig(TIM3, ENABLE);
+
+    // Включаем таймер
+    TIM_Cmd(TIM3, ENABLE);
+
+
+
+
+
+	//устанавливаем уровень приоритета прерывания от таймера TIM4
+	NVIC_SetPriority(TIM4_IRQn, 2);
+	//разрешаем обработку прерывания от таймера TIM4
+	NVIC_EnableIRQ(TIM4_IRQn);
+    TIM_BaseConfig.TIM_Prescaler = 23999;
+    // Период - 1 раз в минуту
+    TIM_BaseConfig.TIM_Period = 60000;
+    // Инициализируем таймер №4
+    TIM_TimeBaseInit(TIM4, &TIM_BaseConfig);
+    //разрешаем генерацию прерывания
+    TIM_ITConfig(TIM4, TIM_DIER_UIE, ENABLE);
+	/*
+	//Разрешаем тактирование таймера от шины APB1.
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE);
+	//задаем коэффициент деления предделителя таймера
+	//частота сист.шины = 24МГц
+	TIM4->PSC = 23999;
+	//Прерывание необходимо вызывать через 1 минуту
+	TIM4->ARR = 60000; //Перезагружаемое значение
+	//В регистре TIM7_DIER разрешаем генерацию прерывания
+	TIM4->DIER |= TIM_DIER_UIE;*/
+
+
+
+
+	//устанавливаем уровень приоритета прерывания от таймера TIM7
+	NVIC_SetPriority(TIM7_IRQn, 1);
+	//разрешаем обработку прерывания от таймера TIM7
+	NVIC_EnableIRQ(TIM7_IRQn);
+    // Запускаем таймер на тактовой частоте в 1 kHz
+    TIM_BaseConfig.TIM_Prescaler = 23999;
+    // Период - 1000 тактов => 1000/1000 = 1 Hz
+    TIM_BaseConfig.TIM_Period = 1000;
+    // Инициализируем таймер №7
+    TIM_TimeBaseInit(TIM7, &TIM_BaseConfig);
+    //разрешаем генерацию прерывания
+    TIM_ITConfig(TIM7, TIM_DIER_UIE, ENABLE);
+	// запускаем счет таймера
+	TIM_Cmd(TIM7, ENABLE);
+/*
+	//Разрешаем тактирование таймера от шины APB1.
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM7, ENABLE);
+	//задаем коэффициент деления предделителя таймера
+	//частота сист.шины = 24МГц
+	TIM7->PSC = 23999;
+	//Прерывание необходимо вызывать через 1 секунду
+	TIM7->ARR = 1000; //Перезагружаемое значение
+	//В регистре TIM7_DIER разрешаем генерацию прерывания
+	TIM7->DIER |= TIM_DIER_UIE;*/
+
+
+	/*Поскольку счет начнется с нуля, то сразу же после включения счета
+	 * сгенерируется первое прерывание. Если нужно этого избежать,
+	 * то надо добавить две строчки:
+	 * 	TIM6->EGR |= TIM_EGR_UG;
+	 *  TIM6->SR &= ~TIM_SR_UIF;
+	 *   .*/
+
+
+	//устанавливаем уровень приоритета прерывания от таймера TIM6
+	NVIC_SetPriority(TIM6_DAC_IRQn, 3);
+	//разрешаем обработку прерывания от таймера TIM6
+	NVIC_EnableIRQ(TIM6_DAC_IRQn);
+    // Запускаем таймер на тактовой частоте в 1 kHz
+    TIM_BaseConfig.TIM_Prescaler = 23999;
+    // Период - 1000 тактов => 1000/1000 = 1 Hz
+    TIM_BaseConfig.TIM_Period = 23999;
+    // Инициализируем таймер №6
+    TIM_TimeBaseInit(TIM6, &TIM_BaseConfig);
+    //отключаем генирацию прерывания сразу после запуска таймера
+	TIM_GenerateEvent(TIM6, TIM_EGR_UG);
+	TIM_ClearFlag(TIM6, TIM_SR_UIF);
+    //разрешаем генерацию прерывания
+    TIM_ITConfig(TIM6, TIM_DIER_UIE, ENABLE);
+	// запускаем счет таймера
+    TIM_SelectOnePulseMode(TIM6, TIM_CR1_OPM);
+
+	/*
+	//Разрешаем тактирование таймера от шины APB1.
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM6, ENABLE);
+	//задаем коэффициент деления предделителя таймера
+	//частота сист.шины = 24МГц
+	TIM6->PSC = 0xFFFF;
+	//Прерывание необходимо вызывать через 180 секунд
+	TIM6->ARR = 0xFFFF; //Перезагружаемое значение
+	TIM6->EGR |= TIM_EGR_UG;
+	TIM6->SR &= ~TIM_SR_UIF;
+	//В регистре TIM7_DIER разрешаем генерацию прерывания
+	TIM6->DIER |= TIM_DIER_UIE;
+	//одиночный счет таймера
+	TIM6->CR1 |= TIM_CR1_OPM;*/
+}
