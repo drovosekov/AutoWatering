@@ -11,7 +11,7 @@
 	  * of the DMA is also setup to be used with ADC1.  ADC1 is setup to continuously output data to the
 	  * array "ADCConvertedValue"
 	  */
-void init_adc(){
+void init_adc(void){
 
 	    DMA_InitTypeDef DMA_InitStructure;  //Variable used to setup the DMA
 	    ADC_InitTypeDef ADC_InitStructure;  //Variable used to setup the ADC

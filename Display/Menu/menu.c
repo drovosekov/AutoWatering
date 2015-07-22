@@ -1,5 +1,8 @@
 #include "main.h"
 
+static void AddMenu(u8 idx, char *text, u8 regim, void *func);
+static void print_selected_menu(u8 marker, u8 line, char *menu_text);
+
 
 static menu Menu[MENU_COUNT+1];	//массив описаний меню
 static u8 scr;	//используется для отсчета паузы до показа стрелочек прокрутки (500мс)

@@ -104,10 +104,5 @@
 #include "devices/inc/termo_sensor.h"
 #include "devices/inc/periph.h"
 
-void LCD_test();
-
-void init_all(void);
-void init_adc(void);
-void init_default_values(void);
 
 #endif /* MAIN_H_ */

@@ -1,5 +1,8 @@
 #include "main.h"
 
+static void init_all(void);
+static void init_default_values(void);
+
 //--глобальные переменные--------
 display_regim regim;
 //-------------------------------
@@ -112,7 +115,9 @@ void init_all(void){
 	OW_Init();
 
 	//set DS18B20 resolution 9bit
-    OW_Send(OW_SEND_RESET, (u8 *)"\xcc\x4e\x0\x0\x1f\x48", 6, 0, 0, OW_NO_READ);
+	u8 data[] = {0xCC, 0x4E, 0, 0, DS18B20_9BIT, 0x48};
+	OW_Send(OW_SEND_RESET, data, sizeof(data), 0, 0, OW_NO_READ);
+    //OW_Send(OW_SEND_RESET, (u8 *)"\xcc\x4e\x0\x0\x1f\x48", 6, 0, 0, OW_NO_READ);
 
 	init_adc();
 

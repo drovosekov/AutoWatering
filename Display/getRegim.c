@@ -1,5 +1,10 @@
 #include "main.h"
 
+static void move_by_menu_LR(buttons direction);
+//защитка от дребезга
+static u8 save_pressed_buton(buttons btn, u8 clr);
+
+
 u8 timeout_menu_count;
 
 static buttons btn_pressed=0;

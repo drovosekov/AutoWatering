@@ -1,5 +1,10 @@
 #include "main.h"
 
+static void display_default_line0_draw(u8 dot_s);
+static void display_default_line1_draw(u8 dot_s);
+static void TIM4_set_work_status(u8 status);
+
+
 //интервал измерений заряда аккумулятора в мс * 50
 //по умолчанию = 20 - 1 раз в 1 сек
 const u8 MAX_PRESCALER=20;

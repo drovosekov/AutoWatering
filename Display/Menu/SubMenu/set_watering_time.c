@@ -1,5 +1,11 @@
 #include "main.h"
 
+void init_set_watering_time();
+void display_set_watering_time_draw();
+void btn_enter_pressed_in_set_watering_time();
+void btn_move_in_set_watering_time(buttons direction);
+
+
 u8 timeout_menu_count;
 u8 cursor_x, cursor_y;
 display_regim regim;

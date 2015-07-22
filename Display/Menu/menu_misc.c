@@ -1,5 +1,8 @@
 #include "main.h"
 
+void de_in_crement_value(u8 *val, u8 min_val, u8 max_val, buttons direction);
+
+
 void de_in_crement_value(u8 *val, u8 min_val, u8 max_val, buttons direction){
 	s16 v=*val+(s8)direction;
 	if(v==max_val+1){

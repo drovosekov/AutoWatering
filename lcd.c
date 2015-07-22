@@ -1,4 +1,7 @@
 #if 0
+
+void LCD_test();
+
 #include "main.h"
 
 

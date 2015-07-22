@@ -59,23 +59,15 @@ extern display_regim regim;
 //и проверяем состояния кнопок
 void get_buttons_state();
 void auto_exit_from_menu();
-void move_by_menu_LR(buttons direction);
-//защитка от дребезга
-u8 save_pressed_buton(buttons btn, u8 clr);
 
 void init_display_default();
 void display_default_draw();
-void display_default_line0_draw(u8 dot_s);
-void display_default_line1_draw(u8 dot_s);
 void btn_menu_pressed_in_deault();
 void check_humidity_sensor();
 void check_humidity_value();
-void TIM4_set_work_status(u8 status);
 
 void init_menu();
-void AddMenu(u8 idx, char *text, u8 regim, void *func);
 void display_menu_draw();
-void print_selected_menu(u8 marker, u8 line, char *menu_text);
 void btn_enter_pressed_in_menu();
 void btn_move_in_menu(buttons *direction);
 

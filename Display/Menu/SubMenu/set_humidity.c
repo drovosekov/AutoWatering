@@ -1,5 +1,11 @@
 #include "main.h"
 
+void init_set_humidity();
+void display_set_humidity_draw();
+void btn_enter_pressed_in_set_humidity();
+void btn_move_in_set_humidity(buttons direction);
+
+
 u8 timeout_menu_count;
 u8 cursor_x, cursor_y;
 display_regim regim;

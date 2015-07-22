@@ -1,5 +1,6 @@
 #include "main.h"
 
+
 void init_periph(void){
 
 	PIN_CONFIGURATION(ADC_CH0);

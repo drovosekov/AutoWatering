@@ -1,5 +1,10 @@
 #include "main.h"
 
+void init_set_bright_contrast();
+void display_set_bright_contrast_draw();
+void btn_enter_pressed_in_set_bright_contrast();
+void btn_move_in_set_bright_contrast(buttons direction);
+
 u8 timeout_menu_count;
 u8 cursor_x, cursor_y;
 display_regim regim;

@@ -1,5 +1,11 @@
 #include "main.h"
 
+void init_set_chk_interval();
+void display_set_chk_interval_draw();
+void btn_enter_pressed_in_set_chk_interval();
+void btn_move_in_set_chk_interval(buttons direction);
+
+
 u8 timeout_menu_count;
 u8 cursor_x, cursor_y;
 display_regim regim;
