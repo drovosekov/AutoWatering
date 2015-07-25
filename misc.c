@@ -28,9 +28,13 @@ u16 absolute(s16 value) {
 	return value;
 }
 
-u8 CheckBit(int dwNumber, u8 iBit)
+u8 CheckBit(int dwNumber, u16 iBit)
 {
     return (dwNumber & iBit);
+}
+
+u8 get_TIM_state(TIM_TypeDef* TIMx){
+	return CheckBit(TIMx->CR1, TIM_CR1_CEN);
 }
 
 u8 get_low(u16 value){

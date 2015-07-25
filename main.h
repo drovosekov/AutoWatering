@@ -25,12 +25,14 @@
 /* end buttons defines */
 
 /* out pins defines */
+#define DS18B20_1WIRE_PORT	A, 9,  HIGH, ALTERNATE_OUTPUT_PUSH_PULL, SPEED_50MHZ //1-wire DS18B20
+
 #define HUMIDITY_SENSOR		B, 8,  HIGH, GENERAL_OUTPUT_PUSH_PULL,   SPEED_2MHZ //blue led on the discovery board
 #define WATERING_RELAY		B, 9,  HIGH, GENERAL_OUTPUT_PUSH_PULL,   SPEED_2MHZ //green led on the discovery board
 #define NO_WATER_LED		B, 10, HIGH, GENERAL_OUTPUT_PUSH_PULL,   SPEED_2MHZ
 
-#define BACKLIGHT_PWM		B, 0,  HIGH, ALTERNATE_OUTPUT_PUSH_PULL, SPEED_2MHZ
-#define CONTRAST_PWM		B, 1,  HIGH, ALTERNATE_OUTPUT_PUSH_PULL, SPEED_2MHZ
+#define BACKLIGHT_PWM		C, 8,  HIGH, ALTERNATE_OUTPUT_PUSH_PULL, SPEED_10MHZ //альтернативный выход TIM3 CH3
+#define CONTRAST_PWM		C, 9,  HIGH, ALTERNATE_OUTPUT_PUSH_PULL, SPEED_10MHZ //альтернативный выход TIM3 CH4
 /* end out pins defines */
 
 /* LCD defines */

@@ -39,10 +39,10 @@ void btn_enter_pressed_in_set_bright_contrast(){
 void btn_move_in_set_bright_contrast(buttons direction){
 	if(cursor_y == 0){//устновка мин. значения
 		de_in_crement_value(&bright, 0, 16, direction);
-		TIM2->CCR3 = bright * 4095;
+		TIM_SetCompare3(TIM3, bright * 4095);
 	}else{			//установка макс. значения
-		de_in_crement_value(&contrast, 0, 16, direction);
-		TIM2->CCR4 = contrast * 4095;
+		de_in_crement_value(&contrast, 10, 16, direction);
+		TIM_SetCompare4(TIM3, contrast * 4095);
 	}
 	display_set_bright_contrast_draw();
 }

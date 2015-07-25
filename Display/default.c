@@ -1,9 +1,8 @@
 #include "main.h"
 
-static void display_default_line0_draw(u8 dot_s);
-static void display_default_line1_draw(u8 dot_s);
-static void TIM4_set_work_status(u8 status);
-
+void display_default_line0_draw(u8 dot_s);
+void display_default_line1_draw(u8 dot_s);
+static u8 get_time_state();
 
 //интервал измерений заряда аккумулятора в мс * 50
 //по умолчанию = 20 - 1 раз в 1 сек
@@ -30,7 +29,6 @@ void init_display_default(){
 	lcd_clear();
 
     timeout_menu_count=0;
-    regim = DISPLAY_REGIM_DEFAULT;
 }
 
 void btn_menu_pressed_in_deault(){
@@ -42,14 +40,14 @@ void display_default_draw(){
 	static u8 prescaler=0;
 
 	if(prescaler==0 || prescaler==10){display_default_line0_draw(prescaler>9);}
-	if(prescaler==0 || prescaler==4){display_default_line1_draw(prescaler>3);}
+	if(prescaler==0 || prescaler==4) {display_default_line1_draw(prescaler>3);}
 
 	prescaler++;
 
 	delay_ms(100);
 
-	if(prescaler==MAX_PRESCALER){
-		prescaler=0;
+	if(prescaler == MAX_PRESCALER){
+		prescaler = 0;
 	}
 
 }
@@ -63,7 +61,7 @@ void display_default_line0_draw(u8 dot_s){
 	if(air_temp>0) 		{lcd_out("+");}
 	else if(air_temp<0)	{lcd_out("-");}
 
-	air_temp=absolute(air_temp);
+	air_temp = absolute(air_temp);
 	if(air_temp>9){
 		lcd_write_dec_xx(air_temp);
 	}else{
@@ -90,17 +88,17 @@ void display_default_line1_draw(u8 dot_s){
 	lcd_set_xy(0, 1);
 
 	//время полива
-	if(regim == DISPLAY_REGIM_WATERING ||
-	   regim == DISPLAY_REGIM_MANUAL_WATERING){
+	if(regim == DISPLAY_REGIM_NO_WATER){
+		lcd_out(dot_s ? NO_WATER : NO_WATER_SPACE);
+	}else if(regim == DISPLAY_REGIM_WATERING ||
+			 regim == DISPLAY_REGIM_MANUAL_WATERING){
 		lcd_send_data(dot_s ? SYMB_AUTO_REG_EMPTY : SYMB_AUTO_REG_FULL); //пиктограмка активного полива
 		lcd_out(WATERING_STATE);
-	}else if(regim == DISPLAY_REGIM_NO_WATER){
-		lcd_out(dot_s ? NO_WATER : NO_WATER_SPACE);
-	}else if(CheckBit(TIM6->CR1, TIM_CR1_CEN)){
+	}else if(get_TIM_state(TIM6)){
 		lcd_send_data(SYMB_MANUAL_REG); //пиктограмка режима полива (ручн)
 		lcd_out(MANUAL_REGIM);
 	}else if(watering_time > 0){
-		if(CheckBit(TIM4->CR1, TIM_CR1_CEN)){//режим отсчета задержки перед поливом
+		if(get_TIM_state(TIM4)){//режим отсчета задержки перед поливом
 			lcd_send_data(SYMB_AUTO_REG_EMPTY);
 		}else{				//режим задржки перед измерением уровня влажности
 			lcd_out(SYMB_CHECK_W_SENSOR);
@@ -149,12 +147,9 @@ void display_default_line1_draw(u8 dot_s){
 //обработчик прерывания от таймера 7 один раз в секунду
 void TIM7_IRQHandler(void)
 {
-	//Сбрасываем бит вызова прерывания.
-	TIM7->SR &= ~TIM_SR_UIF;
+	TIM_ClearFlag(TIM7, TIM_SR_UIF);//Сбрасываем флаг прерывания
 
-	u16 morning_time, evening_time, now_time;
 	u16 chk_interval;
-	u8 time_state;
 
 	if(regim == DISPLAY_REGIM_WATERING){
 		u8 watering_duration = (u8)BKP_ReadBackupRegister(WATERING_DURATION_BKP);//продолжительность полива
@@ -171,6 +166,8 @@ void TIM7_IRQHandler(void)
 		air_temp =	get_temperature_3wire();
 		RTC_GetTime(TIME_CURRENT, &rtc_clck);
 
+		if(get_TIM_state(TIM6)){return;}//включен ручной режим полива
+
 		//проверка уровня влажности один раз в заданый промежуток (5минут)
 		chk_interval = BKP_ReadBackupRegister(CHECK_INTERVAL_BKP);
 		chk_interval *= 60;
@@ -181,26 +178,14 @@ void TIM7_IRQHandler(void)
 			cnt_watering = 0;
 		}
 		if(cnt_watering == 0){
-			if(CheckBit(TIM4->CR1, TIM_CR1_CEN) == false) {watering_time = chk_interval;}
+			if(get_TIM_state(TIM4) == false) {watering_time = chk_interval;}
 
 			check_humidity_sensor();
 
-			morning_time = BKP_ReadBackupRegister(tMORNING_WATERING_TIME_BKP);
-			evening_time = BKP_ReadBackupRegister(tEVENING_WATERING_TIME_BKP);
-
-			now_time = (rtc_clck.hour << 8) | rtc_clck.min; //текущее время (часы+минуты)
-
-			if(air_temp > 30){	//оч.жарко - поливаем независимо от времени утро/вечер
-				//но в заданный промежуток времени
-				time_state = (morning_time < now_time && now_time < evening_time); //с утра до вечера
-			}else if(air_temp > 5){		//лето
-				time_state = (morning_time < now_time && now_time < 0x0C00); //до полудня
-			}else{						//зима
-				time_state = (0x0C00 < now_time && now_time < evening_time); //после полудня
-			}
-
-			if(time_state == false){
-				TIM4_set_work_status(false);//допустимое время полива вышло - откл. таймер отсчета до полива
+			if(get_time_state() == false){
+				TIM_Cmd(TIM4, DISABLE);//допустимое время полива вышло - откл. таймер отсчета до полива
+				watering_time = 0;
+				return;
 			}else{
 				check_humidity_value();
 			}
@@ -208,18 +193,37 @@ void TIM7_IRQHandler(void)
 		if(watering_time > 0) {watering_time--;}
 	}
 	cnt_watering++;
+
+}
+
+static u8 get_time_state(){
+	u16 morning_time, evening_time, now_time;
+
+	morning_time = BKP_ReadBackupRegister(tMORNING_WATERING_TIME_BKP);
+	evening_time = BKP_ReadBackupRegister(tEVENING_WATERING_TIME_BKP);
+
+	now_time = (rtc_clck.hour << 8) | rtc_clck.min; //текущее время (часы+минуты)
+
+	if(air_temp > 30){	//оч.жарко - поливаем независимо от времени утро/вечер
+		//но в заданный промежуток времени
+		return (morning_time < now_time && now_time < evening_time); //с утра до вечера
+	}else if(air_temp > 5){		//лето
+		return (morning_time < now_time && now_time < 0x0C00); //до полудня
+	}else{						//зима
+		return (0x0C00 < now_time && now_time < evening_time); //после полудня
+	}
 }
 
 void check_humidity_value(){
 	u16 hum_params = BKP_ReadBackupRegister(HUMYDURTY_BKP);
 
 	if(gnd_hum < (hum_params >> 8)){//влажность почвы меньше заданного значения
-		if(CheckBit(TIM4->CR1, TIM_CR1_CEN) == false){
+		if(get_TIM_state(TIM4) == false){
 			watering_time = ((hum_params & 0xFF) + 1) * 60;//задержка перед поливом (в секундах)
+			TIM_Cmd(TIM4, ENABLE);
 		}
-		TIM4_set_work_status(true);
 	}else{
-		TIM4_set_work_status(false);//кто-то полил ручную - отключаем таймер отсчета до полива
+		TIM_Cmd(TIM4, DISABLE);//кто-то полил ручную - отключаем таймер отсчета до полива
 	}
 }
 
@@ -230,30 +234,15 @@ void check_humidity_sensor(){
 	PIN_OFF(HUMIDITY_SENSOR);//отключаем питание
 }
 
-//обработчик прерывания от таймера 6
-//задержка перед отключением ручного режима полива - 3мин
-void TIM6_DAC_IRQHandler(void)
-{
-	TIM6->SR &= ~TIM_SR_UIF; //Сбрасываем флаг прерывания
-	TIM4->CR1 &= ~TIM_CR1_CEN;
-}
-
-void TIM4_set_work_status(u8 status){
-	if(status){
-		TIM4->CR1 |= TIM_CR1_CEN;	//запускаем счет таймера до полива
-	}else{
-		TIM4->CR1 &= ~TIM_CR1_CEN;	//отключаем таймер
-	}
-}
 
 //обработчик прерывания от таймера 4 один раз в минуту
 //задержка перед поливом 60-250мин
 void TIM4_IRQHandler(void)
 {
-	TIM4->SR &= ~TIM_SR_UIF; //Сбрасываем флаг прерывания
+	TIM_ClearFlag(TIM4, TIM_SR_UIF);//Сбрасываем флаг прерывания
 
 	if(watering_time == 1){
-		TIM4->CR1 &= ~TIM_CR1_CEN;//отключаем таймер
+		TIM_Cmd(TIM4, DISABLE); //отключаем таймер
 		regim = DISPLAY_REGIM_WATERING;
 		cnt_watering = 0;
 		PIN_ON(WATERING_RELAY);

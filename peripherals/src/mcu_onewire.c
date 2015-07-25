@@ -125,28 +125,28 @@ uint8_t OW_Init() {
 		return OW_ERROR;
 	#endif
 
-	GPIO_InitTypeDef GPIO_InitStruct;
+	//GPIO_InitTypeDef GPIO_InitStruct;
 	USART_InitTypeDef USART_InitStructure;
 
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA | RCC_APB2Periph_AFIO, ENABLE);
+	//RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA | RCC_APB2Periph_AFIO, ENABLE);
 
-	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_AF_PP;
+	//GPIO_InitStruct.GPIO_Speed = GPIO_Speed_50MHz;
+	//GPIO_InitStruct.GPIO_Mode = GPIO_Mode_AF_PP;
 
 #ifdef OW_USART1
 	// USART TX
-	GPIO_InitStruct.GPIO_Pin = GPIO_Pin_9;
-	GPIO_Init(GPIOA, &GPIO_InitStruct);
+	//GPIO_InitStruct.GPIO_Pin = GPIO_Pin_9;
+	//GPIO_Init(GPIOA, &GPIO_InitStruct);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1, ENABLE);
 #endif
 #ifdef OW_USART2
-	GPIO_InitStruct.GPIO_Pin = GPIO_Pin_2;
-	GPIO_Init(GPIOA, &GPIO_InitStruct);
+	//GPIO_InitStruct.GPIO_Pin = GPIO_Pin_2;
+	//GPIO_Init(GPIOA, &GPIO_InitStruct);
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);
 #endif
 #ifdef OW_USART3
-	GPIO_InitStruct.GPIO_Pin = GPIO_Pin_10;
-	GPIO_Init(GPIOB, &GPIO_InitStruct);
+	//GPIO_InitStruct.GPIO_Pin = GPIO_Pin_10;
+	//GPIO_Init(GPIOB, &GPIO_InitStruct);
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART3, ENABLE);
 #endif
 

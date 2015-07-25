@@ -47,6 +47,7 @@ void get_buttons_state(){
     		break;
 
     	case DISPLAY_REGIM_SET_WATERING_REG:
+    		btn_enter_pressed_in_set_watering_reg();
     		break;
 
     	case DISPLAY_REGIM_SET_LIGHT:
@@ -104,6 +105,7 @@ void get_buttons_state(){
 			case DISPLAY_REGIM_MENU:
 
 				regim = DISPLAY_REGIM_DEFAULT;
+	    		TIM_Cmd(TIM7, ENABLE);
 				break;
 
 			case DISPLAY_REGIM_SET_TIME_DATE:
@@ -142,6 +144,7 @@ void get_buttons_state(){
 				check_humidity_sensor();
 				//если влажность ниже заданной - полив запуститься не зависимо от времени суток!
 				check_humidity_value();
+	    		TIM_Cmd(TIM7, ENABLE);
 				break;
 
 			case DISPLAY_REGIM_MENU:
@@ -181,6 +184,7 @@ void auto_exit_from_menu(){
 			lcd_clear();
 			lcd_set_state(LCD_ENABLE, CURSOR_DISABLE);
 			regim = DISPLAY_REGIM_DEFAULT;
+    		TIM_Cmd(TIM7, ENABLE);
 		}else{
 			timeout_menu_count++;
 			delay_ms(50);

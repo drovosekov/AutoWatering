@@ -25,7 +25,7 @@ void init_adc(void){
 	    //--Enable DMA1 clock--
 	    RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE);
 
-	    //--Enable ADC1 and GPIOA--
+	    //--Enable ADC1 --
 	    RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);
 
 	    //==Configure DMA1 - Channel1==

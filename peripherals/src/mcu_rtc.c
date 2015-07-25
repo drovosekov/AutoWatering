@@ -17,9 +17,6 @@ static const u8 numofdays[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
 void RTC_Init(void)
 {
-	/* Enable PWR and BKP clocks */
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR | RCC_APB1Periph_BKP, ENABLE);
-
 	/* Backup data register value is not correct or not yet programmed (when
        the first time the program is executed) */
 
@@ -27,15 +24,6 @@ void RTC_Init(void)
 	{
 	  /* RTC Configuration */
 		RTC_Configuration();
-
-		/* Adjust time by values entered by the user*/
-		RTCTIME newtime;
-		newtime.year = 2015;
-		newtime.month  = 7;
-		newtime.mday = 3;
-		newtime.hour = 12;
-		newtime.min = 30;
-		RTC_SetTime(&newtime);
 	}
 	else
 	{
@@ -159,8 +147,6 @@ void RTC_SetTime(const RTCTIME* rtc)
 	uint32_t utc;
 	utc = RTC_GetTicksFromTime(TIME_CURRENT, rtc);
 
-	/* Enable PWR and BKP clocks */
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR | RCC_APB1Periph_BKP, ENABLE);
 	/* Allow access to BKP Domain */
 	PWR_BackupAccessCmd(ENABLE);
 	/* Reset Backup Domain */

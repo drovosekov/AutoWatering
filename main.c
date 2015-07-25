@@ -2,6 +2,7 @@
 
 static void init_all(void);
 static void init_default_values(void);
+static void init_bright_contrast(void);
 
 //--глобальные переменные--------
 display_regim regim;
@@ -26,6 +27,7 @@ int main(void)
 			break;
 
     	case DISPLAY_REGIM_MENU:
+    		TIM_Cmd(TIM7, DISABLE);
     		display_menu_draw();
     		break;
 
@@ -72,11 +74,11 @@ int main(void)
 void init_default_values(void){
 	u16 result = BKP_ReadBackupRegister(WATERING_DURATION_BKP);
 
-	if(result==0){
+	if(result == 0){
 		/* Allow access to BKP Domain */
 		PWR_BackupAccessCmd(ENABLE);
 		/* Reset Backup Domain */
-		BKP_DeInit();
+		//BKP_DeInit();
 
 		//продолжительность полива (сек)
 		result=5;
@@ -93,11 +95,28 @@ void init_default_values(void){
 		result = set_low_n_height(18, 0);//вечер (час, мин)
 		BKP_WriteBackupRegister(tEVENING_WATERING_TIME_BKP, result);
 
-		result = set_low_n_height(16, 16);//подсветка/контраст
+		result = set_low_n_height(16, 13);//подсветка/контраст
 		BKP_WriteBackupRegister(BRIGHT_CONTRAST_BKP, result);
+		TIM_SetCompare3(TIM3, 16 * 4095); //подсветка
+		TIM_SetCompare4(TIM3, 13 * 4095); //контраст
+
+		/* Adjust time by values entered by the user*/
+		RTCTIME newtime;
+		newtime.year =  2015;
+		newtime.month = 7;
+		newtime.mday =  3;
+		newtime.hour =  12;
+		newtime.min =   30;
+		RTC_SetTime(&newtime);
 
 		PWR_BackupAccessCmd(DISABLE);
 	}
+}
+
+void init_bright_contrast(void){
+	u16 result = BKP_ReadBackupRegister(BRIGHT_CONTRAST_BKP);
+	TIM_SetCompare3(TIM3, get_height(result) * 4095); //подсветка
+	TIM_SetCompare4(TIM3, get_low(result) * 4095);    //контраст
 }
 
 void init_all(void){
@@ -110,21 +129,25 @@ void init_all(void){
 
 	lcd_init();
 
-	RTC_Init();
-
 	OW_Init();
 
 	//set DS18B20 resolution 9bit
 	u8 data[] = {0xCC, 0x4E, 0, 0, DS18B20_9BIT, 0x48};
 	OW_Send(OW_SEND_RESET, data, sizeof(data), 0, 0, OW_NO_READ);
-    //OW_Send(OW_SEND_RESET, (u8 *)"\xcc\x4e\x0\x0\x1f\x48", 6, 0, 0, OW_NO_READ);
 
 	init_adc();
+
+	RTC_Init();
 
 	init_tim();
 
 	init_default_values();
 
 	init_display_default();
+
+	init_bright_contrast();
+
+
+    regim = DISPLAY_REGIM_DEFAULT;
 }
 

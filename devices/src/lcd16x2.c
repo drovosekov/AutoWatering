@@ -108,13 +108,6 @@ const u8 russian_codepage[]={
 };
 
 void lcd_init(void) {
-	PIN_CONFIGURATION(LCD_2X16_RS);
-	PIN_CONFIGURATION(LCD_2X16_E);
-	PIN_CONFIGURATION(LCD_2X16_DB4);
-	PIN_CONFIGURATION(LCD_2X16_DB5);
-	PIN_CONFIGURATION(LCD_2X16_DB6);
-	PIN_CONFIGURATION(LCD_2X16_DB7);
-
 	delay_ms(15);
 	lcd_send_command(LCD_2X16_RESET);
 	delay_ms(5);

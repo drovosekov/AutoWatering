@@ -10,19 +10,19 @@
 
 
 typedef enum {
-	DISPLAY_REGIM_DEFAULT 			= 0,	//начальный режим - дефолтный экран
-	DISPLAY_REGIM_MENU 				= 1,	//меню настроек
-	DISPLAY_REGIM_SET_TIME_DATE		= 2,	//настройка даты, времени
-	DISPLAY_REGIM_SET_WATERING_TIME	= 3,	//настройка интервала времени полива
-	DISPLAY_REGIM_SET_HUMIDITY		= 4,	//настройка уровней влажности (мин и макс)
-	DISPLAY_REGIM_SET_CHK_INTERVAL	= 5,	//интервал опроса датчика влажности (минут)
-	DISPLAY_REGIM_SET_WAERING_DUR	= 6,	//продолжительность полива (секунд)
-	DISPLAY_REGIM_SET_WATERING_REG	= 7,	//выбор режима работы полива (автомат. или ручной полив)
-	DISPLAY_REGIM_SET_BRIGHT_CONTR	= 12,	//режим настройки контраста и €ркости подстветки
-	DISPLAY_REGIM_SET_LIGHT			= 8,	//режим работы подсветки (врем€ со скольки-до скольки и вкл/выкл)
-	DISPLAY_REGIM_WATERING			= 9,	//процесс режима полива
-	DISPLAY_REGIM_MANUAL_WATERING	= 10,	//режим ручного полива
-	DISPLAY_REGIM_NO_WATER			= 11	//когда нет воды в резервуаре
+	DISPLAY_REGIM_DEFAULT = 0,				//начальный режим - дефолтный экран
+	DISPLAY_REGIM_MENU,						//меню настроек
+	DISPLAY_REGIM_SET_TIME_DATE,			//настройка даты, времени
+	DISPLAY_REGIM_SET_WATERING_TIME,		//настройка интервала времени полива
+	DISPLAY_REGIM_SET_HUMIDITY,				//настройка уровней влажности (мин и макс)
+	DISPLAY_REGIM_SET_CHK_INTERVAL,			//интервал опроса датчика влажности (минут)
+	DISPLAY_REGIM_SET_WAERING_DUR,			//продолжительность полива (секунд)
+	DISPLAY_REGIM_SET_WATERING_REG,			//выбор режима работы полива (автомат. или ручной полив)
+	DISPLAY_REGIM_SET_BRIGHT_CONTR,			//режим настройки контраста и €ркости подстветки
+	DISPLAY_REGIM_SET_LIGHT,				//режим работы подсветки (врем€ со скольки-до скольки и вкл/выкл)
+	DISPLAY_REGIM_WATERING,					//процесс режима полива
+	DISPLAY_REGIM_MANUAL_WATERING,			//режим ручного полива
+	DISPLAY_REGIM_NO_WATER					//когда нет воды в резервуаре
 } display_regim;
 
 
@@ -30,11 +30,11 @@ typedef enum {
 	BTN_STATE_RESET	= 0,	//ни одна кнопка не нажата
 	BTN_STATE_LEFT	= -1,	//влево
 	BTN_STATE_RIGHT	= 1,	//вправо
-	BTN_STATE_MENU	= 2,	//вход в меню
-	BTN_STATE_START	= 3,	//запуск полива вручную
-	BTN_STATE_EXIT	= 4,	//выход из меню
-	BTN_STATE_ENTER	= 5,	//ввод
-	BTN_STATE_STOP	= 6		//сброс (стоп)
+	BTN_STATE_MENU	,	//вход в меню
+	BTN_STATE_START	,	//запуск полива вручную
+	BTN_STATE_EXIT	,	//выход из меню
+	BTN_STATE_ENTER	,	//ввод
+	BTN_STATE_STOP		//сброс (стоп)
 } buttons;
 
 
