@@ -4,7 +4,6 @@
 
 
 #include "main.h"
-#include "localize.h"
 
 #define TIMEOUT_MENU_EXIT	200//таймайт выхода из меню - 10сек (200*50ms задержки цикла)
 

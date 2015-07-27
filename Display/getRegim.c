@@ -20,11 +20,12 @@ void get_buttons_state(){
 		case DISPLAY_REGIM_WATERING:
 		case DISPLAY_REGIM_MANUAL_WATERING:
 		case DISPLAY_REGIM_NO_WATER:
-			break;
+			return;
 
 		case DISPLAY_REGIM_MENU:
 			btn_enter_pressed_in_menu();
-			break;
+			lcd_set_state(LCD_ENABLE, CURSOR_ENABLE);
+			return;
 
 		case DISPLAY_REGIM_SET_TIME_DATE:
 			btn_enter_pressed_in_set_date_time();
@@ -58,6 +59,9 @@ void get_buttons_state(){
     		btn_enter_pressed_in_set_bright_contrast();
 			break;
 		}
+
+		regim = DISPLAY_REGIM_MENU;		//выходим в меню
+		lcd_set_state(LCD_ENABLE, CURSOR_DISABLE);
 
 	}else if (PIN_SIGNAL(BUTTON_MENU)) {
 		if(save_pressed_buton(BTN_STATE_MENU, false) || regim == DISPLAY_REGIM_MENU)

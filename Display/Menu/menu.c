@@ -12,7 +12,7 @@ static s8 cursor_menu;	//выбранное положение в меню
 void init_menu(){
 	cursor_menu = 0;
 
-	if(Menu[0].RegimMenu != 0)
+	if(Menu[0].RegimMenu != 0)//если меню уже инициализированно - выходим
 		{return;}
 
 	AddMenu(0, MENU0, DISPLAY_REGIM_SET_TIME_DATE, 		&init_set_date_time);
@@ -21,8 +21,8 @@ void init_menu(){
 	AddMenu(3, MENU3, DISPLAY_REGIM_SET_HUMIDITY, 		&init_set_humidity);
 	AddMenu(4, MENU4, DISPLAY_REGIM_SET_CHK_INTERVAL, 	&init_set_chk_interval);
 	AddMenu(5, MENU5, DISPLAY_REGIM_SET_WATERING_REG, 	&init_set_watering_reg);
-	AddMenu(6, MENU7, DISPLAY_REGIM_SET_BRIGHT_CONTR, 	&init_set_bright_contrast);
 	//AddMenu(6, MENU6, DISPLAY_REGIM_SET_LIGHT,			0);
+	AddMenu(6, MENU7, DISPLAY_REGIM_SET_BRIGHT_CONTR, 	&init_set_bright_contrast);
 }
 
 void AddMenu(u8 idx, char *text, u8 regim, void *func){
@@ -34,8 +34,6 @@ void AddMenu(u8 idx, char *text, u8 regim, void *func){
 void btn_enter_pressed_in_menu(){
 	Menu[cursor_menu].Func();
 	regim = Menu[cursor_menu].RegimMenu;
-
-	lcd_set_state(LCD_ENABLE, CURSOR_ENABLE);
 }
 
 void btn_move_in_menu(buttons *direction){
@@ -57,17 +55,17 @@ void display_menu_draw(){
 
 	//отрисовка стрелочек вверх/вниз (прокрутка)
 	//с задержкой 500мс
-	if(scr==10){
-		if(cursor_menu==0){
-			lcd_set_xy(15,1);
+	if(scr == 10){
+		if(cursor_menu == 0){
+			lcd_set_xy(15, 1);
 			lcd_send_data(MENU_DOWN);
-		}else if(cursor_menu==MENU_COUNT){
-			lcd_set_xy(15,0);
+		}else if(cursor_menu == MENU_COUNT){
+			lcd_set_xy(15, 0);
 			lcd_send_data(MENU_UP);
 		}else{
-			lcd_set_xy(15,1);
+			lcd_set_xy(15, 1);
 			lcd_send_data(MENU_DOWN);
-			lcd_set_xy(15,0);
+			lcd_set_xy(15, 0);
 			lcd_send_data(MENU_UP);
 		}
 	}else{
@@ -79,7 +77,7 @@ void print_selected_menu(u8 marker, u8 line, char *menu_text){
 	static u8 cur_m=0;
 
 	if(cursor_menu == cur_m && timeout_menu_count > 1){return;}
-	cur_m=cursor_menu;
+	cur_m = cursor_menu;
 
 	lcd_set_xy(0, line);
 	if(marker) {

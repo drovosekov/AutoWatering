@@ -5,10 +5,21 @@
 s8 get_temperature_3wire(){
 	u8 buf[2];
 
-    if(OW_Send(OW_SEND_RESET, (u8 *)"\xcc\x44", 2, 0, 0, OW_NO_READ)==OW_NO_DEVICE)
+    if(OW_Send(OW_SEND_RESET, (u8 *)"\xcc\x44", 2, 0, 0, OW_NO_READ) == OW_NO_DEVICE)
     	{return 0;}
 
+#if DS18B20_RESOLUTION == DS18B20_9BIT
     delay_for(100);
+#endif
+#if DS18B20_RESOLUTION == DS18B20_10BIT
+    delay_for(200);
+#endif
+#if DS18B20_RESOLUTION == DS18B20_11BIT
+    delay_for(400);
+#endif
+#if DS18B20_RESOLUTION == DS18B20_12BIT
+    delay_for(750);
+#endif
 
     OW_Send(OW_SEND_RESET, (u8 *)"\xcc\xbe\xff\xff", 4, (u8 *)buf, 2, 2);
 
@@ -31,7 +42,18 @@ void get_temperature_2wire(int *hb, int *lb){
     OW_out_set_as_Power_pin();
 
     // выдерживаем время измерения (например 750 мс для 12-битного измерения)
-    delay_ms(750);
+#if DS18B20_RESOLUTION == DS18B20_9BIT
+    delay_for(100);
+#endif
+#if DS18B20_RESOLUTION == DS18B20_10BIT
+    delay_for(200);
+#endif
+#if DS18B20_RESOLUTION == DS18B20_11BIT
+    delay_for(400);
+#endif
+#if DS18B20_RESOLUTION == DS18B20_12BIT
+    delay_for(750);
+#endif
 
     // восстанавливаем функцию передатчика UART
     OW_out_set_as_TX_pin();

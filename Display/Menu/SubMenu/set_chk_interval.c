@@ -20,8 +20,8 @@ void init_set_chk_interval(){
 }
 
 void btn_enter_pressed_in_set_chk_interval(){
-	regim = DISPLAY_REGIM_MENU;		//выходим в меню
-	lcd_set_state(LCD_ENABLE, CURSOR_DISABLE);
+	//regim = DISPLAY_REGIM_MENU;		//выходим в меню
+	//lcd_set_state(LCD_ENABLE, CURSOR_DISABLE);
 
 	/* Allow access to BKP Domain */
 	PWR_BackupAccessCmd(ENABLE);

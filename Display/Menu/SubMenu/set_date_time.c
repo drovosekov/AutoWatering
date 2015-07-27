@@ -31,8 +31,8 @@ void btn_enter_pressed_in_set_date_time(){
 	}else if(cursor_x == M0_MONTH_LCD_POS){
 		cursor_x = M0_YEAR_LCD_POS;		//редактируем год
 	}else{
-		regim = DISPLAY_REGIM_MENU;		//выходим в меню
-		lcd_set_state(LCD_ENABLE, CURSOR_DISABLE);
+		//regim = DISPLAY_REGIM_MENU;		//выходим в меню
+		//lcd_set_state(LCD_ENABLE, CURSOR_DISABLE);
 		RTC_SetTime(&rtc_clck);			//запоминаем измененное время и дату
 	}
 }

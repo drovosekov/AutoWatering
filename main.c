@@ -125,14 +125,14 @@ void init_all(void){
 	//configure SysTimer to 1 ms
 	while(SysTick_Config(SystemCoreClock / 2400));
 
-	init_periph();
+	mcu_gpio_deinit();
 
 	lcd_init();
 
 	OW_Init();
 
 	//set DS18B20 resolution 9bit
-	u8 data[] = {0xCC, 0x4E, 0, 0, DS18B20_9BIT, 0x48};
+	u8 data[] = {0xCC, 0x4E, 0, 0, DS18B20_RESOLUTION, 0x48};
 	OW_Send(OW_SEND_RESET, data, sizeof(data), 0, 0, OW_NO_READ);
 
 	init_adc();

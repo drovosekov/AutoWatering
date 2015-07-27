@@ -23,8 +23,8 @@ void btn_enter_pressed_in_set_watering_reg(){
 	//запускаем таймер отключени€ ручного режима
 	TIM_Cmd(TIM6, watering_reg);
 	TIM_ClearFlag(TIM6, TIM_SR_UIF);//—брасываем флаг прерывани€
-	regim = DISPLAY_REGIM_MENU;		//выходим в меню
-	lcd_set_state(LCD_ENABLE, CURSOR_DISABLE);
+	//regim = DISPLAY_REGIM_MENU;		//выходим в меню
+	//lcd_set_state(LCD_ENABLE, CURSOR_DISABLE);
 }
 
 void btn_move_in_set_watering_reg(buttons direction){

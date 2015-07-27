@@ -1,5 +1,5 @@
 #include "main.h"
-#include "stm32f10x.h"
+//#include "stm32f10x.h"
 
 void init_tim(){
 	/* управление яркостью и контрастом */

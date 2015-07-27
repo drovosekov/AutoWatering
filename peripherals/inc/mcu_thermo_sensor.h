@@ -17,12 +17,6 @@
 #define DS18B20_12BIT           0x7F
 
 
-
-//#define SENS_2WIRE
-#define SENS_3WIRE
-
-
-
 //u8 find_sensor(void);
 #ifdef SENS_2WIRE
 	void get_temperature_2wire(int *hb, int *lb);

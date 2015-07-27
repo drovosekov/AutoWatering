@@ -25,8 +25,8 @@ void btn_enter_pressed_in_set_humidity(){
 	if(cursor_y==0){
 		cursor_y=1;	//редактируем макс. значение
 	}else{
-		regim = DISPLAY_REGIM_MENU;		//выходим в меню
-		lcd_set_state(LCD_ENABLE, CURSOR_DISABLE);
+		//regim = DISPLAY_REGIM_MENU;		//выходим в меню
+		//lcd_set_state(LCD_ENABLE, CURSOR_DISABLE);
 
 		/* Allow access to BKP Domain */
 		PWR_BackupAccessCmd(ENABLE);

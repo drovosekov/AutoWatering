@@ -6,6 +6,8 @@
 #ifndef MCU_GPIO_H_
 #define MCU_GPIO_H_
 
+void mcu_gpio_deinit();
+
 //-----------------------------------------------------------------------------
 #define GPIO_PIN_SPEED_2MHZ()	(2UL)
 #define GPIO_PIN_SPEED_10MHZ()	(1UL)

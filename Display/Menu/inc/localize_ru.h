@@ -66,7 +66,7 @@
 
 #define SET_M7_BRIGTH		"Яркость: "
 #define SET_M7_CONTRAST		"Контраст:"
-#define M7_VAL_LCD_POS		11
+#define M7_VAL_LCD_POS		10
 
 
 #define T_SEP			":"
