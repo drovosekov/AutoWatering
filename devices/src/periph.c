@@ -7,17 +7,17 @@ void init_periph(void){
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR | RCC_APB1Periph_BKP, ENABLE);
 
 	//разрешаем тактирование таймера
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE);
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM6, ENABLE);
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM7, ENABLE);
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE); //ШИМ для подсветки и контраста экрана
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE); //задержка перед поливом
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM6, ENABLE); //задержка перед отключением ручного режима
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM7, ENABLE); //секундный таймер для инфо экрана
 
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA | RCC_APB2Periph_AFIO, ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC | RCC_APB2Periph_AFIO, ENABLE);
 
-	PIN_CONFIGURATION(ADC_CH0);
-	PIN_CONFIGURATION(ADC_CH1);
+	PIN_CONFIGURATION(ADC_CH0); //датчик влажности грунта
+	PIN_CONFIGURATION(ADC_CH1); //уровень напряжения аккумулятора
 
 	PIN_CONFIGURATION(DS18B20_1WIRE_PORT);
 

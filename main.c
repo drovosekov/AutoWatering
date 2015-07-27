@@ -2,7 +2,6 @@
 
 static void init_all(void);
 static void init_default_values(void);
-static void init_bright_contrast(void);
 
 //--глобальные переменные--------
 display_regim regim;
@@ -64,6 +63,7 @@ int main(void)
     		break;
     	}
 
+    	auto_bright_off();
     	auto_exit_from_menu();
     }
 
@@ -147,7 +147,8 @@ void init_all(void){
 
 	init_bright_contrast();
 
-
     regim = DISPLAY_REGIM_DEFAULT;
+
+	TIM_Cmd(TIM7, ENABLE);
 }
 

@@ -178,14 +178,17 @@ void TIM7_IRQHandler(void)
 			cnt_watering = 0;
 		}
 		if(cnt_watering == 0){
-			if(get_TIM_state(TIM4) == false) {watering_time = chk_interval;}
+			if(get_TIM_state(TIM4) == false) {
+				watering_time = chk_interval;
+			}
 
 			check_humidity_sensor();
 
 			if(get_time_state() == false){
-				TIM_Cmd(TIM4, DISABLE);//допустимое время полива вышло - откл. таймер отсчета до полива
-				watering_time = 0;
-				return;
+				if(get_TIM_state(TIM4)) {
+					TIM_Cmd(TIM4, DISABLE);//допустимое время полива вышло - откл. таймер отсчета до полива
+					watering_time = 0;
+				}
 			}else{
 				check_humidity_value();
 			}

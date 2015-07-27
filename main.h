@@ -107,4 +107,6 @@
 #include "devices/inc/periph.h"
 
 
+void init_bright_contrast(void);
+
 #endif /* MAIN_H_ */

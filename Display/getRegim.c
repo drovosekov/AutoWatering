@@ -190,7 +190,24 @@ void auto_exit_from_menu(){
 			delay_ms(50);
 		}
 	}
+}
 
+void auto_bright_off(){
+	static u8 bright_off_count = 0;
+
+	if(regim == DISPLAY_REGIM_DEFAULT ||
+	   regim == DISPLAY_REGIM_NO_WATER) {
+		if(bright_off_count > TIMEOUT_MENU_EXIT){
+			//отключаем подсветку
+			TIM_SetCompare3(TIM3, 0);
+			bright_off_count = 0;
+		}else{
+			bright_off_count++;
+		}
+	}else{
+		init_bright_contrast();
+		bright_off_count = 0;
+	}
 }
 
 void move_by_menu_LR(buttons direction){

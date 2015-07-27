@@ -64,7 +64,7 @@ void init_tim(){
     // Инициализируем таймер №7
     TIM_TimeBaseInit(TIM7, &TIM_BaseConfig);
 	// запускаем счет таймера
-	TIM_Cmd(TIM7, ENABLE);
+	TIM_Cmd(TIM7, DISABLE);
 
 
 	/*Поскольку счет начнется с нуля, то сразу же после включения счета
