@@ -8,6 +8,8 @@ static u8 save_pressed_buton(buttons btn, u8 clr);
 u8 timeout_menu_count;
 
 static buttons btn_pressed=0;
+static u8 bright_off_count = 0;
+
 
 void get_buttons_state(){
 	if (PIN_STATE(BUTTON_ENTER)) {
@@ -20,6 +22,8 @@ void get_buttons_state(){
 		case DISPLAY_REGIM_WATERING:
 		case DISPLAY_REGIM_MANUAL_WATERING:
 		case DISPLAY_REGIM_NO_WATER:
+			init_bright_contrast();
+			bright_off_count = 0;
 			return;
 
 		case DISPLAY_REGIM_MENU:
@@ -130,6 +134,9 @@ void get_buttons_state(){
 				//если влажность ниже заданной - полив запуститься не зависимо от времени суток!
 				check_humidity_value();
 	    		TIM_Cmd(TIM7, ENABLE);
+
+	    		init_bright_contrast();
+	    		bright_off_count = 0;
 				break;
 
 			case DISPLAY_REGIM_MENU:
@@ -178,7 +185,7 @@ void auto_exit_from_menu(){
 }
 
 void auto_bright_off(){
-	static u8 bright_off_count = 0;
+	static u8 already_set=0;
 
 	if(regim == DISPLAY_REGIM_DEFAULT ||
 	   regim == DISPLAY_REGIM_NO_WATER) {
@@ -189,9 +196,11 @@ void auto_bright_off(){
 		}else{
 			bright_off_count++;
 		}
-	}else{
+		already_set = 0;
+	}else if(already_set == 0 && regim != DISPLAY_REGIM_SET_BRIGHT_CONTR){
 		init_bright_contrast();
 		bright_off_count = 0;
+		already_set = 1;
 	}
 }
 
@@ -203,6 +212,8 @@ void move_by_menu_LR(buttons direction){
 	case DISPLAY_REGIM_WATERING:
 	case DISPLAY_REGIM_DEFAULT:
 	case DISPLAY_REGIM_NO_WATER:
+		init_bright_contrast();
+		bright_off_count = 0;
 		break;
 
 	case DISPLAY_REGIM_MENU:
