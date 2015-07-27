@@ -8,6 +8,8 @@
 
 #include "main.h"
 
+void set_reset_bit_e();
+
 enum
 {
 	LCD_2X16_RESET = 0x30, // Команда сброса ЖКД
@@ -214,7 +216,7 @@ void lcd_init_user_chars(void){
 void lcd_set_user_char(uint8_t char_num, uint8_t * char_data) {
 	u8 i;
 	lcd_send_command(((1<<6) | (char_num * 8) ));
-	for (i=0; i<=7; i++) {
+	for (i = 0; i <8 ; i++) {
 		lcd_send_data(char_data[i]);
 	}
 	lcd_send_command((1<<7));
@@ -283,9 +285,9 @@ void lcd_clear(void) {
 }
 
 void lcd_set_state(lcd_state state, cursor_state cur_state)  {
-	if (state==LCD_DISABLE){
+	if (state == LCD_DISABLE){
 		lcd_send_command(0x08);
-	}else if (cur_state==CURSOR_DISABLE){
+	}else if (cur_state == CURSOR_DISABLE){
 		lcd_send_command(LCD_2X16_DISPLAY_ON);
 	}else{
 		lcd_send_command(0x0F); //blink cursor
@@ -295,21 +297,15 @@ void lcd_set_state(lcd_state state, cursor_state cur_state)  {
 void lcd_set_4bit_mode(void) {
 	LCD_PORT->BSRR = LCD_ALL_PINS_OFF;
 	PIN_ON(LCD_2X16_DB5);
-	PIN_ON(LCD_2X16_E);
-	delay_ms(1);
-	PIN_OFF(LCD_2X16_E);
+	set_reset_bit_e();
 
 	LCD_PORT->BSRR = LCD_ALL_PINS_OFF;
 	PIN_ON(LCD_2X16_DB5);
-	PIN_ON(LCD_2X16_E);
-	delay_ms(1);
-	PIN_OFF(LCD_2X16_E);
+	set_reset_bit_e();
 
 	LCD_PORT->BSRR = LCD_ALL_PINS_OFF;
 	PIN_ON(LCD_2X16_DB7);
-	PIN_ON(LCD_2X16_E);
-	delay_ms(1);
-	PIN_OFF(LCD_2X16_E);
+	set_reset_bit_e();
 }
 
 void lcd_send_command(uint8_t byte){
@@ -321,14 +317,7 @@ void lcd_send_data(uint8_t byte){
 }
 
 void lcd_send(uint8_t byte, dat_or_comm dc)  {
-	//сбрасываем все пины
-	//PIN_OFF(LCD_2X16_E);
-	//PIN_OFF(LCD_2X16_RS);
-	//PIN_OFF(LCD_2X16_DB4);
-	//PIN_OFF(LCD_2X16_DB5);
-	//PIN_OFF(LCD_2X16_DB6);
-	//PIN_OFF(LCD_2X16_DB7);
-	LCD_PORT->BSRR = LCD_ALL_PINS_OFF;//так работает быстрее
+	LCD_PORT->BSRR = LCD_ALL_PINS_OFF;
 
 	if (dc) {PIN_ON(LCD_2X16_RS);}
 
@@ -338,10 +327,7 @@ void lcd_send(uint8_t byte, dat_or_comm dc)  {
 	if (byte & 0x40) {PIN_ON(LCD_2X16_DB6);}
 	if (byte & 0x80) {PIN_ON(LCD_2X16_DB7);}
 
-	//дергаем ногой для записи значений
-	PIN_ON(LCD_2X16_E);
-	delay_ms(1);
-	PIN_OFF(LCD_2X16_E);
+	set_reset_bit_e();
 
 	LCD_PORT->BSRR = LCD_ALL_DATA_PINS_OFF;
 
@@ -351,10 +337,13 @@ void lcd_send(uint8_t byte, dat_or_comm dc)  {
 	if (byte & 0x04) {PIN_ON(LCD_2X16_DB6);}
 	if (byte & 0x08) {PIN_ON(LCD_2X16_DB7);}
 
-	//дергаем ногой для записи значений
-	PIN_ON(LCD_2X16_E);
-	delay_ms(1);
-	PIN_OFF(LCD_2X16_E);
-	delay_ms(1);
+	set_reset_bit_e();
 }
 
+
+//дергаем ногой для записи значений
+void set_reset_bit_e(){
+	PIN_ON(LCD_2X16_E);
+	delay_ms(5);
+	PIN_OFF(LCD_2X16_E);
+}

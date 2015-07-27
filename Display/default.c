@@ -31,11 +31,6 @@ void init_display_default(){
     timeout_menu_count=0;
 }
 
-void btn_menu_pressed_in_deault(){
-	init_menu();
-	regim = DISPLAY_REGIM_MENU;
-}
-
 void display_default_draw(){
 	static u8 prescaler=0;
 

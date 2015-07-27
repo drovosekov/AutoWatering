@@ -31,9 +31,10 @@ void btn_enter_pressed_in_set_date_time(){
 	}else if(cursor_x == M0_MONTH_LCD_POS){
 		cursor_x = M0_YEAR_LCD_POS;		//редактируем год
 	}else{
-		//regim = DISPLAY_REGIM_MENU;		//выходим в меню
-		//lcd_set_state(LCD_ENABLE, CURSOR_DISABLE);
 		RTC_SetTime(&rtc_clck);			//запоминаем измененное время и дату
+
+		regim = DISPLAY_REGIM_MENU;		//выходим в меню
+		lcd_set_state(LCD_ENABLE, CURSOR_DISABLE);
 	}
 }
 
@@ -41,18 +42,15 @@ void btn_move_in_set_date_time(buttons direction){
 	if(cursor_y == 0){//устновка часов и минут
 		if(cursor_x == M0_HOUR_LCD_POS){
 			de_in_crement_value(&(rtc_clck.hour), 0, 23, direction);
-		}
-		if(cursor_x == M0_MINUTE_LCD_POS){
+		}else if(cursor_x == M0_MINUTE_LCD_POS){
 			de_in_crement_value(&(rtc_clck.min), 0, 59, direction);
 		}
 	}else{			//установка даты
 		if(cursor_x == M0_DAY_LCD_POS){
 			de_in_crement_value(&(rtc_clck.mday), 1, RTC_DaysInMonth(rtc_clck.year, rtc_clck.month), direction);
-		}
-		if(cursor_x == M0_MONTH_LCD_POS){
+		}else if(cursor_x == M0_MONTH_LCD_POS){
 			de_in_crement_value(&(rtc_clck.month), 1, 12, direction);
-		}
-		if(cursor_x == M0_YEAR_LCD_POS){
+		}else if(cursor_x == M0_YEAR_LCD_POS){
 			rtc_clck.year += direction;
 		}
 	}

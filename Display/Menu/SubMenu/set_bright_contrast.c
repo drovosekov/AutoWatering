@@ -24,15 +24,15 @@ void btn_enter_pressed_in_set_bright_contrast(){
 	if(cursor_y == 0){
 		cursor_y = 1;	//редактируем макс. контарст
 	}else{
-		//regim = DISPLAY_REGIM_MENU;		//выходим в меню
-		//lcd_set_state(LCD_ENABLE, CURSOR_DISABLE);
-
 		/* Allow access to BKP Domain */
 		PWR_BackupAccessCmd(ENABLE);
 
 		BKP_WriteBackupRegister(BRIGHT_CONTRAST_BKP, set_low_n_height(bright, contrast));
 
 		PWR_BackupAccessCmd(DISABLE);
+
+		regim = DISPLAY_REGIM_MENU;		//выходим в меню
+		lcd_set_state(LCD_ENABLE, CURSOR_DISABLE);
 	}
 }
 

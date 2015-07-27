@@ -20,15 +20,15 @@ void init_set_watering_duration(){
 }
 
 void btn_enter_pressed_in_set_watering_duration(){
-	//regim = DISPLAY_REGIM_MENU;		//выходим в меню
-	//lcd_set_state(LCD_ENABLE, CURSOR_DISABLE);
-
 	/* Allow access to BKP Domain */
 	PWR_BackupAccessCmd(ENABLE);
 
 	BKP_WriteBackupRegister(WATERING_DURATION_BKP, watering_duration);
 
 	PWR_BackupAccessCmd(DISABLE);
+
+	regim = DISPLAY_REGIM_MENU;		//выходим в меню
+	lcd_set_state(LCD_ENABLE, CURSOR_DISABLE);
 }
 
 void btn_move_in_set_watering_duration(buttons direction){

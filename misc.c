@@ -15,6 +15,8 @@ void delay_ms(u16 ms)
 	while(delay){}
 }
 
+//in traps (exti) functions delay_ms not working
+//so call this function
 void delay_for(u16 del)
 {
 	u16 i;

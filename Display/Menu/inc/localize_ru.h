@@ -6,14 +6,14 @@
 #define LOGO_LINE1		"Автополиватор v1"
 #define LOGO_SHOW_TIME	500	//время показа логотипа в мс
 
-#define MENU_COUNT		6	//количество пунктов меню
+#define MENU_COUNT		7	//количество пунктов меню
 #define MENU0 			"Уст.время/дата"
 #define MENU1 			"Интервал полива"
 #define MENU2 			"Длит. полива"
 #define MENU3 			"Уровень влажн."
 #define MENU4 			"Интервал опроса"
 #define MENU5 			"Режим полива"
-#define MENU6			"Режим подсветки" //todo
+#define MENU6			"Досветка"
 #define MENU7 			"Подств/контраст"
 
 #define MENU_SEL		0x1D	//знак стрелочки для выбранного пункта меню
@@ -56,13 +56,16 @@
 #define SET_M5_SPACE		"                "
 #define M5_VAL_LCD_POS		7
 
-//todo
-#define SET_M6_LIGHT0		"С: "
-#define SET_M6_LIGHT1		"До:"
-#define SET_M6_LIGHT2		"Вкл"
-#define SET_M6_LIGHT3		"Выкл"
-#define SET_M6_LIGHT4		"Режим: "
-//
+#define SET_M6_LIGHT0		"С:"
+#define SET_M6_LIGHT1		" До:"
+#define SET_M6_LIGHT2		"Да "
+#define SET_M6_LIGHT3		"Нет"
+#define SET_M6_LIGHT4		"Активна: "
+#define M6_FROM_H_LCD_POS	3
+#define M6_FROM_M_LCD_POS	6
+#define M6_TO_H_LCD_POS		12
+#define M6_TO_M_LCD_POS		15
+#define M6_REGIM_SWCH		9
 
 #define SET_M7_BRIGTH		"Яркость: "
 #define SET_M7_CONTRAST		"Контраст:"

@@ -21,8 +21,8 @@ void init_menu(){
 	AddMenu(3, MENU3, DISPLAY_REGIM_SET_HUMIDITY, 		&init_set_humidity);
 	AddMenu(4, MENU4, DISPLAY_REGIM_SET_CHK_INTERVAL, 	&init_set_chk_interval);
 	AddMenu(5, MENU5, DISPLAY_REGIM_SET_WATERING_REG, 	&init_set_watering_reg);
-	//AddMenu(6, MENU6, DISPLAY_REGIM_SET_LIGHT,			0);
-	AddMenu(6, MENU7, DISPLAY_REGIM_SET_BRIGHT_CONTR, 	&init_set_bright_contrast);
+	AddMenu(6, MENU6, DISPLAY_REGIM_SET_LIGHT,			&init_set_light_time);
+	AddMenu(7, MENU7, DISPLAY_REGIM_SET_BRIGHT_CONTR, 	&init_set_bright_contrast);
 }
 
 void AddMenu(u8 idx, char *text, u8 regim, void *func){
@@ -34,12 +34,13 @@ void AddMenu(u8 idx, char *text, u8 regim, void *func){
 void btn_enter_pressed_in_menu(){
 	Menu[cursor_menu].Func();
 	regim = Menu[cursor_menu].RegimMenu;
+	lcd_set_state(LCD_ENABLE, CURSOR_ENABLE);
 }
 
 void btn_move_in_menu(buttons *direction){
 	dir = *direction;
 	cursor_menu += *direction;
-	if(cursor_menu == MENU_COUNT+1){cursor_menu = MENU_COUNT;}
+	if(cursor_menu == MENU_COUNT + 1){cursor_menu = MENU_COUNT;}
 	if(cursor_menu == -1) {cursor_menu = 0;}
 	scr = 0;
 }

@@ -10,7 +10,7 @@ u8 timeout_menu_count;
 static buttons btn_pressed=0;
 
 void get_buttons_state(){
-	if (PIN_SIGNAL(BUTTON_ENTER)) {
+	if (PIN_STATE(BUTTON_ENTER)) {
 		if(save_pressed_buton(BTN_STATE_ENTER, true))
 			{return;}//если кнопка все еще нажата - выходим
 
@@ -24,8 +24,7 @@ void get_buttons_state(){
 
 		case DISPLAY_REGIM_MENU:
 			btn_enter_pressed_in_menu();
-			lcd_set_state(LCD_ENABLE, CURSOR_ENABLE);
-			return;
+			break;
 
 		case DISPLAY_REGIM_SET_TIME_DATE:
 			btn_enter_pressed_in_set_date_time();
@@ -52,7 +51,7 @@ void get_buttons_state(){
     		break;
 
     	case DISPLAY_REGIM_SET_LIGHT:
-    		//todo
+    		btn_enter_pressed_in_set_light_time();
     		break;
 
 		case DISPLAY_REGIM_SET_BRIGHT_CONTR:
@@ -60,42 +59,24 @@ void get_buttons_state(){
 			break;
 		}
 
-		regim = DISPLAY_REGIM_MENU;		//выходим в меню
-		lcd_set_state(LCD_ENABLE, CURSOR_DISABLE);
-
-	}else if (PIN_SIGNAL(BUTTON_MENU)) {
-		if(save_pressed_buton(BTN_STATE_MENU, false) || regim == DISPLAY_REGIM_MENU)
+	}else if (PIN_STATE(BUTTON_MENU)) {
+		if(save_pressed_buton(BTN_STATE_MENU, false))
 			{return;}//если кнопка все еще нажата - выходим
 
-		switch(regim){
-		case DISPLAY_REGIM_DEFAULT:
-		case DISPLAY_REGIM_WATERING:
-		case DISPLAY_REGIM_MANUAL_WATERING:
-		case DISPLAY_REGIM_NO_WATER:
-			btn_menu_pressed_in_deault();
-			break;
+		regim = DISPLAY_REGIM_MENU;
+		lcd_set_state(LCD_ENABLE, CURSOR_DISABLE);
+		init_menu();
 
-		case DISPLAY_REGIM_MENU:
-		case DISPLAY_REGIM_SET_TIME_DATE:
-		case DISPLAY_REGIM_SET_WATERING_TIME:
-		case DISPLAY_REGIM_SET_WAERING_DUR:
-    	case DISPLAY_REGIM_SET_HUMIDITY:
-    	case DISPLAY_REGIM_SET_CHK_INTERVAL:
-    	case DISPLAY_REGIM_SET_WATERING_REG:
-    	case DISPLAY_REGIM_SET_LIGHT:
-		case DISPLAY_REGIM_SET_BRIGHT_CONTR:
-    		break;
-		}
+	}else if(PIN_STATE(BUTTON_START)) {
+		if(save_pressed_buton(BTN_STATE_START, false))
+			{return;}
 
-	}else if(PIN_SIGNAL(BUTTON_SART)) {
-		if(CheckBit(TIM6->CR1, TIM_CR1_CEN) && regim != DISPLAY_REGIM_NO_WATER){
-			if(save_pressed_buton(BTN_STATE_START, false))
-				{return;}
+		if(get_TIM_state(TIM6) && regim != DISPLAY_REGIM_NO_WATER){
 			PIN_ON(WATERING_RELAY);					//запуск полива (вкл.реле)
 			regim = DISPLAY_REGIM_MANUAL_WATERING;
 		}
 
-	}else if(PIN_SIGNAL(BUTTON_EXIT)) {
+	}else if(PIN_STATE(BUTTON_EXIT)) {
 		if(save_pressed_buton(BTN_STATE_EXIT, true))
 			{return;}
 
@@ -126,13 +107,13 @@ void get_buttons_state(){
 				break;
 		}
 
-	}else if (PIN_SIGNAL(BUTTON_LEFT)) {
+	}else if (PIN_STATE(BUTTON_LEFT)) {
 		move_by_menu_LR(BTN_STATE_LEFT);
 
-	}else if (PIN_SIGNAL(BUTTON_RIGHT)) {
+	}else if (PIN_STATE(BUTTON_RIGHT)) {
 		move_by_menu_LR(BTN_STATE_RIGHT);
 
-	}else if(PIN_SIGNAL(BUTTON_RESET)) {
+	}else if(PIN_STATE(BUTTON_RESET)) {
 		switch(regim){
 			case DISPLAY_REGIM_WATERING:
 			case DISPLAY_REGIM_MANUAL_WATERING:
@@ -163,7 +144,7 @@ void get_buttons_state(){
 				break;
 		}
 
-	}else if (PIN_SIGNAL(WATER_LEVER_SENSOR)) {
+	}else if (PIN_STATE(WATER_LEVER_SENSOR)) {
 		regim = DISPLAY_REGIM_NO_WATER;
 		PIN_ON(NO_WATER_LED);
 
@@ -228,7 +209,7 @@ void move_by_menu_LR(buttons direction){
 		if(save_pressed_buton(direction, false))
 			{return;}
 		btn_move_in_menu(&direction);
-		break;
+		return;
 
 	case DISPLAY_REGIM_SET_TIME_DATE:
 		btn_move_in_set_date_time(direction);
@@ -255,7 +236,7 @@ void move_by_menu_LR(buttons direction){
 		break;
 
 	case DISPLAY_REGIM_SET_LIGHT:
-		/* todo */
+		btn_move_in_set_light_time(direction);
 		break;
 
 	case DISPLAY_REGIM_SET_BRIGHT_CONTR:
@@ -263,7 +244,7 @@ void move_by_menu_LR(buttons direction){
 		break;
 
 	}
-	delay_ms(300);//задержка для не очень быстрого изменения значений
+	delay_ms(500);//задержка для не очень быстрого изменения значений
 }
 
 u8 save_pressed_buton(buttons btn, u8 clr){

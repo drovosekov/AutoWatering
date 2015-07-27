@@ -62,7 +62,6 @@ void auto_bright_off();
 
 void init_display_default();
 void display_default_draw();
-void btn_menu_pressed_in_deault();
 void check_humidity_sensor();
 void check_humidity_value();
 
@@ -105,6 +104,11 @@ void init_set_bright_contrast();
 void display_set_bright_contrast_draw();
 void btn_enter_pressed_in_set_bright_contrast();
 void btn_move_in_set_bright_contrast(buttons direction);
+
+void init_set_light_time();
+void display_set_light_time_draw();
+void btn_enter_pressed_in_set_light_time();
+void btn_move_in_set_light_time(buttons direction);
 
 void de_in_crement_value(u8 *val, u8 min_val, u8 max_val, buttons direction);
 

@@ -55,7 +55,7 @@ int main(void)
     		break;
 
     	case DISPLAY_REGIM_SET_LIGHT:
-    		//todo
+    		display_set_light_time_draw();
     		break;
 
     	case DISPLAY_REGIM_SET_BRIGHT_CONTR:
@@ -78,7 +78,7 @@ void init_default_values(void){
 		/* Allow access to BKP Domain */
 		PWR_BackupAccessCmd(ENABLE);
 		/* Reset Backup Domain */
-		//BKP_DeInit();
+		//BKP_DeInit(); //уже вызывается в RTC_Init(); повторный вызов сбивает RTC
 
 		//продолжительность полива (сек)
 		result=5;
@@ -103,9 +103,9 @@ void init_default_values(void){
 		/* Adjust time by values entered by the user*/
 		RTCTIME newtime;
 		newtime.year =  2015;
-		newtime.month = 7;
+		newtime.month = 5;
 		newtime.mday =  3;
-		newtime.hour =  12;
+		newtime.hour =  15;
 		newtime.min =   30;
 		RTC_SetTime(&newtime);
 
