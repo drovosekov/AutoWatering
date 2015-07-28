@@ -16,6 +16,7 @@ int main(void)
     while (1)
     {
     	get_buttons_state();
+    	get_sensors_state();
 
     	switch(regim){
 		case DISPLAY_REGIM_WATERING:

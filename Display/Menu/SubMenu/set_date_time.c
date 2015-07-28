@@ -13,13 +13,13 @@ display_regim regim;
 static RTCTIME rtc_clck;
 
 void init_set_date_time(){
-	RTC_GetTime(TIME_CURRENT, &rtc_clck);
-	cursor_x=M0_HOUR_LCD_POS;
-	cursor_y=0;
+	RTC_GetTime(&rtc_clck);
+	cursor_x = M0_HOUR_LCD_POS;
+	cursor_y = 0;
 }
 
 void btn_enter_pressed_in_set_date_time(){
-	if(cursor_y==0){
+	if(cursor_y == 0){
 		if(cursor_x == M0_MINUTE_LCD_POS){
 			cursor_x = M0_DAY_LCD_POS;	//редактируем день
 			cursor_y = 1;					//редактируем дату

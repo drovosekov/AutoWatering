@@ -37,7 +37,6 @@ void mcu_gpio_deinit();
 #define HUMIDITY_SENSOR		B, 8,  HIGH, GENERAL_OUTPUT_PUSH_PULL,   SPEED_2MHZ //blue led on the discovery board
 #define WATERING_RELAY		B, 9,  HIGH, GENERAL_OUTPUT_PUSH_PULL,   SPEED_2MHZ //green led on the discovery board
 #define NO_WATER_LED		B, 10, HIGH, GENERAL_OUTPUT_PUSH_PULL,   SPEED_2MHZ
-
 #define LIGHT_RELAY			B, 11, HIGH, GENERAL_OUTPUT_PUSH_PULL,   SPEED_2MHZ //реле фоновой подсветки
 
 #define BACKLIGHT_PWM		C, 8,  HIGH, ALTERNATE_OUTPUT_PUSH_PULL, SPEED_10MHZ //альтернативный выход TIM3 CH3

@@ -59,6 +59,7 @@ extern display_regim regim;
 void get_buttons_state();
 void auto_exit_from_menu();
 void auto_bright_off();
+void get_sensors_state();
 
 void init_display_default();
 void display_default_draw();

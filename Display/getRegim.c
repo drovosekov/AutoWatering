@@ -12,6 +12,7 @@ static u8 bright_off_count = 0;
 
 
 void get_buttons_state(){
+
 	if (PIN_STATE(BUTTON_ENTER)) {
 		if(save_pressed_buton(BTN_STATE_ENTER, true))
 			{return;}//если кнопка все еще нажата - выходим
@@ -151,10 +152,6 @@ void get_buttons_state(){
 				break;
 		}
 
-	}else if (PIN_STATE(WATER_LEVER_SENSOR)) {
-		regim = DISPLAY_REGIM_NO_WATER;
-		PIN_ON(NO_WATER_LED);
-
 	}else if(regim == DISPLAY_REGIM_MANUAL_WATERING) {
 		PIN_OFF(WATERING_RELAY);		//стоп полива (откл.реле)
 		regim = DISPLAY_REGIM_DEFAULT;
@@ -165,27 +162,37 @@ void get_buttons_state(){
 	}
 }
 
-void auto_exit_from_menu(){
-	if(regim != DISPLAY_REGIM_DEFAULT &&
-	   regim != DISPLAY_REGIM_MANUAL_WATERING &&
-	   regim != DISPLAY_REGIM_WATERING &&
-	   regim != DISPLAY_REGIM_NO_WATER){
-		//проверяем истечение времени по таймауту выхода из меню
-		if(timeout_menu_count > TIMEOUT_MENU_EXIT) {
-			save_pressed_buton(BTN_STATE_RESET, true);
-			lcd_clear();
-			lcd_set_state(LCD_ENABLE, CURSOR_DISABLE);
-			regim = DISPLAY_REGIM_DEFAULT;
-    		TIM_Cmd(TIM7, ENABLE);
-		}else{
-			timeout_menu_count++;
-			delay_ms(50);
+void get_sensors_state(){
+	if (PIN_STATE(WATER_LEVER_SENSOR)) {
+		if(regim == DISPLAY_REGIM_DEFAULT)
+			{regim = DISPLAY_REGIM_NO_WATER;}
+		PIN_ON(NO_WATER_LED);
+	}else{
+		PIN_OFF(NO_WATER_LED);
+	}
+
+	if (PIN_STATE(LIGHT_SENSOR)) {
+		//датчик естественного света - выключаем досветку
+		PIN_OFF(LIGHT_RELAY);
+	}else{
+		//текущее время в разрешенном диапазоне использования досветки
+		RTCTIME rtc_clock;
+		RTC_GetTime(&rtc_clock);
+
+		u16 now_time = (rtc_clock.hour << 8) | rtc_clock.min; //текущее время (часы+минуты)
+
+		//но в заданный промежуток времени
+		if (BKP_ReadBackupRegister(tMORNING_LIGHT_TIME_BKP) < now_time &&
+			now_time < BKP_ReadBackupRegister(tEVENING_LIGHT_TIME_BKP)) //с утра до вечера
+		{
+			PIN_ON(LIGHT_RELAY);
 		}
 	}
 }
 
+
 void auto_bright_off(){
-	static u8 already_set=0;
+	static u8 already_set = 0;
 
 	if(regim == DISPLAY_REGIM_DEFAULT ||
 	   regim == DISPLAY_REGIM_NO_WATER) {

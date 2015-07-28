@@ -90,3 +90,23 @@ void print_selected_menu(u8 marker, u8 line, char *menu_text){
 	//чтоб не очищать экран целиком - забиваем лишнее пробелами
 	lcd_out("         ");
 }
+
+
+void auto_exit_from_menu(){
+	if(regim != DISPLAY_REGIM_DEFAULT &&
+	   regim != DISPLAY_REGIM_MANUAL_WATERING &&
+	   regim != DISPLAY_REGIM_WATERING &&
+	   regim != DISPLAY_REGIM_NO_WATER){
+		//проверяем истечение времени по таймауту выхода из меню
+		if(timeout_menu_count > TIMEOUT_MENU_EXIT) {
+			//save_pressed_buton(BTN_STATE_RESET, true);
+			lcd_clear();
+			lcd_set_state(LCD_ENABLE, CURSOR_DISABLE);
+			regim = DISPLAY_REGIM_DEFAULT;
+    		TIM_Cmd(TIM7, ENABLE);
+		}else{
+			timeout_menu_count++;
+			delay_ms(50);
+		}
+	}
+}

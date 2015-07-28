@@ -159,7 +159,7 @@ void TIM7_IRQHandler(void)
 		bat_v =		get_acu_value();
 		bat_p =		get_acu_perc_value(bat_v);
 		air_temp =	get_temperature_3wire();
-		RTC_GetTime(TIME_CURRENT, &rtc_clck);
+		RTC_GetTime(&rtc_clck);
 
 		if(get_TIM_state(TIM6)){return;}//включен ручной режим полива
 

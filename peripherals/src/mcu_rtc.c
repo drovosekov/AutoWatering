@@ -65,7 +65,7 @@ void RTC_Configuration(void)
 /*------------------------------------------*/
 /* Convert time structure to timeticks      */
 /*------------------------------------------*/
-uint32_t RTC_GetTicksFromTime(time_count timetype, const RTCTIME *rtc)
+u32 RTC_GetTicksFromTime(const RTCTIME *rtc)
 {
 	uint32_t utc, i, y;
 	y = rtc->year - 1970;
@@ -80,18 +80,9 @@ uint32_t RTC_GetTicksFromTime(time_count timetype, const RTCTIME *rtc)
 	}
 	utc += rtc->mday - 1;
 	utc *= 86400;
-	if(timetype==TIME_CURRENT)
-	{
-		utc += rtc->hour * 3600 + rtc->min * 60 + rtc->sec;
-		return utc;
-	}
-	else if(timetype==TIME_MIDNIGHT)
-	{
-		return utc;
-	}
-	else {
-		return 0;
-	}
+
+	utc += rtc->hour * 3600 + rtc->min * 60 + rtc->sec;
+	return utc;
 }
 
 
@@ -99,28 +90,19 @@ uint32_t RTC_GetTicksFromTime(time_count timetype, const RTCTIME *rtc)
 /*------------------------------------------*/
 /* Get time in calendar form                */
 /*------------------------------------------*/
-void RTC_GetTime(time_count timetype, RTCTIME *rtc)
+void RTC_GetTime(RTCTIME *rtc)
 {
 	uint32_t year, month, day, utc;
 	utc = RTC_GetCounter();
 
 	/* Compute  hours */
-	if(timetype==TIME_CURRENT)
-	{
-		rtc->sec = (u8)(utc % 60);
-		utc /= 60;
-		rtc->min = (u8)(utc % 60);
-		utc /= 60;
-		rtc->hour = (u8)(utc % 24);
-		utc /= 24;
-	}
-	else if(timetype==TIME_MIDNIGHT)
-	{
-		rtc->sec = 0;
-		rtc->min = 0;
-		rtc->hour = 0;
-		utc /= 86400;
-	}
+	rtc->sec = (u8)(utc % 60);
+	utc /= 60;
+	rtc->min = (u8)(utc % 60);
+	utc /= 60;
+	rtc->hour = (u8)(utc % 24);
+	utc /= 24;
+
 	rtc->wday = (u8)((utc + 4) % 7);
 
 	rtc->year = (u16)(1970 + utc / 1461 * 4);
@@ -144,8 +126,7 @@ void RTC_GetTime(time_count timetype, RTCTIME *rtc)
 /*------------------------------------------*/
 void RTC_SetTime(const RTCTIME* rtc)
 {
-	uint32_t utc;
-	utc = RTC_GetTicksFromTime(TIME_CURRENT, rtc);
+	u32 utc = RTC_GetTicksFromTime(rtc);
 
 	/* Allow access to BKP Domain */
 	PWR_BackupAccessCmd(ENABLE);
@@ -174,12 +155,12 @@ void RTC_SetTime(const RTCTIME* rtc)
 }
 
 u8 RTC_DaysInMonth(u16 year, u8 month){
-	u8 d=numofdays[month];
-	if(month==2 && TM_RTC_LEAP_YEAR(2000 + year)) {d++;}
+	u8 d = numofdays[month];
+	if(month == 2 && TM_RTC_LEAP_YEAR(2000 + year)) {d++;}
 	return d;
 }
 
-#if 0
+#if 0 //not used functions
 /*------------------------------------------*/
 /* Get time ticks from RTC                  */
 /*------------------------------------------*/
