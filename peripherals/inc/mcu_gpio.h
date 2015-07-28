@@ -77,6 +77,7 @@ void mcu_gpio_deinit();
 #define BRIGHT_CONTRAST_BKP			BKP_DR7 //уровни яркости подсветки и контраста
 #define tMORNING_LIGHT_TIME_BKP		BKP_DR8	//утреннее время включения доп.подсветки
 #define tEVENING_LIGHT_TIME_BKP		BKP_DR9	//вечернее время включения доп.подсветки
+#define ACTIVE_LIGHT_TIME_BKP		BKP_DR10//используется досветка
 
 ///////////////////////////////////
 

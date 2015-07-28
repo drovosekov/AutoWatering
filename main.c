@@ -98,8 +98,14 @@ void init_default_values(void){
 
 		result = set_low_n_height(16, 13);//подсветка/контраст
 		BKP_WriteBackupRegister(BRIGHT_CONTRAST_BKP, result);
-		TIM_SetCompare3(TIM3, 16 * 4095); //подсветка
+		TIM_SetCompare3(TIM3, 10 * 4095); //подсветка
 		TIM_SetCompare4(TIM3, 13 * 4095); //контраст
+
+		result = set_low_n_height(8, 0);//досветка утро
+		BKP_WriteBackupRegister(tMORNING_LIGHT_TIME_BKP, result);
+		result = set_low_n_height(20, 0);//досветка вечер
+		BKP_WriteBackupRegister(tEVENING_LIGHT_TIME_BKP, result);
+		BKP_WriteBackupRegister(ACTIVE_LIGHT_TIME_BKP, true);
 
 		/* Adjust time by values entered by the user*/
 		RTCTIME newtime;

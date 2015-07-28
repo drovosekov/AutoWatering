@@ -18,6 +18,8 @@ void init_set_light_time(){
 	result = BKP_ReadBackupRegister(tEVENING_LIGHT_TIME_BKP);
 	t_evening.hour=	result >> 8;
 	t_evening.min=	result & 0xFF;
+
+	light_regim = BKP_ReadBackupRegister(ACTIVE_LIGHT_TIME_BKP);
 }
 
 void btn_enter_pressed_in_set_light_time(){
@@ -41,6 +43,8 @@ void btn_enter_pressed_in_set_light_time(){
 
 		result = (t_evening.hour << 8) | t_evening.min;
 		BKP_WriteBackupRegister(tEVENING_LIGHT_TIME_BKP, result);
+
+		BKP_WriteBackupRegister(ACTIVE_LIGHT_TIME_BKP, light_regim);
 
 		PWR_BackupAccessCmd(DISABLE);
 
