@@ -1,7 +1,7 @@
 #include "main.h"
 
 static void move_by_menu_LR(buttons direction);
-//защитка от дребезга
+//защитка от дребезга кнопок
 static u8 save_pressed_buton(buttons btn, u8 clr);
 
 
@@ -179,7 +179,7 @@ void get_sensors_state(){
 		RTCTIME rtc_clock;
 		RTC_GetTime(&rtc_clock);
 
-		u16 now_time = (rtc_clock.hour << 8) | rtc_clock.min; //текущее время (часы+минуты)
+		u16 now_time = set_low_n_height(rtc_clock.hour, rtc_clock.min); //текущее время (часы+минуты)
 
 		//но в заданный промежуток времени
 		if (BKP_ReadBackupRegister(tMORNING_LIGHT_TIME_BKP) < now_time &&

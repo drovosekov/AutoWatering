@@ -12,12 +12,12 @@ void init_set_light_time(){
 	cursor_y = 0;
 
 	u16 result = BKP_ReadBackupRegister(tMORNING_LIGHT_TIME_BKP);
-	t_morning.hour=	result >> 8;
-	t_morning.min=	result & 0xFF;
+	t_morning.hour=	get_height(result);
+	t_morning.min=	get_low(result);
 
 	result = BKP_ReadBackupRegister(tEVENING_LIGHT_TIME_BKP);
-	t_evening.hour=	result >> 8;
-	t_evening.min=	result & 0xFF;
+	t_evening.hour=	get_height(result);
+	t_evening.min=	get_low(result);
 
 	light_regim = BKP_ReadBackupRegister(ACTIVE_LIGHT_TIME_BKP);
 }
@@ -38,12 +38,8 @@ void btn_enter_pressed_in_set_light_time(){
 		/* Allow access to BKP Domain */
 		PWR_BackupAccessCmd(ENABLE);
 
-		u16 result = (t_morning.hour << 8) | t_morning.min;
-		BKP_WriteBackupRegister(tMORNING_LIGHT_TIME_BKP, result);
-
-		result = (t_evening.hour << 8) | t_evening.min;
-		BKP_WriteBackupRegister(tEVENING_LIGHT_TIME_BKP, result);
-
+		BKP_WriteBackupRegister(tMORNING_LIGHT_TIME_BKP, set_low_n_height(t_morning.hour, t_morning.min));
+		BKP_WriteBackupRegister(tEVENING_LIGHT_TIME_BKP, set_low_n_height(t_evening.hour, t_evening.min));
 		BKP_WriteBackupRegister(ACTIVE_LIGHT_TIME_BKP, light_regim);
 
 		PWR_BackupAccessCmd(DISABLE);

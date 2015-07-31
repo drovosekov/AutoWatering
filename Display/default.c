@@ -200,7 +200,7 @@ static u8 get_time_state(){
 	morning_time = BKP_ReadBackupRegister(tMORNING_WATERING_TIME_BKP);
 	evening_time = BKP_ReadBackupRegister(tEVENING_WATERING_TIME_BKP);
 
-	now_time = (rtc_clck.hour << 8) | rtc_clck.min; //текущее время (часы+минуты)
+	now_time = set_low_n_height(rtc_clck.hour, rtc_clck.min); //текущее время (часы+минуты)
 
 	if(air_temp > 30){	//оч.жарко - поливаем независимо от времени утро/вечер
 		//но в заданный промежуток времени
@@ -215,13 +215,13 @@ static u8 get_time_state(){
 void check_humidity_value(){
 	u16 hum_params = BKP_ReadBackupRegister(HUMYDURTY_BKP);
 
-	if(gnd_hum < (hum_params >> 8)){//влажность почвы меньше заданного значения
-		if(get_TIM_state(TIM4) == false){
-			watering_time = ((hum_params & 0xFF) + 1) * 60;//задержка перед поливом (в секундах)
-			TIM_Cmd(TIM4, ENABLE);
+	if(gnd_hum < get_height(hum_params)){//влажность почвы меньше заданного значения
+		if(get_TIM_state(TIM4) == false){//отсчет до полива не был уже запущен ранее
+			watering_time = (get_low(hum_params) + 1) * 60;//задержка перед поливом (в секундах)
+			TIM_Cmd(TIM4, ENABLE);		//запускаем отсчет
 		}
 	}else{
-		TIM_Cmd(TIM4, DISABLE);//кто-то полил ручную - отключаем таймер отсчета до полива
+		TIM_Cmd(TIM4, DISABLE);//кто-то полил вручную - отключаем таймер отсчета до полива
 	}
 }
 

@@ -103,9 +103,9 @@ void init_default_values(void){
 
 		result = set_low_n_height(8, 0);//досветка утро
 		BKP_WriteBackupRegister(tMORNING_LIGHT_TIME_BKP, result);
-		result = set_low_n_height(20, 0);//досветка вечер
+		result = set_low_n_height(21, 0);//досветка вечер
 		BKP_WriteBackupRegister(tEVENING_LIGHT_TIME_BKP, result);
-		BKP_WriteBackupRegister(ACTIVE_LIGHT_TIME_BKP, true);
+		BKP_WriteBackupRegister(ACTIVE_LIGHT_TIME_BKP, true);//досветка активна
 
 		/* Adjust time by values entered by the user*/
 		RTCTIME newtime;

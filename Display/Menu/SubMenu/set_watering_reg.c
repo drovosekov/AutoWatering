@@ -16,7 +16,7 @@ void init_set_watering_reg(){
 	cursor_x=M4_VAL_LCD_POS;
 	cursor_y=0;
 
-	watering_reg = CheckBit(TIM6->CR1, TIM_CR1_CEN);
+	watering_reg = get_TIM_state(TIM6);
 }
 
 void btn_enter_pressed_in_set_watering_reg(){
