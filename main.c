@@ -11,8 +11,6 @@ int main(void)
 {
 	init_all();
 
-	//LCD_test();
-
     while (1)
     {
     	get_buttons_state();

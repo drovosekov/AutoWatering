@@ -76,7 +76,6 @@
     <Component id="445" name="EXTI" path="" type="2"/>
     <Component id="446" name="DMA" path="" type="2"/>
     <Component id="448" name="RTC" path="" type="2"/>
-    <Component id="453" name="I2C" path="" type="2"/>
     <Component id="456" name="TIM" path="" type="2"/>
     <Component id="457" name="ADC" path="" type="2"/>
     <Component id="458" name="USART" path="" type="2"/>
@@ -97,8 +96,8 @@
     <File name="cmsis_boot" path="" type="2"/>
     <File name="peripherals/src/mcu_rcc.c" path="peripherals/src/mcu_rcc.c" type="1"/>
     <File name="misc.h" path="misc.h" type="1"/>
-    <File name="stm_lib/inc/stm32f10x_pwr.h" path="stm_lib/inc/stm32f10x_pwr.h" type="1"/>
     <File name="stm_lib/src/stm32f10x_tim.c" path="stm_lib/src/stm32f10x_tim.c" type="1"/>
+    <File name="stm_lib/inc/stm32f10x_pwr.h" path="stm_lib/inc/stm32f10x_pwr.h" type="1"/>
     <File name="Display/Menu/SubMenu/set_watering_reg.c" path="Display/Menu/SubMenu/set_watering_reg.c" type="1"/>
     <File name="cmsis_boot/startup" path="" type="2"/>
     <File name="cmsis/core_cmFunc.h" path="cmsis/core_cmFunc.h" type="1"/>
@@ -113,17 +112,17 @@
     <File name="main.h" path="main.h" type="1"/>
     <File name="peripherals/src/mcu_gpio.c" path="peripherals/src/mcu_gpio.c" type="1"/>
     <File name="Display/default.c" path="Display/default.c" type="1"/>
-    <File name="stm_lib/inc/stm32f10x_dma.h" path="stm_lib/inc/stm32f10x_dma.h" type="1"/>
     <File name="stm_lib/src/stm32f10x_adc.c" path="stm_lib/src/stm32f10x_adc.c" type="1"/>
+    <File name="stm_lib/inc/stm32f10x_dma.h" path="stm_lib/inc/stm32f10x_dma.h" type="1"/>
     <File name="peripherals/inc/mcu_gpio.h" path="peripherals/inc/mcu_gpio.h" type="1"/>
     <File name="Display/Menu/SubMenu/set_watering_duration.c" path="Display/Menu/SubMenu/set_watering_duration.c" type="1"/>
     <File name="peripherals/src/mcu_onewire.c" path="peripherals/src/mcu_onewire.c" type="1"/>
     <File name="Display/Menu/SubMenu" path="" type="2"/>
     <File name="Display/Menu/inc" path="" type="2"/>
-    <File name="stm_lib/src/stm32f10x_usart.c" path="stm_lib/src/stm32f10x_usart.c" type="1"/>
     <File name="Display/Menu/SubMenu/set_bright_contrast.c" path="Display/Menu/SubMenu/set_bright_contrast.c" type="1"/>
-    <File name="peripherals/src/mcu_adc.c" path="peripherals/src/mcu_adc.c" type="1"/>
+    <File name="stm_lib/src/stm32f10x_usart.c" path="stm_lib/src/stm32f10x_usart.c" type="1"/>
     <File name="stm_lib/inc/stm32f10x_rtc.h" path="stm_lib/inc/stm32f10x_rtc.h" type="1"/>
+    <File name="peripherals/src/mcu_adc.c" path="peripherals/src/mcu_adc.c" type="1"/>
     <File name="Display/Menu/SubMenu/set_light.c" path="Display/Menu/SubMenu/set_light.c" type="1"/>
     <File name="Display" path="" type="2"/>
     <File name="stm_lib/src/stm32f10x_bkp.c" path="stm_lib/src/stm32f10x_bkp.c" type="1"/>
@@ -159,10 +158,8 @@
     <File name="stm_lib/inc/stm32f10x_adc.h" path="stm_lib/inc/stm32f10x_adc.h" type="1"/>
     <File name="cmsis_boot/system_stm32f10x.h" path="cmsis_boot/system_stm32f10x.h" type="1"/>
     <File name="stm_lib/inc/stm32f10x_rcc.h" path="stm_lib/inc/stm32f10x_rcc.h" type="1"/>
-    <File name="stm_lib/inc/stm32f10x_i2c.h" path="stm_lib/inc/stm32f10x_i2c.h" type="1"/>
     <File name="peripherals/inc/mcu_rcc.h" path="peripherals/inc/mcu_rcc.h" type="1"/>
     <File name="peripherals/src" path="" type="2"/>
-    <File name="stm_lib/src/stm32f10x_i2c.c" path="stm_lib/src/stm32f10x_i2c.c" type="1"/>
     <File name="peripherals/src/mcu_rtc.c" path="peripherals/src/mcu_rtc.c" type="1"/>
     <File name="peripherals/src/mcu_lcd16x2.c" path="peripherals/src/mcu_lcd16x2.c" type="1"/>
     <File name="peripherals" path="" type="2"/>
