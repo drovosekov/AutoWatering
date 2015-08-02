@@ -1,7 +1,7 @@
-#include "main.h"
+п»ї#include "main.h"
 
 static void move_by_menu_LR(buttons direction);
-//защитка от дребезга кнопок
+//Р·Р°С‰РёС‚РєР° РѕС‚ РґСЂРµР±РµР·РіР° РєРЅРѕРїРѕРє
 static u8 save_pressed_buton(buttons btn, u8 clr);
 
 
@@ -15,7 +15,7 @@ void get_buttons_state(){
 
 	if (PIN_STATE(BUTTON_ENTER)) {
 		if(save_pressed_buton(BTN_STATE_ENTER, true))
-			{return;}//если кнопка все еще нажата - выходим
+			{return;}//РµСЃР»Рё РєРЅРѕРїРєР° РІСЃРµ РµС‰Рµ РЅР°Р¶Р°С‚Р° - РІС‹С…РѕРґРёРј
 
 		//PIN_ON(LED_GREEN);
 		switch(regim){
@@ -66,7 +66,7 @@ void get_buttons_state(){
 
 	}else if (PIN_STATE(BUTTON_MENU)) {
 		if(save_pressed_buton(BTN_STATE_MENU, false))
-			{return;}//если кнопка все еще нажата - выходим
+			{return;}//РµСЃР»Рё РєРЅРѕРїРєР° РІСЃРµ РµС‰Рµ РЅР°Р¶Р°С‚Р° - РІС‹С…РѕРґРёРј
 
 		regim = DISPLAY_REGIM_MENU;
 		lcd_set_state(LCD_ENABLE, CURSOR_DISABLE);
@@ -77,7 +77,7 @@ void get_buttons_state(){
 			{return;}
 
 		if(get_TIM_state(TIM6) && regim != DISPLAY_REGIM_NO_WATER){
-			PIN_ON(WATERING_RELAY);					//запуск полива (вкл.реле)
+			PIN_ON(WATERING_RELAY);					//Р·Р°РїСѓСЃРє РїРѕР»РёРІР° (РІРєР».СЂРµР»Рµ)
 			regim = DISPLAY_REGIM_MANUAL_WATERING;
 		}
 
@@ -127,12 +127,12 @@ void get_buttons_state(){
 				if(save_pressed_buton(BTN_STATE_STOP, false))
 					{return;}
 
-				PIN_OFF(WATERING_RELAY);		//стоп полива (откл.реле)
+				PIN_OFF(WATERING_RELAY);		//СЃС‚РѕРї РїРѕР»РёРІР° (РѕС‚РєР».СЂРµР»Рµ)
 				PIN_OFF(NO_WATER_LED);
 				regim = DISPLAY_REGIM_DEFAULT;
 
 				check_humidity_sensor();
-				//если влажность ниже заданной - полив запуститься не зависимо от времени суток!
+				//РµСЃР»Рё РІР»Р°Р¶РЅРѕСЃС‚СЊ РЅРёР¶Рµ Р·Р°РґР°РЅРЅРѕР№ - РїРѕР»РёРІ Р·Р°РїСѓСЃС‚РёС‚СЊСЃСЏ РЅРµ Р·Р°РІРёСЃРёРјРѕ РѕС‚ РІСЂРµРјРµРЅРё СЃСѓС‚РѕРє!
 				check_humidity_value();
 	    		TIM_Cmd(TIM7, ENABLE);
 
@@ -153,7 +153,7 @@ void get_buttons_state(){
 		}
 
 	}else if(regim == DISPLAY_REGIM_MANUAL_WATERING) {
-		PIN_OFF(WATERING_RELAY);		//стоп полива (откл.реле)
+		PIN_OFF(WATERING_RELAY);		//СЃС‚РѕРї РїРѕР»РёРІР° (РѕС‚РєР».СЂРµР»Рµ)
 		regim = DISPLAY_REGIM_DEFAULT;
 
 	}else{
@@ -172,18 +172,18 @@ void get_sensors_state(){
 	}
 
 	if (PIN_STATE(LIGHT_SENSOR)) {
-		//датчик естественного света - выключаем досветку
+		//РґР°С‚С‡РёРє РµСЃС‚РµСЃС‚РІРµРЅРЅРѕРіРѕ СЃРІРµС‚Р° - РІС‹РєР»СЋС‡Р°РµРј РґРѕСЃРІРµС‚РєСѓ
 		PIN_OFF(LIGHT_RELAY);
 	}else{
-		//текущее время в разрешенном диапазоне использования досветки
+		//С‚РµРєСѓС‰РµРµ РІСЂРµРјСЏ РІ СЂР°Р·СЂРµС€РµРЅРЅРѕРј РґРёР°РїР°Р·РѕРЅРµ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ РґРѕСЃРІРµС‚РєРё
 		RTCTIME rtc_clock;
 		RTC_GetTime(&rtc_clock);
 
-		u16 now_time = set_low_n_height(rtc_clock.hour, rtc_clock.min); //текущее время (часы+минуты)
+		u16 now_time = set_low_n_height(rtc_clock.hour, rtc_clock.min); //С‚РµРєСѓС‰РµРµ РІСЂРµРјСЏ (С‡Р°СЃС‹+РјРёРЅСѓС‚С‹)
 
-		//но в заданный промежуток времени
+		//РЅРѕ РІ Р·Р°РґР°РЅРЅС‹Р№ РїСЂРѕРјРµР¶СѓС‚РѕРє РІСЂРµРјРµРЅРё
 		if (BKP_ReadBackupRegister(tMORNING_LIGHT_TIME_BKP) < now_time &&
-			now_time < BKP_ReadBackupRegister(tEVENING_LIGHT_TIME_BKP)) //с утра до вечера
+			now_time < BKP_ReadBackupRegister(tEVENING_LIGHT_TIME_BKP)) //СЃ СѓС‚СЂР° РґРѕ РІРµС‡РµСЂР°
 		{
 			PIN_ON(LIGHT_RELAY);
 		}
@@ -197,7 +197,7 @@ void auto_bright_off(){
 	if(regim == DISPLAY_REGIM_DEFAULT ||
 	   regim == DISPLAY_REGIM_NO_WATER) {
 		if(bright_off_count > TIMEOUT_MENU_EXIT){
-			//отключаем подсветку
+			//РѕС‚РєР»СЋС‡Р°РµРј РїРѕРґСЃРІРµС‚РєСѓ
 			TIM_SetCompare3(TIM3, 0);
 			bright_off_count = 0;
 		}else{
@@ -262,19 +262,19 @@ void move_by_menu_LR(buttons direction){
 		break;
 
 	}
-	delay_ms(500);//задержка для не очень быстрого изменения значений
+	delay_ms(500);//Р·Р°РґРµСЂР¶РєР° РґР»СЏ РЅРµ РѕС‡РµРЅСЊ Р±С‹СЃС‚СЂРѕРіРѕ РёР·РјРµРЅРµРЅРёСЏ Р·РЅР°С‡РµРЅРёР№
 }
 
 u8 save_pressed_buton(buttons btn, u8 clr){
 	timeout_menu_count=0;
 	if(btn_pressed == btn) {
-		//кнопка все еще нажата
-		//защита от повторного вызова
+		//РєРЅРѕРїРєР° РІСЃРµ РµС‰Рµ РЅР°Р¶Р°С‚Р°
+		//Р·Р°С‰РёС‚Р° РѕС‚ РїРѕРІС‚РѕСЂРЅРѕРіРѕ РІС‹Р·РѕРІР°
 		return true;
 	}
 	btn_pressed=btn;
 	if(clr) {lcd_clear();}
-	delay_ms(200);//задержка от дребезга контактов
+	delay_ms(200);//Р·Р°РґРµСЂР¶РєР° РѕС‚ РґСЂРµР±РµР·РіР° РєРѕРЅС‚Р°РєС‚РѕРІ
 	return false;
 }
 

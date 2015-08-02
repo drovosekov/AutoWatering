@@ -1,9 +1,9 @@
-#include "main.h"
+п»ї#include "main.h"
 
 static void init_all(void);
 static void init_default_values(void);
 
-//--глобальные переменные--------
+//--РіР»РѕР±Р°Р»СЊРЅС‹Рµ РїРµСЂРµРјРµРЅРЅС‹Рµ--------
 display_regim regim;
 //-------------------------------
 
@@ -69,7 +69,7 @@ int main(void)
 	return 0;
 }
 
-//инициализируем параметры, при первом включении
+//РёРЅРёС†РёР°Р»РёР·РёСЂСѓРµРј РїР°СЂР°РјРµС‚СЂС‹, РїСЂРё РїРµСЂРІРѕРј РІРєР»СЋС‡РµРЅРёРё
 void init_default_values(void){
 	u16 result = BKP_ReadBackupRegister(WATERING_DURATION_BKP);
 
@@ -77,33 +77,33 @@ void init_default_values(void){
 		/* Allow access to BKP Domain */
 		PWR_BackupAccessCmd(ENABLE);
 		/* Reset Backup Domain */
-		//BKP_DeInit(); //уже вызывается в RTC_Init(); повторный вызов сбивает RTC
+		//BKP_DeInit(); //СѓР¶Рµ РІС‹Р·С‹РІР°РµС‚СЃСЏ РІ RTC_Init(); РїРѕРІС‚РѕСЂРЅС‹Р№ РІС‹Р·РѕРІ СЃР±РёРІР°РµС‚ RTC
 
-		//продолжительность полива (сек)
+		//РїСЂРѕРґРѕР»Р¶РёС‚РµР»СЊРЅРѕСЃС‚СЊ РїРѕР»РёРІР° (СЃРµРє)
 		result=5;
 		BKP_WriteBackupRegister(WATERING_DURATION_BKP, result);
 
-		//интервал опроса датчиков
+		//РёРЅС‚РµСЂРІР°Р» РѕРїСЂРѕСЃР° РґР°С‚С‡РёРєРѕРІ
 		BKP_WriteBackupRegister(CHECK_INTERVAL_BKP, result);
 
-		result = set_low_n_height(10, 60);//мин.влажность (%) и задержка перед поливом (мин)
+		result = set_low_n_height(10, 60);//РјРёРЅ.РІР»Р°Р¶РЅРѕСЃС‚СЊ (%) Рё Р·Р°РґРµСЂР¶РєР° РїРµСЂРµРґ РїРѕР»РёРІРѕРј (РјРёРЅ)
 		BKP_WriteBackupRegister(HUMYDURTY_BKP, result);
 
-		result = set_low_n_height(9, 0);//утро (час, мин)
+		result = set_low_n_height(9, 0);//СѓС‚СЂРѕ (С‡Р°СЃ, РјРёРЅ)
 		BKP_WriteBackupRegister(tMORNING_WATERING_TIME_BKP, result);
-		result = set_low_n_height(18, 0);//вечер (час, мин)
+		result = set_low_n_height(18, 0);//РІРµС‡РµСЂ (С‡Р°СЃ, РјРёРЅ)
 		BKP_WriteBackupRegister(tEVENING_WATERING_TIME_BKP, result);
 
-		result = set_low_n_height(16, 13);//подсветка/контраст
+		result = set_low_n_height(16, 13);//РїРѕРґСЃРІРµС‚РєР°/РєРѕРЅС‚СЂР°СЃС‚
 		BKP_WriteBackupRegister(BRIGHT_CONTRAST_BKP, result);
-		TIM_SetCompare3(TIM3, 10 * 4095); //подсветка
-		TIM_SetCompare4(TIM3, 13 * 4095); //контраст
+		TIM_SetCompare3(TIM3, 10 * 4095); //РїРѕРґСЃРІРµС‚РєР°
+		TIM_SetCompare4(TIM3, 13 * 4095); //РєРѕРЅС‚СЂР°СЃС‚
 
-		result = set_low_n_height(8, 0);//досветка утро
+		result = set_low_n_height(8, 0);//РґРѕСЃРІРµС‚РєР° СѓС‚СЂРѕ
 		BKP_WriteBackupRegister(tMORNING_LIGHT_TIME_BKP, result);
-		result = set_low_n_height(21, 0);//досветка вечер
+		result = set_low_n_height(21, 0);//РґРѕСЃРІРµС‚РєР° РІРµС‡РµСЂ
 		BKP_WriteBackupRegister(tEVENING_LIGHT_TIME_BKP, result);
-		BKP_WriteBackupRegister(ACTIVE_LIGHT_TIME_BKP, true);//досветка активна
+		BKP_WriteBackupRegister(ACTIVE_LIGHT_TIME_BKP, true);//РґРѕСЃРІРµС‚РєР° Р°РєС‚РёРІРЅР°
 
 		/* Adjust time by values entered by the user*/
 		RTCTIME newtime;
@@ -120,8 +120,8 @@ void init_default_values(void){
 
 void init_bright_contrast(void){
 	u16 result = BKP_ReadBackupRegister(BRIGHT_CONTRAST_BKP);
-	TIM_SetCompare3(TIM3, get_height(result) * 4095); //подсветка
-	TIM_SetCompare4(TIM3, get_low(result) * 4095);    //контраст
+	TIM_SetCompare3(TIM3, get_height(result) * 4095); //РїРѕРґСЃРІРµС‚РєР°
+	TIM_SetCompare4(TIM3, get_low(result) * 4095);    //РєРѕРЅС‚СЂР°СЃС‚
 }
 
 void init_all(void){

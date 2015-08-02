@@ -1,4 +1,4 @@
-/*
+п»ї/*
  *	File:	mcu_gpio.c
  *	Date:	07.01.2011
  */
@@ -11,24 +11,24 @@ void mcu_gpio_deinit()
 	/* Enable PWR and BKP clocks */
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR | RCC_APB1Periph_BKP, ENABLE);
 
-	//разрешаем тактирование таймера
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE); //ШИМ для подсветки и контраста экрана
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE); //задержка перед поливом
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM6, ENABLE); //задержка перед отключением ручного режима
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM7, ENABLE); //секундный таймер для инфо экрана
+	//СЂР°Р·СЂРµС€Р°РµРј С‚Р°РєС‚РёСЂРѕРІР°РЅРёРµ С‚Р°Р№РјРµСЂР°
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE); //РЁРРњ РґР»СЏ РїРѕРґСЃРІРµС‚РєРё Рё РєРѕРЅС‚СЂР°СЃС‚Р° СЌРєСЂР°РЅР°
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE); //Р·Р°РґРµСЂР¶РєР° РїРµСЂРµРґ РїРѕР»РёРІРѕРј
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM6, ENABLE); //Р·Р°РґРµСЂР¶РєР° РїРµСЂРµРґ РѕС‚РєР»СЋС‡РµРЅРёРµРј СЂСѓС‡РЅРѕРіРѕ СЂРµР¶РёРјР°
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM7, ENABLE); //СЃРµРєСѓРЅРґРЅС‹Р№ С‚Р°Р№РјРµСЂ РґР»СЏ РёРЅС„Рѕ СЌРєСЂР°РЅР°
 
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA | RCC_APB2Periph_AFIO, ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC | RCC_APB2Periph_AFIO, ENABLE);
 
-	PIN_CONFIGURATION(ADC_CH0); //датчик влажности грунта
-	PIN_CONFIGURATION(ADC_CH1); //уровень напряжения аккумулятора
+	PIN_CONFIGURATION(ADC_CH0); //РґР°С‚С‡РёРє РІР»Р°Р¶РЅРѕСЃС‚Рё РіСЂСѓРЅС‚Р°
+	PIN_CONFIGURATION(ADC_CH1); //СѓСЂРѕРІРµРЅСЊ РЅР°РїСЂСЏР¶РµРЅРёСЏ Р°РєРєСѓРјСѓР»СЏС‚РѕСЂР°
 
 	PIN_CONFIGURATION(DS18B20_1WIRE_PORT);
 
 	PIN_CONFIGURATION(BACKLIGHT_PWM);
 	PIN_CONFIGURATION(CONTRAST_PWM);
-	GPIO_PinRemapConfig(GPIO_FullRemap_TIM3, ENABLE);//альтернативные выходы для таймера (PC8, PC9)
+	GPIO_PinRemapConfig(GPIO_FullRemap_TIM3, ENABLE);//Р°Р»СЊС‚РµСЂРЅР°С‚РёРІРЅС‹Рµ РІС‹С…РѕРґС‹ РґР»СЏ С‚Р°Р№РјРµСЂР° (PC8, PC9)
 
 	PIN_CONFIGURATION(NO_WATER_LED);
 	PIN_CONFIGURATION(WATERING_RELAY);

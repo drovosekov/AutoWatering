@@ -1,4 +1,4 @@
-/*
+п»ї/*
  *	File:	GPIO.h
  *	Date:	07.01.2011
  */
@@ -28,7 +28,7 @@ void mcu_gpio_deinit();
 #define BUTTON_RESET		A, 7, HIGH, INPUT_PULL_DOWN, SPEED_2MHZ
 #define BUTTON_ENTER		A, 8, HIGH, INPUT_PULL_DOWN, SPEED_2MHZ
 #define WATER_LEVER_SENSOR	A, 10, HIGH, INPUT_PULL_DOWN, SPEED_2MHZ
-#define LIGHT_SENSOR		A, 11, HIGH, INPUT_PULL_DOWN, SPEED_2MHZ //сенсор освещенности
+#define LIGHT_SENSOR		A, 11, HIGH, INPUT_PULL_DOWN, SPEED_2MHZ //СЃРµРЅСЃРѕСЂ РѕСЃРІРµС‰РµРЅРЅРѕСЃС‚Рё
 /* end buttons defines */
 
 /* out pins defines */
@@ -37,10 +37,10 @@ void mcu_gpio_deinit();
 #define HUMIDITY_SENSOR		B, 8,  HIGH, GENERAL_OUTPUT_PUSH_PULL,   SPEED_2MHZ //blue led on the discovery board
 #define WATERING_RELAY		B, 9,  HIGH, GENERAL_OUTPUT_PUSH_PULL,   SPEED_2MHZ //green led on the discovery board
 #define NO_WATER_LED		B, 10, HIGH, GENERAL_OUTPUT_PUSH_PULL,   SPEED_2MHZ
-#define LIGHT_RELAY			B, 11, HIGH, GENERAL_OUTPUT_PUSH_PULL,   SPEED_2MHZ //реле фоновой подсветки
+#define LIGHT_RELAY			B, 11, HIGH, GENERAL_OUTPUT_PUSH_PULL,   SPEED_2MHZ //СЂРµР»Рµ С„РѕРЅРѕРІРѕР№ РїРѕРґСЃРІРµС‚РєРё
 
-#define BACKLIGHT_PWM		C, 8,  HIGH, ALTERNATE_OUTPUT_PUSH_PULL, SPEED_10MHZ //альтернативный выход TIM3 CH3
-#define CONTRAST_PWM		C, 9,  HIGH, ALTERNATE_OUTPUT_PUSH_PULL, SPEED_10MHZ //альтернативный выход TIM3 CH4
+#define BACKLIGHT_PWM		C, 8,  HIGH, ALTERNATE_OUTPUT_PUSH_PULL, SPEED_10MHZ //Р°Р»СЊС‚РµСЂРЅР°С‚РёРІРЅС‹Р№ РІС‹С…РѕРґ TIM3 CH3
+#define CONTRAST_PWM		C, 9,  HIGH, ALTERNATE_OUTPUT_PUSH_PULL, SPEED_10MHZ //Р°Р»СЊС‚РµСЂРЅР°С‚РёРІРЅС‹Р№ РІС‹С…РѕРґ TIM3 CH4
 /* end out pins defines */
 
 /* LCD defines */
@@ -69,15 +69,15 @@ void mcu_gpio_deinit();
 #define LCD_ALL_PINS_OFF 		(LCD_ALL_DATA_PINS_OFF | LCD_RS_BC | LCD_EN_BC)
 /* end LCD defines */
 
-#define tMORNING_WATERING_TIME_BKP	BKP_DR2	//утреннее время начала разрешенного интервала полива
-#define tEVENING_WATERING_TIME_BKP	BKP_DR3	//вечернее время окончания разрешенного интервала полива
-#define HUMYDURTY_BKP				BKP_DR4	//минимальный и максимальный уровень влажности для полива
-#define CHECK_INTERVAL_BKP			BKP_DR5	//интервал проверки уровня влажности (минут)
-#define WATERING_DURATION_BKP		BKP_DR6 //интервал задержки перед поливом (минут)
-#define BRIGHT_CONTRAST_BKP			BKP_DR7 //уровни яркости подсветки и контраста
-#define tMORNING_LIGHT_TIME_BKP		BKP_DR8	//утреннее время включения доп.подсветки
-#define tEVENING_LIGHT_TIME_BKP		BKP_DR9	//вечернее время включения доп.подсветки
-#define ACTIVE_LIGHT_TIME_BKP		BKP_DR10//используется досветка
+#define tMORNING_WATERING_TIME_BKP	BKP_DR2	//СѓС‚СЂРµРЅРЅРµРµ РІСЂРµРјСЏ РЅР°С‡Р°Р»Р° СЂР°Р·СЂРµС€РµРЅРЅРѕРіРѕ РёРЅС‚РµСЂРІР°Р»Р° РїРѕР»РёРІР°
+#define tEVENING_WATERING_TIME_BKP	BKP_DR3	//РІРµС‡РµСЂРЅРµРµ РІСЂРµРјСЏ РѕРєРѕРЅС‡Р°РЅРёСЏ СЂР°Р·СЂРµС€РµРЅРЅРѕРіРѕ РёРЅС‚РµСЂРІР°Р»Р° РїРѕР»РёРІР°
+#define HUMYDURTY_BKP				BKP_DR4	//РјРёРЅРёРјР°Р»СЊРЅС‹Р№ Рё РјР°РєСЃРёРјР°Р»СЊРЅС‹Р№ СѓСЂРѕРІРµРЅСЊ РІР»Р°Р¶РЅРѕСЃС‚Рё РґР»СЏ РїРѕР»РёРІР°
+#define CHECK_INTERVAL_BKP			BKP_DR5	//РёРЅС‚РµСЂРІР°Р» РїСЂРѕРІРµСЂРєРё СѓСЂРѕРІРЅСЏ РІР»Р°Р¶РЅРѕСЃС‚Рё (РјРёРЅСѓС‚)
+#define WATERING_DURATION_BKP		BKP_DR6 //РёРЅС‚РµСЂРІР°Р» Р·Р°РґРµСЂР¶РєРё РїРµСЂРµРґ РїРѕР»РёРІРѕРј (РјРёРЅСѓС‚)
+#define BRIGHT_CONTRAST_BKP			BKP_DR7 //СѓСЂРѕРІРЅРё СЏСЂРєРѕСЃС‚Рё РїРѕРґСЃРІРµС‚РєРё Рё РєРѕРЅС‚СЂР°СЃС‚Р°
+#define tMORNING_LIGHT_TIME_BKP		BKP_DR8	//СѓС‚СЂРµРЅРЅРµРµ РІСЂРµРјСЏ РІРєР»СЋС‡РµРЅРёСЏ РґРѕРї.РїРѕРґСЃРІРµС‚РєРё
+#define tEVENING_LIGHT_TIME_BKP		BKP_DR9	//РІРµС‡РµСЂРЅРµРµ РІСЂРµРјСЏ РІРєР»СЋС‡РµРЅРёСЏ РґРѕРї.РїРѕРґСЃРІРµС‚РєРё
+#define ACTIVE_LIGHT_TIME_BKP		BKP_DR10//РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РґРѕСЃРІРµС‚РєР°
 
 ///////////////////////////////////
 

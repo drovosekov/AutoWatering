@@ -1,4 +1,4 @@
-
+﻿
 #ifndef MISC_H_
 #define MISC_H_
 

@@ -1,4 +1,4 @@
-#include "main.h"
+п»ї#include "main.h"
 
 void init_set_bright_contrast();
 void display_set_bright_contrast_draw();
@@ -22,7 +22,7 @@ void init_set_bright_contrast(){
 
 void btn_enter_pressed_in_set_bright_contrast(){
 	if(cursor_y == 0){
-		cursor_y = 1;	//редактируем макс. контарст
+		cursor_y = 1;	//СЂРµРґР°РєС‚РёСЂСѓРµРј РјР°РєСЃ. РєРѕРЅС‚Р°СЂСЃС‚
 	}else{
 		/* Allow access to BKP Domain */
 		PWR_BackupAccessCmd(ENABLE);
@@ -31,16 +31,16 @@ void btn_enter_pressed_in_set_bright_contrast(){
 
 		PWR_BackupAccessCmd(DISABLE);
 
-		regim = DISPLAY_REGIM_MENU;		//выходим в меню
+		regim = DISPLAY_REGIM_MENU;		//РІС‹С…РѕРґРёРј РІ РјРµРЅСЋ
 		lcd_set_state(LCD_ENABLE, CURSOR_DISABLE);
 	}
 }
 
 void btn_move_in_set_bright_contrast(buttons direction){
-	if(cursor_y == 0){//устновка мин. значения
+	if(cursor_y == 0){//СѓСЃС‚РЅРѕРІРєР° РјРёРЅ. Р·РЅР°С‡РµРЅРёСЏ
 		de_in_crement_value(&bright, 0, 16, direction);
 		TIM_SetCompare3(TIM3, bright * 4095);
-	}else{			//установка макс. значения
+	}else{			//СѓСЃС‚Р°РЅРѕРІРєР° РјР°РєСЃ. Р·РЅР°С‡РµРЅРёСЏ
 		de_in_crement_value(&contrast, 10, 16, direction);
 		TIM_SetCompare4(TIM3, contrast * 4095);
 	}
@@ -49,12 +49,12 @@ void btn_move_in_set_bright_contrast(buttons direction){
 
 void display_set_bright_contrast_draw(){
 	if(timeout_menu_count == 0){
-		//верхняя строка на дисплее
+		//РІРµСЂС…РЅСЏСЏ СЃС‚СЂРѕРєР° РЅР° РґРёСЃРїР»РµРµ
 		lcd_set_xy(0, 0);
 		lcd_out(SET_M7_BRIGTH);
 		lcd_write_dec_xx(bright);
 
-		//нижняя строка на дисплее
+		//РЅРёР¶РЅСЏСЏ СЃС‚СЂРѕРєР° РЅР° РґРёСЃРїР»РµРµ
 		lcd_set_xy(0, 1);
 		lcd_out(SET_M7_CONTRAST);
 		lcd_write_dec_xx(contrast);

@@ -1,85 +1,85 @@
-
+п»ї
 #ifndef MAIN_LOCALIZE
 #define MAIN_LOCALIZE
 
 #define LOGO_LINE0		" DROVOSEKOV.NET"
-#define LOGO_LINE1		"Автополиватор v1"
-#define LOGO_SHOW_TIME	500	//время показа логотипа в мс
+#define LOGO_LINE1		"РђРІС‚РѕРїРѕР»РёРІР°С‚РѕСЂ v1"
+#define LOGO_SHOW_TIME	500	//РІСЂРµРјСЏ РїРѕРєР°Р·Р° Р»РѕРіРѕС‚РёРїР° РІ РјСЃ
 
-#define MENU_COUNT		7	//количество пунктов меню
-#define MENU0 			"Уст.время/дата"
-#define MENU1 			"Интервал полива"
-#define MENU2 			"Длит. полива"
-#define MENU3 			"Уровень влажн."
-#define MENU4 			"Интервал опроса"
-#define MENU5 			"Режим полива"
-#define MENU6			"Досветка"
-#define MENU7 			"Подств/контраст"
+#define MENU_COUNT		7	//РєРѕР»РёС‡РµСЃС‚РІРѕ РїСѓРЅРєС‚РѕРІ РјРµРЅСЋ
+#define MENU0 			"РЈСЃС‚.РІСЂРµРјСЏ/РґР°С‚Р°"
+#define MENU1 			"РРЅС‚РµСЂРІР°Р» РїРѕР»РёРІР°"
+#define MENU2 			"Р”Р»РёС‚. РїРѕР»РёРІР°"
+#define MENU3 			"РЈСЂРѕРІРµРЅСЊ РІР»Р°Р¶РЅ."
+#define MENU4 			"РРЅС‚РµСЂРІР°Р» РѕРїСЂРѕСЃР°"
+#define MENU5 			"Р РµР¶РёРј РїРѕР»РёРІР°"
+#define MENU6			"Р”РѕСЃРІРµС‚РєР°"
+#define MENU7 			"РџРѕРґСЃС‚РІ/РєРѕРЅС‚СЂР°СЃС‚"
 
-#define MENU_SEL		0x1D	//знак стрелочки для выбранного пункта меню
-#define MENU_UP			0x12	//стрелочка вверх (для прокрутки в меню)
-#define MENU_DOWN		0x13	//стрелочка вниз (для прокрутки в меню)
+#define MENU_SEL		0x1D	//Р·РЅР°Рє СЃС‚СЂРµР»РѕС‡РєРё РґР»СЏ РІС‹Р±СЂР°РЅРЅРѕРіРѕ РїСѓРЅРєС‚Р° РјРµРЅСЋ
+#define MENU_UP			0x12	//СЃС‚СЂРµР»РѕС‡РєР° РІРІРµСЂС… (РґР»СЏ РїСЂРѕРєСЂСѓС‚РєРё РІ РјРµРЅСЋ)
+#define MENU_DOWN		0x13	//СЃС‚СЂРµР»РѕС‡РєР° РІРЅРёР· (РґР»СЏ РїСЂРѕРєСЂСѓС‚РєРё РІ РјРµРЅСЋ)
 
-#define SET_M0_DT0			"Время:"
-#define SET_M0_DT1			"Дата: "
+#define SET_M0_DT0			"Р’СЂРµРјСЏ:"
+#define SET_M0_DT1			"Р”Р°С‚Р°: "
 #define M0_HOUR_LCD_POS		7
 #define M0_MINUTE_LCD_POS	10
 #define M0_DAY_LCD_POS		7
 #define M0_MONTH_LCD_POS	10
 #define M0_YEAR_LCD_POS		15
 
-#define SET_M1_W0			"Утро: "
-#define SET_M1_W1			"Вечер:"
+#define SET_M1_W0			"РЈС‚СЂРѕ: "
+#define SET_M1_W1			"Р’РµС‡РµСЂ:"
 #define M1_HOUR_LCD_POS		7
 #define M1_MINUTE_LCD_POS	10
 
-#define SET_M2_HUM_MIN		"Мин.влажн: "
-#define SET_M2_DURATION		"Задержка: "
-#define SET_M2_MINUT		"мин "
+#define SET_M2_HUM_MIN		"РњРёРЅ.РІР»Р°Р¶РЅ: "
+#define SET_M2_DURATION		"Р—Р°РґРµСЂР¶РєР°: "
+#define SET_M2_MINUT		"РјРёРЅ "
 #define M2_MIN_H_LCD_POS	12
 #define M2_DURATION_LCD_POS	9
 
-#define SET_M3_DURATION1	"Длительность"
-#define SET_M3_DURATION2	"полива "
-#define SET_M3_SECOND		" сек"
+#define SET_M3_DURATION1	"Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ"
+#define SET_M3_DURATION2	"РїРѕР»РёРІР° "
+#define SET_M3_SECOND		" СЃРµРє"
 #define M3_VAL_LCD_POS		8
 
-#define SET_M4_CHK_INTERVAL	"Опрос дат.влажн."
-#define SET_M4_ONE_PER		"Раз в "
-#define SET_M4_MINUT		" мин"
+#define SET_M4_CHK_INTERVAL	"РћРїСЂРѕСЃ РґР°С‚.РІР»Р°Р¶РЅ."
+#define SET_M4_ONE_PER		"Р Р°Р· РІ "
+#define SET_M4_MINUT		" РјРёРЅ"
 #define M4_VAL_LCD_POS		7
 
-#define SET_M5_REGIM		"Режим: "
-#define SET_M5_REGIM_AUTO	"Авто  "
-#define SET_M5_REGIM_MANUAL	"Ручной"
-#define SET_M5_AUTO_OFF		"Откл.через 3 мин"
+#define SET_M5_REGIM		"Р РµР¶РёРј: "
+#define SET_M5_REGIM_AUTO	"РђРІС‚Рѕ  "
+#define SET_M5_REGIM_MANUAL	"Р СѓС‡РЅРѕР№"
+#define SET_M5_AUTO_OFF		"РћС‚РєР».С‡РµСЂРµР· 3 РјРёРЅ"
 #define SET_M5_SPACE		"                "
 #define M5_VAL_LCD_POS		7
 
-#define SET_M6_LIGHT0		"С:"
-#define SET_M6_LIGHT1		" До:"
-#define SET_M6_LIGHT2		"Да "
-#define SET_M6_LIGHT3		"Нет"
-#define SET_M6_LIGHT4		"Активна: "
+#define SET_M6_LIGHT0		"РЎ:"
+#define SET_M6_LIGHT1		" Р”Рѕ:"
+#define SET_M6_LIGHT2		"Р”Р° "
+#define SET_M6_LIGHT3		"РќРµС‚"
+#define SET_M6_LIGHT4		"РђРєС‚РёРІРЅР°: "
 #define M6_FROM_H_LCD_POS	3
 #define M6_FROM_M_LCD_POS	6
 #define M6_TO_H_LCD_POS		12
 #define M6_TO_M_LCD_POS		15
 #define M6_REGIM_SWCH		9
 
-#define SET_M7_BRIGTH		"Яркость: "
-#define SET_M7_CONTRAST		"Контраст:"
+#define SET_M7_BRIGTH		"РЇСЂРєРѕСЃС‚СЊ: "
+#define SET_M7_CONTRAST		"РљРѕРЅС‚СЂР°СЃС‚:"
 #define M7_VAL_LCD_POS		10
 
 
 #define T_SEP			":"
 #define D_SEP			"-"
 #define FLOAT_POINT		"."
-#define BAT_VOLT		"в"
-#define WATERING_STATE	"ПОЛИВ"
-#define NO_WATER		"Нет ВОДЫ"
+#define BAT_VOLT		"РІ"
+#define WATERING_STATE	"РџРћР›РР’"
+#define NO_WATER		"РќРµС‚ Р’РћР”Р«"
 #define NO_WATER_SPACE	"          "
-#define MANUAL_REGIM	"Ручн."
+#define MANUAL_REGIM	"Р СѓС‡РЅ."
 #define NOT_CHEK_TIME	"--:--"
 
 

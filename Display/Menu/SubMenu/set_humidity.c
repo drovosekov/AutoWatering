@@ -1,4 +1,4 @@
-#include "main.h"
+п»ї#include "main.h"
 
 void init_set_humidity();
 void display_set_humidity_draw();
@@ -23,7 +23,7 @@ void init_set_humidity(){
 
 void btn_enter_pressed_in_set_humidity(){
 	if(cursor_y==0){
-		cursor_y=1;	//редактируем макс. значение
+		cursor_y=1;	//СЂРµРґР°РєС‚РёСЂСѓРµРј РјР°РєСЃ. Р·РЅР°С‡РµРЅРёРµ
 	}else{
 		/* Allow access to BKP Domain */
 		PWR_BackupAccessCmd(ENABLE);
@@ -32,15 +32,15 @@ void btn_enter_pressed_in_set_humidity(){
 
 		PWR_BackupAccessCmd(DISABLE);
 
-		regim = DISPLAY_REGIM_MENU;		//выходим в меню
+		regim = DISPLAY_REGIM_MENU;		//РІС‹С…РѕРґРёРј РІ РјРµРЅСЋ
 		lcd_set_state(LCD_ENABLE, CURSOR_DISABLE);
 	}
 }
 
 void btn_move_in_set_humidity(buttons direction){
-	if(cursor_y==0){//устновка мин. значения
+	if(cursor_y==0){//СѓСЃС‚РЅРѕРІРєР° РјРёРЅ. Р·РЅР°С‡РµРЅРёСЏ
 		de_in_crement_value(&min_H, 10, 70, direction);
-	}else{			//установка макс. значения
+	}else{			//СѓСЃС‚Р°РЅРѕРІРєР° РјР°РєСЃ. Р·РЅР°С‡РµРЅРёСЏ
 		de_in_crement_value(&duration, 30, 250, direction);
 	}
 	display_set_humidity_draw();
@@ -48,13 +48,13 @@ void btn_move_in_set_humidity(buttons direction){
 
 void display_set_humidity_draw(){
 	if(timeout_menu_count == 0){
-		//верхняя строка на дисплее
+		//РІРµСЂС…РЅСЏСЏ СЃС‚СЂРѕРєР° РЅР° РґРёСЃРїР»РµРµ
 		lcd_set_xy(0, 0);
 		lcd_out(SET_M2_HUM_MIN);
 		lcd_write_dec_xx(min_H);
 		lcd_out("%");
 
-		//нижняя строка на дисплее
+		//РЅРёР¶РЅСЏСЏ СЃС‚СЂРѕРєР° РЅР° РґРёСЃРїР»РµРµ
 		lcd_set_xy(0, 1);
 		lcd_out(SET_M2_DURATION);
 		if(duration<100)	{lcd_write_dec_xx(duration);}

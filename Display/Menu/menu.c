@@ -1,18 +1,18 @@
-#include "main.h"
+ï»¿#include "main.h"
 
 static void AddMenu(u8 idx, char *text, u8 regim, void *func);
 static void print_selected_menu(u8 marker, u8 line, char *menu_text);
 
 
-static menu Menu[MENU_COUNT+1];	//ìàññèâ îïèñàíèé ìåíþ
-static u8 scr;	//èñïîëüçóåòñÿ äëÿ îòñ÷åòà ïàóçû äî ïîêàçà ñòðåëî÷åê ïðîêðóòêè (500ìñ)
+static menu Menu[MENU_COUNT+1];	//Ð¼Ð°ÑÑÐ¸Ð² Ð¾Ð¿Ð¸ÑÐ°Ð½Ð¸Ð¹ Ð¼ÐµÐ½ÑŽ
+static u8 scr;	//Ð¸ÑÐ¿Ð¾Ð»ÑŒÐ·ÑƒÐµÑ‚ÑÑ Ð´Ð»Ñ Ð¾Ñ‚ÑÑ‡ÐµÑ‚Ð° Ð¿Ð°ÑƒÐ·Ñ‹ Ð´Ð¾ Ð¿Ð¾ÐºÐ°Ð·Ð° ÑÑ‚Ñ€ÐµÐ»Ð¾Ñ‡ÐµÐº Ð¿Ñ€Ð¾ÐºÑ€ÑƒÑ‚ÐºÐ¸ (500Ð¼Ñ)
 static s8 dir;
-static s8 cursor_menu;	//âûáðàííîå ïîëîæåíèå â ìåíþ
+static s8 cursor_menu;	//Ð²Ñ‹Ð±Ñ€Ð°Ð½Ð½Ð¾Ðµ Ð¿Ð¾Ð»Ð¾Ð¶ÐµÐ½Ð¸Ðµ Ð² Ð¼ÐµÐ½ÑŽ
 
 void init_menu(){
 	cursor_menu = 0;
 
-	if(Menu[0].RegimMenu != 0)//åñëè ìåíþ óæå èíèöèàëèçèðîâàííî - âûõîäèì
+	if(Menu[0].RegimMenu != 0)//ÐµÑÐ»Ð¸ Ð¼ÐµÐ½ÑŽ ÑƒÐ¶Ðµ Ð¸Ð½Ð¸Ñ†Ð¸Ð°Ð»Ð¸Ð·Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð½Ð¾ - Ð²Ñ‹Ñ…Ð¾Ð´Ð¸Ð¼
 		{return;}
 
 	AddMenu(0, MENU0, DISPLAY_REGIM_SET_TIME_DATE, 		&init_set_date_time);
@@ -54,8 +54,8 @@ void display_menu_draw(){
 		print_selected_menu(true,  1, Menu[cursor_menu].Text);
 	}
 
-	//îòðèñîâêà ñòðåëî÷åê ââåðõ/âíèç (ïðîêðóòêà)
-	//ñ çàäåðæêîé 500ìñ
+	//Ð¾Ñ‚Ñ€Ð¸ÑÐ¾Ð²ÐºÐ° ÑÑ‚Ñ€ÐµÐ»Ð¾Ñ‡ÐµÐº Ð²Ð²ÐµÑ€Ñ…/Ð²Ð½Ð¸Ð· (Ð¿Ñ€Ð¾ÐºÑ€ÑƒÑ‚ÐºÐ°)
+	//Ñ Ð·Ð°Ð´ÐµÑ€Ð¶ÐºÐ¾Ð¹ 500Ð¼Ñ
 	if(scr == 10){
 		if(cursor_menu == 0){
 			lcd_set_xy(15, 1);
@@ -87,7 +87,7 @@ void print_selected_menu(u8 marker, u8 line, char *menu_text){
 		lcd_out(" ");
 	}
 	lcd_out(menu_text);
-	//÷òîá íå î÷èùàòü ýêðàí öåëèêîì - çàáèâàåì ëèøíåå ïðîáåëàìè
+	//Ñ‡Ñ‚Ð¾Ð± Ð½Ðµ Ð¾Ñ‡Ð¸Ñ‰Ð°Ñ‚ÑŒ ÑÐºÑ€Ð°Ð½ Ñ†ÐµÐ»Ð¸ÐºÐ¾Ð¼ - Ð·Ð°Ð±Ð¸Ð²Ð°ÐµÐ¼ Ð»Ð¸ÑˆÐ½ÐµÐµ Ð¿Ñ€Ð¾Ð±ÐµÐ»Ð°Ð¼Ð¸
 	lcd_out("         ");
 }
 
@@ -97,7 +97,7 @@ void auto_exit_from_menu(){
 	   regim != DISPLAY_REGIM_MANUAL_WATERING &&
 	   regim != DISPLAY_REGIM_WATERING &&
 	   regim != DISPLAY_REGIM_NO_WATER){
-		//ïðîâåðÿåì èñòå÷åíèå âðåìåíè ïî òàéìàóòó âûõîäà èç ìåíþ
+		//Ð¿Ñ€Ð¾Ð²ÐµÑ€ÑÐµÐ¼ Ð¸ÑÑ‚ÐµÑ‡ÐµÐ½Ð¸Ðµ Ð²Ñ€ÐµÐ¼ÐµÐ½Ð¸ Ð¿Ð¾ Ñ‚Ð°Ð¹Ð¼Ð°ÑƒÑ‚Ñƒ Ð²Ñ‹Ñ…Ð¾Ð´Ð° Ð¸Ð· Ð¼ÐµÐ½ÑŽ
 		if(timeout_menu_count > TIMEOUT_MENU_EXIT) {
 			//save_pressed_buton(BTN_STATE_RESET, true);
 			lcd_clear();
