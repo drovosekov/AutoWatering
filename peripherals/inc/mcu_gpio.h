@@ -7,6 +7,7 @@
 #define MCU_GPIO_H_
 
 void mcu_gpio_deinit();
+buttons get_keyboard_state();
 
 /////should be defined by user /////
 
@@ -34,8 +35,8 @@ void mcu_gpio_deinit();
 #define BUTTON_ENTER		A, 8, HIGH, INPUT_PULL_DOWN, SPEED_2MHZ
 */
 
-#define WATER_LEVER_SENSOR	A, 10, HIGH, INPUT_PULL_DOWN, SPEED_2MHZ
-#define LIGHT_SENSOR		A, 11, HIGH, INPUT_PULL_DOWN, SPEED_2MHZ //сенсор освещенности
+#define WATER_LEVER_SENSOR	A, 5, HIGH, INPUT_PULL_DOWN, SPEED_2MHZ
+#define LIGHT_SENSOR		A, 6, HIGH, INPUT_PULL_DOWN, SPEED_2MHZ //сенсор освещенности
 /* end buttons defines */
 
 /* out pins defines */

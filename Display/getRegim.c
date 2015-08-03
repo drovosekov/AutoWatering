@@ -167,24 +167,6 @@ void get_buttons_state(){
 	}
 }
 
-buttons get_keyboard_state(){
-	u8 buttons_state = 0;
-	if(!PIN_STATE(BUTTONS_PIN_A2)) {buttons_state |= 0b00000001;}
-	if(!PIN_STATE(BUTTONS_PIN_A3)) {buttons_state |= 0b00000010;}
-	if(!PIN_STATE(BUTTONS_PIN_A4)) {buttons_state |= 0b00000100;}
-
-	switch(buttons_state){
-		case 1:		return BTN_STATE_MENU;
-		case 2:		return BTN_STATE_STOP;
-		case 3:		return BTN_STATE_ENTER;
-		case 4:		return BTN_STATE_START;
-		case 5:		return BTN_STATE_LEFT;
-		case 6:		return BTN_STATE_EXIT;
-		case 7:		return BTN_STATE_RIGHT;
-		default:	return BTN_STATE_RESET;
-	}
-}
-
 void get_sensors_state(){
 	if(PIN_STATE(WATER_LEVER_SENSOR)) {
 		if(regim == DISPLAY_REGIM_DEFAULT)

@@ -58,3 +58,24 @@ void mcu_gpio_deinit()
 	PIN_CONFIGURATION(LCD_2X16_DB6);
 	PIN_CONFIGURATION(LCD_2X16_DB7);
 }
+
+
+
+buttons get_keyboard_state(){
+	u8 buttons_state = 0;
+
+	if(!PIN_STATE(BUTTONS_PIN_A2)) {buttons_state |= 0b00000001;}
+	if(!PIN_STATE(BUTTONS_PIN_A3)) {buttons_state |= 0b00000010;}
+	if(!PIN_STATE(BUTTONS_PIN_A4)) {buttons_state |= 0b00000100;}
+
+	switch(buttons_state){
+		case 1:		return BTN_STATE_MENU;
+		case 2:		return BTN_STATE_STOP;
+		case 3:		return BTN_STATE_ENTER;
+		case 4:		return BTN_STATE_START;
+		case 5:		return BTN_STATE_LEFT;
+		case 6:		return BTN_STATE_EXIT;
+		case 7:		return BTN_STATE_RIGHT;
+		default:	return BTN_STATE_RESET;
+	}
+}
