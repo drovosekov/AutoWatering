@@ -1,15 +1,15 @@
-п»ї#include "main.h"
+#include "main.h"
 
 void display_default_line0_draw(u8 dot_s);
 void display_default_line1_draw(u8 dot_s);
 static u8 get_time_state();
 
-//РёРЅС‚РµСЂРІР°Р» РёР·РјРµСЂРµРЅРёР№ Р·Р°СЂСЏРґР° Р°РєРєСѓРјСѓР»СЏС‚РѕСЂР° РІ РјСЃ * 50
-//РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ = 20 - 1 СЂР°Р· РІ 1 СЃРµРє
+//интервал измерений заряда аккумулятора в мс * 50
+//по умолчанию = 20 - 1 раз в 1 сек
 const u8 MAX_PRESCALER=20;
 
-//РёРЅС‚РµСЂРІР°Р» РІРєР»СЋС‡РµРЅРёСЏ Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРѕРіРѕ СЂРµР¶РёРјР° РїРѕР»РёРІР°, РµСЃР»Рё Р±С‹Р» РІС‹Р±СЂР°РЅ СЂСѓС‡РЅРѕР№
-const u16 WATERING_REGIM_MANUAL_INTERVAL=180; //3 РјРёРЅСѓС‚С‹
+//интервал включения автоматического режима полива, если был выбран ручной
+const u16 WATERING_REGIM_MANUAL_INTERVAL=180; //3 минуты
 
 static u8 bat_p;
 static float bat_v;
@@ -20,7 +20,7 @@ static u16 cnt_watering=0;
 static u16 watering_time=0;
 
 void init_display_default(){
-	//Р»РѕРіРѕС‚РёРї-Р·Р°СЃС‚Р°РІРєР° РїСЂРё Р·Р°РіСЂСѓР·РєРµ
+	//логотип-заставка при загрузке
 	lcd_set_xy(0,0);
 	lcd_out(LOGO_LINE0);
 	lcd_set_xy(0,1);
@@ -48,11 +48,11 @@ void display_default_draw(){
 }
 
 void display_default_line0_draw(u8 dot_s){
-	//РІРµСЂС…РЅСЏСЏ СЃС‚СЂРѕРєР° РЅР° РґРёСЃРїР»РµРµ
+	//верхняя строка на дисплее
 	lcd_set_xy(0, 0);
 	lcd_set_xy(0, 0);
 
-	//С‚РµРјРїРµСЂР°С‚СѓСЂР°
+	//температура
 	if(air_temp>0) 		{lcd_out("+");}
 	else if(air_temp<0)	{lcd_out("-");}
 
@@ -65,13 +65,13 @@ void display_default_line0_draw(u8 dot_s){
 	lcd_send_data(SYMB_DEGREE);
 	lcd_out("  ");
 
-	//РІР»Р°Р¶РЅРѕСЃС‚СЊ
+	//влажность
 	lcd_set_xy(6, 0);
-	lcd_send_data(SYMB_DRIB); //РєР°РїРµР»СЊРєР°
+	lcd_send_data(SYMB_DRIB); //капелька
 	lcd_write_dec_xx(gnd_hum);
 	lcd_out("%");
 
-	//С‡Р°СЃС‹
+	//часы
 	lcd_set_xy(11, 0);
 	lcd_write_dec_xx(rtc_clck.hour);
 	lcd_out(dot_s ? T_SEP : " ");
@@ -79,26 +79,26 @@ void display_default_line0_draw(u8 dot_s){
 }
 
 void display_default_line1_draw(u8 dot_s){
-	//РЅРёР¶РЅСЏСЏ СЃС‚СЂРѕРєР° РЅР° РґРёСЃРїР»РµРµ
+	//нижняя строка на дисплее
 	lcd_set_xy(0, 1);
 
-	//РІСЂРµРјСЏ РїРѕР»РёРІР°
+	//время полива
 	if(regim == DISPLAY_REGIM_NO_WATER){
 		lcd_out(dot_s ? NO_WATER : NO_WATER_SPACE);
 	}else if(regim == DISPLAY_REGIM_WATERING ||
 			 regim == DISPLAY_REGIM_MANUAL_WATERING){
-		lcd_send_data(dot_s ? SYMB_AUTO_REG_EMPTY : SYMB_AUTO_REG_FULL); //РїРёРєС‚РѕРіСЂР°РјРєР° Р°РєС‚РёРІРЅРѕРіРѕ РїРѕР»РёРІР°
+		lcd_send_data(dot_s ? SYMB_AUTO_REG_EMPTY : SYMB_AUTO_REG_FULL); //пиктограмка активного полива
 		lcd_out(WATERING_STATE);
 	}else if(get_TIM_state(TIM6)){
-		lcd_send_data(SYMB_MANUAL_REG); //РїРёРєС‚РѕРіСЂР°РјРєР° СЂРµР¶РёРјР° РїРѕР»РёРІР° (СЂСѓС‡РЅ)
+		lcd_send_data(SYMB_MANUAL_REG); //пиктограмка режима полива (ручн)
 		lcd_out(MANUAL_REGIM);
 	}else if(watering_time > 0){
-		if(get_TIM_state(TIM4)){//СЂРµР¶РёРј РѕС‚СЃС‡РµС‚Р° Р·Р°РґРµСЂР¶РєРё РїРµСЂРµРґ РїРѕР»РёРІРѕРј
+		if(get_TIM_state(TIM4)){//режим отсчета задержки перед поливом
 			lcd_send_data(SYMB_AUTO_REG_EMPTY);
-		}else{				//СЂРµР¶РёРј Р·Р°РґСЂР¶РєРё РїРµСЂРµРґ РёР·РјРµСЂРµРЅРёРµРј СѓСЂРѕРІРЅСЏ РІР»Р°Р¶РЅРѕСЃС‚Рё
+		}else{				//режим задржки перед измерением уровня влажности
 			lcd_out(SYMB_CHECK_W_SENSOR);
 		}
-		 //РїРёРєС‚РѕРіСЂР°РјРєР° СЂРµР¶РёРјР° РїРѕР»РёРІР° (Р°РІС‚Рѕ)
+		 //пиктограмка режима полива (авто)
 
 		u8 minutes = watering_time / 60;
 
@@ -117,7 +117,7 @@ void display_default_line1_draw(u8 dot_s){
 
 	lcd_set_xy(10, 1);
 
-	//РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ РЅР°РїСЂСЏР¶РµРЅРёСЏ Р°РєРєСѓРјСѓР»СЏС‚РѕСЂР°
+	//относительное значение напряжения аккумулятора
 	if(bat_p>70){
 		lcd_send_data(SYMB_BAT_100_PERC);
 	}else if(bat_p>40){
@@ -131,45 +131,45 @@ void display_default_line1_draw(u8 dot_s){
 			lcd_out(" ");
 		}
 	}
-	//РЅР°РїСЂСЏР¶РµРЅРёРµ Р°РєРєСѓРјСѓР»СЏС‚РѕСЂР°
-	//Р°Р±СЃРѕР»СЋС‚РЅРѕРµ Р·РЅР°С‡РµРЅРёРµ РІ РІРѕР»СЊС‚Р°С…
+	//напряжение аккумулятора
+	//абсолютное значение в вольтах
 	lcd_write_float(bat_v);
 	lcd_out((char *)BAT_VOLT);
 
 }
 
 
-//РѕР±СЂР°Р±РѕС‚С‡РёРє РїСЂРµСЂС‹РІР°РЅРёСЏ РѕС‚ С‚Р°Р№РјРµСЂР° 7 РѕРґРёРЅ СЂР°Р· РІ СЃРµРєСѓРЅРґСѓ
+//обработчик прерывания от таймера 7 один раз в секунду
 void TIM7_IRQHandler(void)
 {
-	TIM_ClearFlag(TIM7, TIM_SR_UIF);//РЎР±СЂР°СЃС‹РІР°РµРј С„Р»Р°Рі РїСЂРµСЂС‹РІР°РЅРёСЏ
+	TIM_ClearFlag(TIM7, TIM_SR_UIF);//Сбрасываем флаг прерывания
 
 	u16 chk_interval;
 
 	if(regim == DISPLAY_REGIM_WATERING){
-		u8 watering_duration = (u8)BKP_ReadBackupRegister(WATERING_DURATION_BKP);//РїСЂРѕРґРѕР»Р¶РёС‚РµР»СЊРЅРѕСЃС‚СЊ РїРѕР»РёРІР°
+		u8 watering_duration = (u8)BKP_ReadBackupRegister(WATERING_DURATION_BKP);//продолжительность полива
 		if(cnt_watering > watering_duration){
-			//РѕС‚СЃС‡РµС‚ РІСЂРµРјРµРЅРё РґРѕ РѕС‚РєР»СЋС‡РµРЅРёСЏ РїРѕР»РёРІР°
-			PIN_OFF(WATERING_RELAY);	//СЃС‚РѕРї РїРѕР»РёРІР° (РѕС‚РєР».СЂРµР»Рµ)
+			//отсчет времени до отключения полива
+			PIN_OFF(WATERING_RELAY);	//стоп полива (откл.реле)
 			regim = DISPLAY_REGIM_DEFAULT;
 			cnt_watering = 0;
 		}
 	}else{
-		//СЃР±РѕСЂ РІСЃРµС… РґР°РЅРЅС‹С… - 1 СЂР°Р· РІ СЃРµРєСѓРЅРґСѓ
+		//сбор всех данных - 1 раз в секунду
 		bat_v =		get_acu_value();
 		bat_p =		get_acu_perc_value(bat_v);
 		air_temp =	get_temperature_3wire();
 		RTC_GetTime(&rtc_clck);
 
-		if(get_TIM_state(TIM6)){return;}//РІРєР»СЋС‡РµРЅ СЂСѓС‡РЅРѕР№ СЂРµР¶РёРј РїРѕР»РёРІР°
+		if(get_TIM_state(TIM6)){return;}//включен ручной режим полива
 
-		//РїСЂРѕРІРµСЂРєР° СѓСЂРѕРІРЅСЏ РІР»Р°Р¶РЅРѕСЃС‚Рё РѕРґРёРЅ СЂР°Р· РІ Р·Р°РґР°РЅС‹Р№ РїСЂРѕРјРµР¶СѓС‚РѕРє (5РјРёРЅСѓС‚)
+		//проверка уровня влажности один раз в заданый промежуток (5минут)
 		chk_interval = BKP_ReadBackupRegister(CHECK_INTERVAL_BKP);
 		chk_interval *= 60;
 
 		if(cnt_watering == chk_interval){
-			//РѕС‚СЃС‡РµС‚ РІСЂРµРјРµРЅРё РґРѕ РѕС‡РµСЂРµРґРЅРѕР№ РїСЂРѕРІРµСЂРєРё РґР°С‚С‡РёРєР° РІР»Р°Р¶РЅРѕСЃС‚Рё
-			//Рё РїСЂРѕРІРµСЂРєРё СЃРѕСЃС‚РѕСЏРЅРёСЏ РґР»СЏ РїРѕР»РёРІР°
+			//отсчет времени до очередной проверки датчика влажности
+			//и проверки состояния для полива
 			cnt_watering = 0;
 		}
 		if(cnt_watering == 0){
@@ -181,7 +181,7 @@ void TIM7_IRQHandler(void)
 
 			if(get_time_state() == false){
 				if(get_TIM_state(TIM4)) {
-					TIM_Cmd(TIM4, DISABLE);//РґРѕРїСѓСЃС‚РёРјРѕРµ РІСЂРµРјСЏ РїРѕР»РёРІР° РІС‹С€Р»Рѕ - РѕС‚РєР». С‚Р°Р№РјРµСЂ РѕС‚СЃС‡РµС‚Р° РґРѕ РїРѕР»РёРІР°
+					TIM_Cmd(TIM4, DISABLE);//допустимое время полива вышло - откл. таймер отсчета до полива
 					watering_time = 0;
 				}
 			}else{
@@ -200,47 +200,47 @@ static u8 get_time_state(){
 	morning_time = BKP_ReadBackupRegister(tMORNING_WATERING_TIME_BKP);
 	evening_time = BKP_ReadBackupRegister(tEVENING_WATERING_TIME_BKP);
 
-	now_time = set_low_n_height(rtc_clck.hour, rtc_clck.min); //С‚РµРєСѓС‰РµРµ РІСЂРµРјСЏ (С‡Р°СЃС‹+РјРёРЅСѓС‚С‹)
+	now_time = set_low_n_height(rtc_clck.hour, rtc_clck.min); //текущее время (часы+минуты)
 
-	if(air_temp > 30){	//РѕС‡.Р¶Р°СЂРєРѕ - РїРѕР»РёРІР°РµРј РЅРµР·Р°РІРёСЃРёРјРѕ РѕС‚ РІСЂРµРјРµРЅРё СѓС‚СЂРѕ/РІРµС‡РµСЂ
-		//РЅРѕ РІ Р·Р°РґР°РЅРЅС‹Р№ РїСЂРѕРјРµР¶СѓС‚РѕРє РІСЂРµРјРµРЅРё
-		return (morning_time < now_time && now_time < evening_time); //СЃ СѓС‚СЂР° РґРѕ РІРµС‡РµСЂР°
-	}else if(air_temp > 5){		//Р»РµС‚Рѕ
-		return (morning_time < now_time && now_time < 0x0C00); //РґРѕ РїРѕР»СѓРґРЅСЏ
-	}else{						//Р·РёРјР°
-		return (0x0C00 < now_time && now_time < evening_time); //РїРѕСЃР»Рµ РїРѕР»СѓРґРЅСЏ
+	if(air_temp > 30){	//оч.жарко - поливаем независимо от времени утро/вечер
+		//но в заданный промежуток времени
+		return (morning_time < now_time && now_time < evening_time); //с утра до вечера
+	}else if(air_temp > 5){		//лето
+		return (morning_time < now_time && now_time < 0x0C00); //до полудня
+	}else{						//зима
+		return (0x0C00 < now_time && now_time < evening_time); //после полудня
 	}
 }
 
 void check_humidity_value(){
 	u16 hum_params = BKP_ReadBackupRegister(HUMYDURTY_BKP);
 
-	if(gnd_hum < get_height(hum_params)){//РІР»Р°Р¶РЅРѕСЃС‚СЊ РїРѕС‡РІС‹ РјРµРЅСЊС€Рµ Р·Р°РґР°РЅРЅРѕРіРѕ Р·РЅР°С‡РµРЅРёСЏ
-		if(get_TIM_state(TIM4) == false){//РѕС‚СЃС‡РµС‚ РґРѕ РїРѕР»РёРІР° РЅРµ Р±С‹Р» СѓР¶Рµ Р·Р°РїСѓС‰РµРЅ СЂР°РЅРµРµ
-			watering_time = (get_low(hum_params) + 1) * 60;//Р·Р°РґРµСЂР¶РєР° РїРµСЂРµРґ РїРѕР»РёРІРѕРј (РІ СЃРµРєСѓРЅРґР°С…)
-			TIM_Cmd(TIM4, ENABLE);		//Р·Р°РїСѓСЃРєР°РµРј РѕС‚СЃС‡РµС‚
+	if(gnd_hum < get_height(hum_params)){//влажность почвы меньше заданного значения
+		if(get_TIM_state(TIM4) == false){//отсчет до полива не был уже запущен ранее
+			watering_time = (get_low(hum_params) + 1) * 60;//задержка перед поливом (в секундах)
+			TIM_Cmd(TIM4, ENABLE);		//запускаем отсчет
 		}
 	}else{
-		TIM_Cmd(TIM4, DISABLE);//РєС‚Рѕ-С‚Рѕ РїРѕР»РёР» РІСЂСѓС‡РЅСѓСЋ - РѕС‚РєР»СЋС‡Р°РµРј С‚Р°Р№РјРµСЂ РѕС‚СЃС‡РµС‚Р° РґРѕ РїРѕР»РёРІР°
+		TIM_Cmd(TIM4, DISABLE);//кто-то полил вручную - отключаем таймер отсчета до полива
 	}
 }
 
 void check_humidity_sensor(){
-	PIN_ON(HUMIDITY_SENSOR);//РїРѕРґР°РµРј РїРёС‚Р°РЅРёРµ РЅР° РґР°С‚С‡РёРє РІР»Р°Р¶РЅРѕСЃС‚Рё
+	PIN_ON(HUMIDITY_SENSOR);//подаем питание на датчик влажности
 	delay_for(1500);
 	gnd_hum = get_watering_sensor_perc_value();
-	PIN_OFF(HUMIDITY_SENSOR);//РѕС‚РєР»СЋС‡Р°РµРј РїРёС‚Р°РЅРёРµ
+	PIN_OFF(HUMIDITY_SENSOR);//отключаем питание
 }
 
 
-//РѕР±СЂР°Р±РѕС‚С‡РёРє РїСЂРµСЂС‹РІР°РЅРёСЏ РѕС‚ С‚Р°Р№РјРµСЂР° 4 РѕРґРёРЅ СЂР°Р· РІ РјРёРЅСѓС‚Сѓ
-//Р·Р°РґРµСЂР¶РєР° РїРµСЂРµРґ РїРѕР»РёРІРѕРј 60-250РјРёРЅ
+//обработчик прерывания от таймера 4 один раз в минуту
+//задержка перед поливом 60-250мин
 void TIM4_IRQHandler(void)
 {
-	TIM_ClearFlag(TIM4, TIM_SR_UIF);//РЎР±СЂР°СЃС‹РІР°РµРј С„Р»Р°Рі РїСЂРµСЂС‹РІР°РЅРёСЏ
+	TIM_ClearFlag(TIM4, TIM_SR_UIF);//Сбрасываем флаг прерывания
 
 	if(watering_time == 1){
-		TIM_Cmd(TIM4, DISABLE); //РѕС‚РєР»СЋС‡Р°РµРј С‚Р°Р№РјРµСЂ
+		TIM_Cmd(TIM4, DISABLE); //отключаем таймер
 		regim = DISPLAY_REGIM_WATERING;
 		cnt_watering = 0;
 		PIN_ON(WATERING_RELAY);

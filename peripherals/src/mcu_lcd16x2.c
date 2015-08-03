@@ -1,4 +1,4 @@
-п»ї/*
+/*
  * LCD module with russian codepage translator
  * write 19.07.2015
  * 2San
@@ -12,29 +12,29 @@ void set_reset_bit_e();
 
 enum
 {
-	LCD_2X16_RESET = 0x30, // РљРѕРјР°РЅРґР° СЃР±СЂРѕСЃР° Р–РљР”
-	//LCD_2X16_4_BIT_BUS = 0x20, // 4-С… СЂР°Р·СЂСЏРґРЅР°СЏ С€РёРЅР° РґР°РЅРЅС‹С…
-	//LCD_2X16_8_BIT_BUS = 0x30, // 8-Рё СЂР°Р·СЂСЏРґРЅР°СЏ С€РёРЅР° РґР°РЅРЅС‹С…
-	//LCD_2X16_LINE_ONE = 0x20, // РћРґРЅР° СЃС‚СЂРѕРєР°
-	//LCD_2X16_LINES_TWO = 0x28, // Р”РІРµ СЃС‚СЂРѕРєРё
-	//LCD_2X16_FONT_5X8 = 0x20, // РЁСЂРёС„С‚ 5x8 С‚РѕС‡РµРє
-	//LCD_2X16_FONT_5X10 = 0x24, // РЁСЂРёС„С‚ 5x10 С‚РѕС‡РµРє
-	LCD_2X16_DISPLAY_CLEAR = 0x01, // РћС‡РёСЃС‚РєР° РґРёСЃРїР»РµСЏ
-	//LCD_2X16_DISPLAY_HOME = 0x02, // РЈСЃС‚Р°РЅРѕРІРєР° РЅСѓР»РµРІРѕР№ РїРѕР·РёС†РёРё РєСѓСЂСЃРѕСЂР° Рё РґРёСЃРїР»РµСЏ
-	LCD_2X16_DISPLAY_ON = 0x0C, // Р’РєР»СЋС‡РёС‚СЊ РґРёСЃРїР»РµР№. РљРѕРјР±. СЃ CURSOR_ON Рё CURSOR_BLINK
-	//LCD_2X16_DISPLAY_RIGHT = 0x1C, // РЎРґРІРёРЅСѓС‚СЊ РґРёСЃРїР»РµР№ РІРїСЂР°РІРѕ
-	//LCD_2X16_DISPLAY_LEFT = 0x18, // РЎРґРІРёРЅСѓС‚СЊ РґРёСЃРїР»РµР№ РІР»РµРІРѕ
-	//LCD_2X16_DISPLAY_SHIFT = 0x05, // РљРѕРјР±. СЃ SHIFTDIR_RIGHT Рё SHIFTDIR_LEFT
-	//LCD_2X16_CURSOR_ON = 0x0A, // Р’РєР»СЋС‡РёС‚СЊ РєСѓСЂСЃРѕСЂ. РљРѕРјР±. СЃ DISPLAY_ON Рё CURSOR_BLINK
-	//LCD_2X16_CURSOR_BLINK = 0x09, // РљРѕРјР±. СЃ DISPLAY_ON Рё CURSOR_ON
-	//LCD_2X16_CURSOR_RIGHT = 0x14, // РЎРґРІРёРЅСѓС‚СЊ РєСѓСЂСЃРѕСЂ РІРїСЂР°РІРѕ
-	//LCD_2X16_CURSOR_LEFT = 0x10, // РЎРґРІРёРЅСѓС‚СЊ РєСѓСЂСЃРѕСЂ РІР»РµРІРѕ
-	LCD_2X16_SHIFT_RIGHT = 0x06, // РљРѕРјР±. СЃ DISPLAY_SHIFT
-	//LCD_2X16_SHIFT_LEFT = 0x04, // РљРѕРјР±. СЃ DISPLAY_SHIFT
-	//LCD_2X16_CGRAM_ADDR = 0x40, // РЈСЃС‚Р°РЅРѕРІРєР° Р°РґСЂРµСЃР° CGRAM
-	LCD_2X16_DDRAM_ADDR = 0x80, // РЈСЃС‚Р°РЅРѕРІРєР° Р°РґСЂРµСЃР° DDRAM
-	//LCD_2X16_BUSY_FLAG = 0x80, // Р¤Р»Р°Рі Р·Р°РЅСЏС‚РѕСЃС‚Рё
-	LCD_2X16_NEXT_LINE = 0x40, // РђРґСЂРµСЃ РЅРѕРІРѕР№ СЃС‚СЂРѕРєРё
+	LCD_2X16_RESET = 0x30, // Команда сброса ЖКД
+	//LCD_2X16_4_BIT_BUS = 0x20, // 4-х разрядная шина данных
+	//LCD_2X16_8_BIT_BUS = 0x30, // 8-и разрядная шина данных
+	//LCD_2X16_LINE_ONE = 0x20, // Одна строка
+	//LCD_2X16_LINES_TWO = 0x28, // Две строки
+	//LCD_2X16_FONT_5X8 = 0x20, // Шрифт 5x8 точек
+	//LCD_2X16_FONT_5X10 = 0x24, // Шрифт 5x10 точек
+	LCD_2X16_DISPLAY_CLEAR = 0x01, // Очистка дисплея
+	//LCD_2X16_DISPLAY_HOME = 0x02, // Установка нулевой позиции курсора и дисплея
+	LCD_2X16_DISPLAY_ON = 0x0C, // Включить дисплей. Комб. с CURSOR_ON и CURSOR_BLINK
+	//LCD_2X16_DISPLAY_RIGHT = 0x1C, // Сдвинуть дисплей вправо
+	//LCD_2X16_DISPLAY_LEFT = 0x18, // Сдвинуть дисплей влево
+	//LCD_2X16_DISPLAY_SHIFT = 0x05, // Комб. с SHIFTDIR_RIGHT и SHIFTDIR_LEFT
+	//LCD_2X16_CURSOR_ON = 0x0A, // Включить курсор. Комб. с DISPLAY_ON и CURSOR_BLINK
+	//LCD_2X16_CURSOR_BLINK = 0x09, // Комб. с DISPLAY_ON и CURSOR_ON
+	//LCD_2X16_CURSOR_RIGHT = 0x14, // Сдвинуть курсор вправо
+	//LCD_2X16_CURSOR_LEFT = 0x10, // Сдвинуть курсор влево
+	LCD_2X16_SHIFT_RIGHT = 0x06, // Комб. с DISPLAY_SHIFT
+	//LCD_2X16_SHIFT_LEFT = 0x04, // Комб. с DISPLAY_SHIFT
+	//LCD_2X16_CGRAM_ADDR = 0x40, // Установка адреса CGRAM
+	LCD_2X16_DDRAM_ADDR = 0x80, // Установка адреса DDRAM
+	//LCD_2X16_BUSY_FLAG = 0x80, // Флаг занятости
+	LCD_2X16_NEXT_LINE = 0x40, // Адрес новой строки
 	LCD_2X16_COMMAND = 0x01,
 	LCD_2X16_DATA = 0x00,
 } lcd_command;
@@ -42,71 +42,71 @@ enum
 const u8 lcd_decode[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
 
 const u8 russian_codepage[]={
-			0x41, //Рђ
-		0x80, //Р‘
-			0x42, //Р’
-		0x81, //Р“
-		0x82, //Р”
-			0x45, //Р•
-		0x83, //Р–
-		0x92, //Р—
-		0x84, //Р
-		0x85, //Р™
-			0x4B, //Рљ
-		0x86, //Р›
-			0x4D, //Рњ
-			0x48, //Рќ
-			0x4F, //Рћ
-		0x87, //Рџ
-			0x50, //Р 
-			0x43, //РЎ
-			0x54, //Рў
-		0x93, //Р¤
-		0x88, //РЈ
-			0x58, //РҐ
-		0x89, //Р¦
-		0x8A, //Р§
-		0x8B, //РЁ
-		0x8C, //Р©
-		0x8D, //РЄ
-		0x8E, //Р«
-		0x94, //Р¬
-		0x8F, //Р­
-		0x90, //Р®
-		0x91, //РЇ
+			0x41, //А
+		0x80, //Б
+			0x42, //В
+		0x81, //Г
+		0x82, //Д
+			0x45, //Е
+		0x83, //Ж
+		0x92, //З
+		0x84, //И
+		0x85, //Й
+			0x4B, //К
+		0x86, //Л
+			0x4D, //М
+			0x48, //Н
+			0x4F, //О
+		0x87, //П
+			0x50, //Р
+			0x43, //С
+			0x54, //Т
+		0x93, //Ф
+		0x88, //У
+			0x58, //Х
+		0x89, //Ц
+		0x8A, //Ч
+		0x8B, //Ш
+		0x8C, //Щ
+		0x8D, //Ъ
+		0x8E, //Ы
+		0x94, //Ь
+		0x8F, //Э
+		0x90, //Ю
+		0x91, //Я
 
-			0x61, //Р°
-		0xA0, //Р±
-		0xB5, //РІ
-		0xA1, //Рі
-		0xA2, //Рґ
-			0x65, //Рµ
-		0xA3, //Р¶
-		0xB2, //Р·
-		0xA4, //Рё
-		0xA5, //Р№
-		0xB6, //Рє
-		0xA6, //Р»
-		0xB7, //Рј
-		0xB8, //РЅ
-			0x6F, //Рѕ
-		0xA7, //Рї
-			0x70, //СЂ
-			0x63, //СЃ
-		0xB9, //С‚
-		0xB3, //С„
-		0xA8, //Сѓ
-			0x78, //С…
-		0xA9, //С†
-		0xAA, //С‡
-		0xAB, //С€
-		0xAC, //С‰
-		0xAD, //СЉ
-		0xAE, //С‹
-		0xB4, //СЊ
-		0xAF, //СЌ
-		0xB0, //СЋ
-		0xB1  //СЏ
+			0x61, //а
+		0xA0, //б
+		0xB5, //в
+		0xA1, //г
+		0xA2, //д
+			0x65, //е
+		0xA3, //ж
+		0xB2, //з
+		0xA4, //и
+		0xA5, //й
+		0xB6, //к
+		0xA6, //л
+		0xB7, //м
+		0xB8, //н
+			0x6F, //о
+		0xA7, //п
+			0x70, //р
+			0x63, //с
+		0xB9, //т
+		0xB3, //ф
+		0xA8, //у
+			0x78, //х
+		0xA9, //ц
+		0xAA, //ч
+		0xAB, //ш
+		0xAC, //щ
+		0xAD, //ъ
+		0xAE, //ы
+		0xB4, //ь
+		0xAF, //э
+		0xB0, //ю
+		0xB1  //я
 };
 
 void lcd_init(void) {
@@ -128,20 +128,20 @@ void lcd_init(void) {
 }
 
 void lcd_init_user_chars(void){
-	u8 user_char[8]; //РЎСЋРґР° Р±СѓРґРµРј Р·Р°РїРёСЃС‹РІР°С‚СЊ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊСЃРєРёР№ СЃРёРјРІРѕР»
+	u8 user_char[8]; //Сюда будем записывать пользовательский символ
 
-	user_char[0]=0b00000; // СЃРёРјРѕРІР»
-	user_char[1]=0b00100; // РІ РІРёРґРµ
-	user_char[2]=0b01010; // РєР°РїРµР»СЊРєРё
-	user_char[3]=0b10001; // РґР»СЏ
-	user_char[4]=0b10001; // РёРЅРґРёРєР°С†РёРё
-	user_char[5]=0b10001; // РІР»Р°Р¶РЅРѕСЃС‚Рё
+	user_char[0]=0b00000; // симовл
+	user_char[1]=0b00100; // в виде
+	user_char[2]=0b01010; // капельки
+	user_char[3]=0b10001; // для
+	user_char[4]=0b10001; // индикации
+	user_char[5]=0b10001; // влажности
 	user_char[6]=0b01110;
 	user_char[7]=0b00000;
 	lcd_set_user_char(0, user_char);
 
-	user_char[0]=0b11000; // СЃРёРјРѕРІР»
-	user_char[1]=0b11000; // РіСЂР°РґСѓСЃ C
+	user_char[0]=0b11000; // симовл
+	user_char[1]=0b11000; // градус C
 	user_char[2]=0b00000; //
 	user_char[3]=0b00110; //
 	user_char[4]=0b01001; //
@@ -150,9 +150,9 @@ void lcd_init_user_chars(void){
 	user_char[7]=0b00110;
 	lcd_set_user_char(1, user_char);
 
-	user_char[0]=0b00100; // СЃРёРјРѕРІР»
-	user_char[1]=0b10101; // СЂСѓС‡РЅРѕРіРѕ
-	user_char[2]=0b01110; // СЂРµР¶РёРјР°
+	user_char[0]=0b00100; // симовл
+	user_char[1]=0b10101; // ручного
+	user_char[2]=0b01110; // режима
 	user_char[3]=0b00100; //
 	user_char[4]=0b00000; //
 	user_char[5]=0b01110; //
@@ -160,8 +160,8 @@ void lcd_init_user_chars(void){
 	user_char[7]=0b11111;
 	lcd_set_user_char(2, user_char);
 
-	user_char[0]=0b11111; // СЃРёРјРІРѕР»
-	user_char[1]=0b10101; // РїРѕР»РёРІР°
+	user_char[0]=0b11111; // символ
+	user_char[1]=0b10101; // полива
 	user_char[2]=0b00000; //
 	user_char[3]=0b00100; //
 	user_char[4]=0b01110; //
@@ -170,9 +170,9 @@ void lcd_init_user_chars(void){
 	user_char[7]=0b01110;
 	lcd_set_user_char(3, user_char);
 
-	user_char[0]=0b11111; // СЃРёРјРѕРІР»
-	user_char[1]=0b10101; // РїРѕР»РёРІР°
-	user_char[2]=0b00000; // Р±РµР· Р·Р°Р»РёРІРєРё
+	user_char[0]=0b11111; // симовл
+	user_char[1]=0b10101; // полива
+	user_char[2]=0b00000; // без заливки
 	user_char[3]=0b00100; //
 	user_char[4]=0b01110; //
 	user_char[5]=0b10001; //
@@ -181,33 +181,33 @@ void lcd_init_user_chars(void){
 	lcd_set_user_char(4, user_char);
 
 
-	user_char[0]=0b00000; // СЃРёРјРѕРІР»
-	user_char[1]=0b01110; // РїСѓСЃС‚РѕР№ Р±Р°С‚Р°СЂРµР№РєРё
-	user_char[2]=0b10001; // С‡Р°СЃРѕРІ
-	user_char[3]=0b10001; // РґР»СЏ
-	user_char[4]=0b10001; // РёРЅРґРёРєР°С†РёРё
-	user_char[5]=0b10001; // СѓСЂРѕРІРЅСЏ РµРµ
-	user_char[6]=0b10001; // Р·Р°СЂСЏРґР° 0%
+	user_char[0]=0b00000; // симовл
+	user_char[1]=0b01110; // пустой батарейки
+	user_char[2]=0b10001; // часов
+	user_char[3]=0b10001; // для
+	user_char[4]=0b10001; // индикации
+	user_char[5]=0b10001; // уровня ее
+	user_char[6]=0b10001; // заряда 0%
 	user_char[7]=0b11111;
 	lcd_set_user_char(5, user_char);
 
-	user_char[0]=0b00000; // СЃРёРјРѕРІР»
-	user_char[1]=0b01110; // Р±Р°С‚Р°СЂРµР№РєРё
-	user_char[2]=0b10001; // С‡Р°СЃРѕРІ
-	user_char[3]=0b10001; // РґР»СЏ
-	user_char[4]=0b10001; // РёРЅРґРёРєР°С†РёРё
-	user_char[5]=0b11111; // СѓСЂРѕРІРЅСЏ РµРµ
-	user_char[6]=0b11111; // Р·Р°СЂСЏРґР° 50%
+	user_char[0]=0b00000; // симовл
+	user_char[1]=0b01110; // батарейки
+	user_char[2]=0b10001; // часов
+	user_char[3]=0b10001; // для
+	user_char[4]=0b10001; // индикации
+	user_char[5]=0b11111; // уровня ее
+	user_char[6]=0b11111; // заряда 50%
 	user_char[7]=0b11111;
 	lcd_set_user_char(6, user_char);
 
-	user_char[0]=0b00000; // СЃРёРјРѕРІР»
-	user_char[1]=0b01110; // Р±Р°С‚Р°СЂРµР№РєРё
-	user_char[2]=0b11111; // С‡Р°СЃРѕРІ
-	user_char[3]=0b11111; // РґР»СЏ
-	user_char[4]=0b11111; // РёРЅРґРёРєР°С†РёРё
-	user_char[5]=0b11111; // СѓСЂРѕРІРЅСЏ РµРµ
-	user_char[6]=0b11111; // Р·Р°СЂСЏРґР° 100%
+	user_char[0]=0b00000; // симовл
+	user_char[1]=0b01110; // батарейки
+	user_char[2]=0b11111; // часов
+	user_char[3]=0b11111; // для
+	user_char[4]=0b11111; // индикации
+	user_char[5]=0b11111; // уровня ее
+	user_char[6]=0b11111; // заряда 100%
 	user_char[7]=0b11111;
 	lcd_set_user_char(7, user_char);
 
@@ -246,19 +246,19 @@ void lcd_write_dec_x(uint8_t dig) {
 	lcd_send_data(lcd_decode[dig]);
 }
 
-void lcd_write_float(float dig){//dig - РґСЂРѕР±РЅРѕРµ С‡РёСЃР»Рѕ СЃ С‚РѕС‡РЅРѕСЃС‚СЊСЋ РґРѕ РґРµСЃСЏС‚С‹С… РґРѕР»РµР№
-	u8 dig_int = dig; //Р·РґРµСЃСЊ Р±СѓРґРµС‚ С†РµР»Р°СЏ С‡Р°СЃС‚СЊ
+void lcd_write_float(float dig){//dig - дробное число с точностью до десятых долей
+	u8 dig_int = dig; //здесь будет целая часть
 	lcd_write_dec_xx(dig_int);
 
 	lcd_out(FLOAT_POINT);
 
-	u8 dig_float = (dig - dig_int) * 10; //Р·РґРµСЃСЊ Р±СѓРґРµС‚ РґСЂРѕР±РЅР°СЏ С‡Р°СЃС‚СЊ
+	u8 dig_float = (dig - dig_int) * 10; //здесь будет дробная часть
 	lcd_write_dec_x(dig_float);
 }
 
-/*РџРѕР»РѕР¶РµРЅСЏ РєСѓСЂСЃРѕСЂР°
- * y = 0 - РїРµСЂРІР°СЏ СЃС‚СЂРѕРєР°
- * y = 1 - РІС‚РѕСЂР°СЏ СЃС‚СЂРѕРєР°
+/*Положеня курсора
+ * y = 0 - первая строка
+ * y = 1 - вторая строка
  * x = 0...15*/
 void lcd_set_xy(uint8_t x, uint8_t y)  {
 	uint8_t position = LCD_2X16_DDRAM_ADDR;
@@ -270,7 +270,7 @@ void lcd_set_xy(uint8_t x, uint8_t y)  {
 
 void lcd_out(char *STRING)
 {
-	unsigned char c; //СЃРёРјРІРѕР» РёР· СЃС‚СЂРѕРєРё
+	unsigned char c; //символ из строки
 	while ((c=*STRING++)){
 		if(c>=192){
 			lcd_send_data(russian_codepage[c-192]);
@@ -321,7 +321,7 @@ void lcd_send(uint8_t byte, dat_or_comm dc)  {
 
 	if (dc) {PIN_ON(LCD_2X16_RS);}
 
-	//РІС‹СЃС‚Р°РІР»СЏРµРј РїРёРЅС‹ РґР»СЏ РїРµСЂРµРґР°С‡Рё РІРµСЂС…РЅРµР№ РїРѕР»РѕРІРёРЅС‹ Р±Р°Р№С‚Р°
+	//выставляем пины для передачи верхней половины байта
 	if (byte & 0x10) {PIN_ON(LCD_2X16_DB4);}
 	if (byte & 0x20) {PIN_ON(LCD_2X16_DB5);}
 	if (byte & 0x40) {PIN_ON(LCD_2X16_DB6);}
@@ -331,7 +331,7 @@ void lcd_send(uint8_t byte, dat_or_comm dc)  {
 
 	LCD_PORT->BSRR = LCD_ALL_DATA_PINS_OFF;
 
-	//РІС‹СЃС‚Р°РІР»СЏРµРј РїРёРЅС‹ РґР»СЏ РїРµСЂРµРґР°С‡Рё РЅРёР¶РЅРµР№ РїРѕР»РѕРІРёРЅС‹ Р±Р°Р№С‚Р°
+	//выставляем пины для передачи нижней половины байта
 	if (byte & 0x01) {PIN_ON(LCD_2X16_DB4);}
 	if (byte & 0x02) {PIN_ON(LCD_2X16_DB5);}
 	if (byte & 0x04) {PIN_ON(LCD_2X16_DB6);}
@@ -341,7 +341,7 @@ void lcd_send(uint8_t byte, dat_or_comm dc)  {
 }
 
 
-//РґРµСЂРіР°РµРј РЅРѕРіРѕР№ РґР»СЏ Р·Р°РїРёСЃРё Р·РЅР°С‡РµРЅРёР№
+//дергаем ногой для записи значений
 void set_reset_bit_e(){
 	PIN_ON(LCD_2X16_E);
 	delay_ms(5);

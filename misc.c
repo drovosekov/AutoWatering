@@ -1,4 +1,4 @@
-п»ї#include "main.h"
+#include "main.h"
 
 //Timer Functions
 static u16 delay = 0;
@@ -31,28 +31,28 @@ u16 absolute(s16 value) {
 }
 
 /*
-//РїСЂРѕРІРµСЂРєР° СЃРѕСЃС‚РѕСЏРЅРёСЏ Р±РёС‚Р° - СѓСЃС‚Р°РЅРѕРІР»РµРЅ РёР»Рё РЅРµС‚
+//проверка состояния бита - установлен или нет
 u8 CheckBit(int dwNumber, u16 iBit)
 {
     return (dwNumber & iBit);
 }*/
 
-//СЃРѕСЃС‚РѕСЏРЅРёРµ С‚Р°Р№РјРµСЂР° - Р·Р°РїСѓС‰РµРЅ РёР»Рё РЅРµС‚
+//состояние таймера - запущен или нет
 u8 get_TIM_state(TIM_TypeDef* TIMx){
 	return TIMx->CR1 & TIM_CR1_CEN;
 }
 
-//РјР»Р°РґС€РёР№ РїРѕР»СѓР±Р°Р№С‚
+//младший полубайт
 u8 get_low(u16 value){
 	return value & 0xFF;
 }
 
-//СЃС‚Р°СЂС€РёР№ РїРѕР»СѓР±Р°Р№С‚
+//старший полубайт
 u8 get_height(u16 value){
 	return value >> 8;
 }
 
-//СЃРєР»РµРµРёРІР°РµРј РґРІР° Р±Р°Р№С‚Р°
+//склееиваем два байта
 u16 set_low_n_height(u8 height, u8 low){
 	 return (height << 8) | low;
 }

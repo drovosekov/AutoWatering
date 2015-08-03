@@ -1,4 +1,4 @@
-п»ї#include "main.h"
+#include "main.h"
 
 void init_set_chk_interval();
 void display_set_chk_interval_draw();
@@ -27,7 +27,7 @@ void btn_enter_pressed_in_set_chk_interval(){
 
 	PWR_BackupAccessCmd(DISABLE);
 
-	regim = DISPLAY_REGIM_MENU;		//РІС‹С…РѕРґРёРј РІ РјРµРЅСЋ
+	regim = DISPLAY_REGIM_MENU;		//выходим в меню
 	lcd_set_state(LCD_ENABLE, CURSOR_DISABLE);
 }
 
@@ -38,11 +38,11 @@ void btn_move_in_set_chk_interval(buttons direction){
 
 void display_set_chk_interval_draw(){
 	if(timeout_menu_count == 0){
-		//РІРµСЂС…РЅСЏСЏ СЃС‚СЂРѕРєР° РЅР° РґРёСЃРїР»РµРµ
+		//верхняя строка на дисплее
 		lcd_set_xy(0, 0);
 		lcd_out(SET_M4_CHK_INTERVAL);
 
-		//РЅРёР¶РЅСЏСЏ СЃС‚СЂРѕРєР° РЅР° РґРёСЃРїР»РµРµ
+		//нижняя строка на дисплее
 		lcd_set_xy(0, 1);
 		lcd_out(SET_M4_ONE_PER);
 		lcd_write_dec_xx(chk_int);

@@ -1,4 +1,4 @@
-﻿#include "main.h"
+#include "main.h"
 
 void de_in_crement_value(u8 *val, u8 min_val, u8 max_val, buttons direction);
 

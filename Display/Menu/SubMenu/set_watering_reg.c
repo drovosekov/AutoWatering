@@ -1,4 +1,4 @@
-п»ї#include "main.h"
+#include "main.h"
 
 void init_set_watering_reg();
 void display_set_watering_reg_draw();
@@ -20,11 +20,11 @@ void init_set_watering_reg(){
 }
 
 void btn_enter_pressed_in_set_watering_reg(){
-	//Р·Р°РїСѓСЃРєР°РµРј С‚Р°Р№РјРµСЂ РѕС‚РєР»СЋС‡РµРЅРёСЏ СЂСѓС‡РЅРѕРіРѕ СЂРµР¶РёРјР°
+	//запускаем таймер отключения ручного режима
 	TIM_Cmd(TIM6, watering_reg);
-	TIM_ClearFlag(TIM6, TIM_SR_UIF);//РЎР±СЂР°СЃС‹РІР°РµРј С„Р»Р°Рі РїСЂРµСЂС‹РІР°РЅРёСЏ
+	TIM_ClearFlag(TIM6, TIM_SR_UIF);//Сбрасываем флаг прерывания
 
-	regim = DISPLAY_REGIM_MENU;		//РІС‹С…РѕРґРёРј РІ РјРµРЅСЋ
+	regim = DISPLAY_REGIM_MENU;		//выходим в меню
 	lcd_set_state(LCD_ENABLE, CURSOR_DISABLE);
 }
 
@@ -36,12 +36,12 @@ void btn_move_in_set_watering_reg(buttons direction){
 
 void display_set_watering_reg_draw(){
 	if(timeout_menu_count == 0){
-		//РІРµСЂС…РЅСЏСЏ СЃС‚СЂРѕРєР° РЅР° РґРёСЃРїР»РµРµ
+		//верхняя строка на дисплее
 		lcd_set_xy(0, 0);
 		lcd_out(SET_M5_REGIM);
 		lcd_out(watering_reg ? SET_M5_REGIM_MANUAL : SET_M5_REGIM_AUTO);
 
-		//РЅРёР¶РЅСЏСЏ СЃС‚СЂРѕРєР° РЅР° РґРёСЃРїР»РµРµ
+		//нижняя строка на дисплее
 		lcd_set_xy(0, 1);
 		lcd_out(watering_reg ? SET_M5_AUTO_OFF : SET_M5_SPACE);
 

@@ -1,4 +1,4 @@
-п»ї#include "main.h"
+#include "main.h"
 
 void init_set_date_time();
 void display_set_date_time_draw();
@@ -21,31 +21,31 @@ void init_set_date_time(){
 void btn_enter_pressed_in_set_date_time(){
 	if(cursor_y == 0){
 		if(cursor_x == M0_MINUTE_LCD_POS){
-			cursor_x = M0_DAY_LCD_POS;	//СЂРµРґР°РєС‚РёСЂСѓРµРј РґРµРЅСЊ
-			cursor_y = 1;					//СЂРµРґР°РєС‚РёСЂСѓРµРј РґР°С‚Сѓ
+			cursor_x = M0_DAY_LCD_POS;	//редактируем день
+			cursor_y = 1;					//редактируем дату
 		}else{
-			cursor_x = M0_MINUTE_LCD_POS;	//СЂРµРґР°РєС‚РёСЂСѓРµРј РјРёРЅСѓС‚С‹
+			cursor_x = M0_MINUTE_LCD_POS;	//редактируем минуты
 		}
 	}else if(cursor_x == M0_DAY_LCD_POS){
-		cursor_x = M0_MONTH_LCD_POS;		//СЂРµРґР°РєС‚РёСЂСѓРµРј РјРµСЃСЏС†
+		cursor_x = M0_MONTH_LCD_POS;		//редактируем месяц
 	}else if(cursor_x == M0_MONTH_LCD_POS){
-		cursor_x = M0_YEAR_LCD_POS;		//СЂРµРґР°РєС‚РёСЂСѓРµРј РіРѕРґ
+		cursor_x = M0_YEAR_LCD_POS;		//редактируем год
 	}else{
-		RTC_SetTime(&rtc_clck);			//Р·Р°РїРѕРјРёРЅР°РµРј РёР·РјРµРЅРµРЅРЅРѕРµ РІСЂРµРјСЏ Рё РґР°С‚Сѓ
+		RTC_SetTime(&rtc_clck);			//запоминаем измененное время и дату
 
-		regim = DISPLAY_REGIM_MENU;		//РІС‹С…РѕРґРёРј РІ РјРµРЅСЋ
+		regim = DISPLAY_REGIM_MENU;		//выходим в меню
 		lcd_set_state(LCD_ENABLE, CURSOR_DISABLE);
 	}
 }
 
 void btn_move_in_set_date_time(buttons direction){
-	if(cursor_y == 0){//СѓСЃС‚РЅРѕРІРєР° С‡Р°СЃРѕРІ Рё РјРёРЅСѓС‚
+	if(cursor_y == 0){//устновка часов и минут
 		if(cursor_x == M0_HOUR_LCD_POS){
 			de_in_crement_value(&(rtc_clck.hour), 0, 23, direction);
 		}else if(cursor_x == M0_MINUTE_LCD_POS){
 			de_in_crement_value(&(rtc_clck.min), 0, 59, direction);
 		}
-	}else{			//СѓСЃС‚Р°РЅРѕРІРєР° РґР°С‚С‹
+	}else{			//установка даты
 		if(cursor_x == M0_DAY_LCD_POS){
 			de_in_crement_value(&(rtc_clck.mday), 1, RTC_DaysInMonth(rtc_clck.year, rtc_clck.month), direction);
 		}else if(cursor_x == M0_MONTH_LCD_POS){
@@ -59,14 +59,14 @@ void btn_move_in_set_date_time(buttons direction){
 
 void display_set_date_time_draw(){
 	if(timeout_menu_count == 0){
-		//РІРµСЂС…РЅСЏСЏ СЃС‚СЂРѕРєР° РЅР° РґРёСЃРїР»РµРµ
+		//верхняя строка на дисплее
 		lcd_set_xy(0, 0);
 		lcd_out(SET_M0_DT0);
 		lcd_write_dec_xx(rtc_clck.hour);
 		lcd_out(T_SEP);
 		lcd_write_dec_xx(rtc_clck.min);
 
-		//РЅРёР¶РЅСЏСЏ СЃС‚СЂРѕРєР° РЅР° РґРёСЃРїР»РµРµ
+		//нижняя строка на дисплее
 		lcd_set_xy(0, 1);
 		lcd_out(SET_M0_DT1);
 		lcd_write_dec_xx(rtc_clck.mday);

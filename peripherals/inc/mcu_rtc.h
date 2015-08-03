@@ -1,4 +1,4 @@
-п»ї/*
+/*
  *	File:	mcu_rtc.h
  *	Date:	09.01.2011
  */
@@ -25,29 +25,29 @@ typedef struct {
 void RTC_Init(void);
 void RTC_Configuration(void);
 
-//РїРѕР»СѓС‡РёС‚СЊ РІСЂРµРјСЏ РёР· RTC (С‚РµРєСѓС‰РµРµ РёР»Рё РІ РїРѕР»РЅРѕС‡СЊ)
+//получить время из RTC (текущее или в полночь)
 void RTC_GetTime(RTCTIME *rtc);
 
-//СѓСЃС‚Р°РЅРѕРІРёС‚СЊ РІСЂРµРјСЏ РІ RTC
+//установить время в RTC
 void RTC_SetTime(const RTCTIME *rtc);
 
-//РІРѕР·РІСЂР°С‰Р°РµС‚ РєРѕР»РёС‡РµСЃС‚РІРѕ РґРЅРµР№ РІ РјРµСЃСЏС†Рµ
+//возвращает количество дней в месяце
 u8 RTC_DaysInMonth(u16 year, u8 month);
 
-//РїСЂРµРѕР±СЂР°Р·РѕРІР°С‚СЊ РІСЂРµРјСЏ РёР· RTC РІ ticks
+//преобразовать время из RTC в ticks
 u32 RTC_GetTicksFromTime(const RTCTIME *rtc);
 
 #if 0
-//РїРѕР»СѓС‡РёС‚СЊ РІСЂРµРјСЏ РІ С‚РёРєР°С… (С‚РµРєСѓС‰РµРµ РёР»Рё РІ РїРѕР»РЅРѕС‡СЊ)
+//получить время в тиках (текущее или в полночь)
 uint32_t RTC_GetTicksFromRTC(uint8_t timetype);
 
-//СЃС‚СЂРѕРєСѓ РІРёРґР° "12:10" "hh:mm" РІ С‚Р°Р№РјС‚РёРєРё
+//строку вида "12:10" "hh:mm" в таймтики
 uint32_t RTC_ClockHMtoTicks(char *s);
 
-//СЃС‚СЂРѕРєСѓ РІРёРґР° "02:10" "mm:ss" РІ С‚Р°Р№РјС‚РёРєРё
+//строку вида "02:10" "mm:ss" в таймтики
 uint32_t RTC_ClockMStoTicks(char *s);
 
-//РєРѕРЅРІРµСЂС‚РёСЂСѓРµС‚ ticks РІ СЃС‚СЂСѓРєС‚СѓСЂСѓ RTCTIME
+//конвертирует ticks в структуру RTCTIME
 void RTC_TicksToRTC (uint32_t ticks, RTCTIME *rtc);
 #endif
 

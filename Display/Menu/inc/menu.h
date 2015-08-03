@@ -1,46 +1,46 @@
-п»ї
+
 #ifndef AW_MENU
 #define AW_MENU
 
 
 #include "main.h"
 
-#define TIMEOUT_MENU_EXIT	200//С‚Р°Р№РјР°Р№С‚ РІС‹С…РѕРґР° РёР· РјРµРЅСЋ - 10СЃРµРє (200*50ms Р·Р°РґРµСЂР¶РєРё С†РёРєР»Р°)
+#define TIMEOUT_MENU_EXIT	200//таймайт выхода из меню - 10сек (200*50ms задержки цикла)
 
 
 typedef enum {
-	DISPLAY_REGIM_DEFAULT = 0,				//РЅР°С‡Р°Р»СЊРЅС‹Р№ СЂРµР¶РёРј - РґРµС„РѕР»С‚РЅС‹Р№ СЌРєСЂР°РЅ
-	DISPLAY_REGIM_MENU,						//РјРµРЅСЋ РЅР°СЃС‚СЂРѕРµРє
-	DISPLAY_REGIM_SET_TIME_DATE,			//РЅР°СЃС‚СЂРѕР№РєР° РґР°С‚С‹, РІСЂРµРјРµРЅРё
-	DISPLAY_REGIM_SET_WATERING_TIME,		//РЅР°СЃС‚СЂРѕР№РєР° РёРЅС‚РµСЂРІР°Р»Р° РІСЂРµРјРµРЅРё РїРѕР»РёРІР°
-	DISPLAY_REGIM_SET_HUMIDITY,				//РЅР°СЃС‚СЂРѕР№РєР° СѓСЂРѕРІРЅРµР№ РІР»Р°Р¶РЅРѕСЃС‚Рё (РјРёРЅ Рё РјР°РєСЃ)
-	DISPLAY_REGIM_SET_CHK_INTERVAL,			//РёРЅС‚РµСЂРІР°Р» РѕРїСЂРѕСЃР° РґР°С‚С‡РёРєР° РІР»Р°Р¶РЅРѕСЃС‚Рё (РјРёРЅСѓС‚)
-	DISPLAY_REGIM_SET_WAERING_DUR,			//РїСЂРѕРґРѕР»Р¶РёС‚РµР»СЊРЅРѕСЃС‚СЊ РїРѕР»РёРІР° (СЃРµРєСѓРЅРґ)
-	DISPLAY_REGIM_SET_WATERING_REG,			//РІС‹Р±РѕСЂ СЂРµР¶РёРјР° СЂР°Р±РѕС‚С‹ РїРѕР»РёРІР° (Р°РІС‚РѕРјР°С‚. РёР»Рё СЂСѓС‡РЅРѕР№ РїРѕР»РёРІ)
-	DISPLAY_REGIM_SET_BRIGHT_CONTR,			//СЂРµР¶РёРј РЅР°СЃС‚СЂРѕР№РєРё РєРѕРЅС‚СЂР°СЃС‚Р° Рё СЏСЂРєРѕСЃС‚Рё РїРѕРґСЃС‚РІРµС‚РєРё
-	DISPLAY_REGIM_SET_LIGHT,				//СЂРµР¶РёРј СЂР°Р±РѕС‚С‹ РїРѕРґСЃРІРµС‚РєРё (РІСЂРµРјСЏ СЃРѕ СЃРєРѕР»СЊРєРё-РґРѕ СЃРєРѕР»СЊРєРё Рё РІРєР»/РІС‹РєР»)
-	DISPLAY_REGIM_WATERING,					//РїСЂРѕС†РµСЃСЃ СЂРµР¶РёРјР° РїРѕР»РёРІР°
-	DISPLAY_REGIM_MANUAL_WATERING,			//СЂРµР¶РёРј СЂСѓС‡РЅРѕРіРѕ РїРѕР»РёРІР°
-	DISPLAY_REGIM_NO_WATER					//РєРѕРіРґР° РЅРµС‚ РІРѕРґС‹ РІ СЂРµР·РµСЂРІСѓР°СЂРµ
+	DISPLAY_REGIM_DEFAULT = 0,				//начальный режим - дефолтный экран
+	DISPLAY_REGIM_MENU,						//меню настроек
+	DISPLAY_REGIM_SET_TIME_DATE,			//настройка даты, времени
+	DISPLAY_REGIM_SET_WATERING_TIME,		//настройка интервала времени полива
+	DISPLAY_REGIM_SET_HUMIDITY,				//настройка уровней влажности (мин и макс)
+	DISPLAY_REGIM_SET_CHK_INTERVAL,			//интервал опроса датчика влажности (минут)
+	DISPLAY_REGIM_SET_WAERING_DUR,			//продолжительность полива (секунд)
+	DISPLAY_REGIM_SET_WATERING_REG,			//выбор режима работы полива (автомат. или ручной полив)
+	DISPLAY_REGIM_SET_BRIGHT_CONTR,			//режим настройки контраста и яркости подстветки
+	DISPLAY_REGIM_SET_LIGHT,				//режим работы подсветки (время со скольки-до скольки и вкл/выкл)
+	DISPLAY_REGIM_WATERING,					//процесс режима полива
+	DISPLAY_REGIM_MANUAL_WATERING,			//режим ручного полива
+	DISPLAY_REGIM_NO_WATER					//когда нет воды в резервуаре
 } display_regim;
 
 
 typedef enum {
-	BTN_STATE_RESET	= 0,	//РЅРё РѕРґРЅР° РєРЅРѕРїРєР° РЅРµ РЅР°Р¶Р°С‚Р°
-	BTN_STATE_LEFT	= -1,	//РІР»РµРІРѕ
-	BTN_STATE_RIGHT	= 1,	//РІРїСЂР°РІРѕ
-	BTN_STATE_MENU	,	//РІС…РѕРґ РІ РјРµРЅСЋ
-	BTN_STATE_START	,	//Р·Р°РїСѓСЃРє РїРѕР»РёРІР° РІСЂСѓС‡РЅСѓСЋ
-	BTN_STATE_EXIT	,	//РІС‹С…РѕРґ РёР· РјРµРЅСЋ
-	BTN_STATE_ENTER	,	//РІРІРѕРґ
-	BTN_STATE_STOP		//СЃР±СЂРѕСЃ (СЃС‚РѕРї)
+	BTN_STATE_RESET	= 0,	//ни одна кнопка не нажата
+	BTN_STATE_LEFT	= -1,	//влево
+	BTN_STATE_RIGHT	= 1,	//вправо
+	BTN_STATE_MENU	,	//вход в меню
+	BTN_STATE_START	,	//запуск полива вручную
+	BTN_STATE_EXIT	,	//выход из меню
+	BTN_STATE_ENTER	,	//ввод
+	BTN_STATE_STOP		//сброс (стоп)
 } buttons;
 
 
 typedef struct {
-	char	*Text;		/* С‚РµРєСЃС‚ РјРµРЅСЋ */
-	u8		RegimMenu;	/* РЅР°Р·РІР°РЅРёРµ СЂРµР¶РёРјР° */
-	void	(*Func)();	/* Р°РґСЂРµСЃ РІС‹Р·С‹РІР°РµРјРѕР№ РёР· РјРµРЅСЋ С„СѓРЅРєС†РёРё */
+	char	*Text;		/* текст меню */
+	u8		RegimMenu;	/* название режима */
+	void	(*Func)();	/* адрес вызываемой из меню функции */
 } menu;
 
 
@@ -54,8 +54,8 @@ extern u8 cursor_x, cursor_y;
 extern display_regim regim;
 
 
-//РѕРїСЂРµРґРµР»СЏРµРј РІ РєР°РєРѕРј СЂРµР¶РёРјРµ РЅР°С…РѕРґРёС‚СЃСЏ РґРёСЃРїР»РµР№
-//Рё РїСЂРѕРІРµСЂСЏРµРј СЃРѕСЃС‚РѕСЏРЅРёСЏ РєРЅРѕРїРѕРє
+//определяем в каком режиме находится дисплей
+//и проверяем состояния кнопок
 void get_buttons_state();
 void auto_exit_from_menu();
 void auto_bright_off();

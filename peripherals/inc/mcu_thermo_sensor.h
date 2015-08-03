@@ -1,4 +1,4 @@
-﻿#include "main.h"
+#include "main.h"
 
 //*****************************************************************************
 //! \addtogroup DS18B20_Bit_Config DS18B20 Thermometer Resolution Configuration

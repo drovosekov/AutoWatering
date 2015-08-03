@@ -1,4 +1,4 @@
-п»ї#include "main.h"
+#include "main.h"
 
 
  //==Definitions==
@@ -85,15 +85,15 @@ u16 get_watering_sensor_value(){
 }
 
 u8 get_acu_perc_value(float value){
-	//const u8 vMAX=	13;	//РІРµСЂС…РЅРёР№ СѓСЂРѕРІРµРЅСЊ Р·Р°СЂСЏРґР° - 13Р’
-	//const u8 vMIN=	10;	//РЅРёР¶РЅРёР№ СѓСЂРѕРІРµРЅСЊ Р·Р°СЂСЏРґР° - 10Р’
+	//const u8 vMAX=	13;	//верхний уровень заряда - 13В
+	//const u8 vMIN=	10;	//нижний уровень заряда - 10В
 	//return 100-100*(vMAX-value)/(vMAX-vMIN);
 	return 100-(1300-100*value)/3;
 }
 
 u8 get_watering_sensor_perc_value(){
-	//const u16 vMAX=	600;	//РІРµСЂС…РЅРёР№ СѓСЂРѕРІРµРЅСЊ РІР»Р°Р¶РЅРѕСЃС‚Рё
-	//const u16 vMIN=	1750;	//РЅРёР¶РЅРёР№ СѓСЂРѕРІРµРЅСЊ РІР»Р°Р¶РЅРѕСЃС‚Рё
+	//const u16 vMAX=	600;	//верхний уровень влажности
+	//const u16 vMIN=	1750;	//нижний уровень влажности
 	//return 100-100*(vMAX-get_watering_sensor_value())/(vMAX-vMIN);
 	return 100-(60000-100*get_watering_sensor_value())/-1150;
 }
