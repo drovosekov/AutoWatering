@@ -13,11 +13,11 @@ static u8 bright_off_count = 0;
 
 void get_buttons_state(){
 
-	if (PIN_STATE(BUTTON_ENTER)) {
+	switch(get_keyboard_state()){
+	case BTN_STATE_ENTER:
 		if(save_pressed_buton(BTN_STATE_ENTER, true))
 			{return;}//если кнопка все еще нажата - выходим
 
-		//PIN_ON(LED_GREEN);
 		switch(regim){
 		case DISPLAY_REGIM_DEFAULT:
 		case DISPLAY_REGIM_WATERING:
@@ -64,15 +64,18 @@ void get_buttons_state(){
 			break;
 		}
 
-	}else if (PIN_STATE(BUTTON_MENU)) {
+		break;
+
+	case BTN_STATE_MENU:
 		if(save_pressed_buton(BTN_STATE_MENU, false))
 			{return;}//если кнопка все еще нажата - выходим
 
 		regim = DISPLAY_REGIM_MENU;
 		lcd_set_state(LCD_ENABLE, CURSOR_DISABLE);
 		init_menu();
+		break;
 
-	}else if(PIN_STATE(BUTTON_START)) {
+	case BTN_STATE_START:
 		if(save_pressed_buton(BTN_STATE_START, false))
 			{return;}
 
@@ -80,8 +83,9 @@ void get_buttons_state(){
 			PIN_ON(WATERING_RELAY);					//запуск полива (вкл.реле)
 			regim = DISPLAY_REGIM_MANUAL_WATERING;
 		}
+		break;
 
-	}else if(PIN_STATE(BUTTON_EXIT)) {
+	case BTN_STATE_EXIT:
 		if(save_pressed_buton(BTN_STATE_EXIT, true))
 			{return;}
 
@@ -111,14 +115,17 @@ void get_buttons_state(){
 				regim = DISPLAY_REGIM_MENU;
 				break;
 		}
+		break;
 
-	}else if (PIN_STATE(BUTTON_LEFT)) {
+	case BTN_STATE_LEFT:
 		move_by_menu_LR(BTN_STATE_LEFT);
+		break;
 
-	}else if (PIN_STATE(BUTTON_RIGHT)) {
+	case BTN_STATE_RIGHT:
 		move_by_menu_LR(BTN_STATE_RIGHT);
+		break;
 
-	}else if(PIN_STATE(BUTTON_RESET)) {
+	case BTN_STATE_STOP:
 		switch(regim){
 			case DISPLAY_REGIM_WATERING:
 			case DISPLAY_REGIM_MANUAL_WATERING:
@@ -151,29 +158,46 @@ void get_buttons_state(){
 			case DISPLAY_REGIM_SET_BRIGHT_CONTR:
 				break;
 		}
+		break;
 
-	}else if(regim == DISPLAY_REGIM_MANUAL_WATERING) {
-		PIN_OFF(WATERING_RELAY);		//стоп полива (откл.реле)
-		regim = DISPLAY_REGIM_DEFAULT;
-
-	}else{
+	default:
 		btn_pressed = BTN_STATE_RESET;
+		break;
 
 	}
 }
 
+buttons get_keyboard_state(){
+	u8 buttons_state = 0;
+	if(!PIN_STATE(BUTTONS_PIN_A2)) {buttons_state |= 0b00000001;}
+	if(!PIN_STATE(BUTTONS_PIN_A3)) {buttons_state |= 0b00000010;}
+	if(!PIN_STATE(BUTTONS_PIN_A4)) {buttons_state |= 0b00000100;}
+
+	switch(buttons_state){
+		case 1:		return BTN_STATE_MENU;
+		case 2:		return BTN_STATE_STOP;
+		case 3:		return BTN_STATE_ENTER;
+		case 4:		return BTN_STATE_START;
+		case 5:		return BTN_STATE_LEFT;
+		case 6:		return BTN_STATE_EXIT;
+		case 7:		return BTN_STATE_RIGHT;
+		default:	return BTN_STATE_RESET;
+	}
+}
+
 void get_sensors_state(){
-	if (PIN_STATE(WATER_LEVER_SENSOR)) {
+	if(PIN_STATE(WATER_LEVER_SENSOR)) {
 		if(regim == DISPLAY_REGIM_DEFAULT)
 			{regim = DISPLAY_REGIM_NO_WATER;}
 		PIN_ON(NO_WATER_LED);
+		PIN_OFF(WATERING_RELAY);
 	}else{
-		PIN_OFF(NO_WATER_LED);
+		if(PIN_STATE(NO_WATER_LED)) {PIN_OFF(NO_WATER_LED);}
 	}
 
-	if (PIN_STATE(LIGHT_SENSOR)) {
+	if(PIN_STATE(LIGHT_SENSOR)) {
 		//датчик естественного света - выключаем досветку
-		PIN_OFF(LIGHT_RELAY);
+		if(PIN_STATE(LIGHT_RELAY)) {PIN_OFF(LIGHT_RELAY);}
 	}else{
 		//текущее время в разрешенном диапазоне использования досветки
 		RTCTIME rtc_clock;

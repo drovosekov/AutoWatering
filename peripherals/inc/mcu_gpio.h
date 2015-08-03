@@ -20,6 +20,11 @@ void mcu_gpio_deinit();
 /* end ADC defines */
 
 /* buttons defines */
+#define BUTTONS_PIN_A2		A, 2, HIGH, INPUT_PULL_UP, SPEED_2MHZ
+#define BUTTONS_PIN_A3		A, 3, HIGH, INPUT_PULL_UP, SPEED_2MHZ
+#define BUTTONS_PIN_A4		A, 4, HIGH, INPUT_PULL_UP, SPEED_2MHZ
+
+/*
 #define BUTTON_EXIT			A, 2, HIGH, INPUT_PULL_DOWN, SPEED_2MHZ
 #define BUTTON_MENU			A, 3, HIGH, INPUT_PULL_DOWN, SPEED_2MHZ
 #define BUTTON_LEFT			A, 4, HIGH, INPUT_PULL_DOWN, SPEED_2MHZ
@@ -27,6 +32,8 @@ void mcu_gpio_deinit();
 #define BUTTON_START		A, 6, HIGH, INPUT_PULL_DOWN, SPEED_2MHZ
 #define BUTTON_RESET		A, 7, HIGH, INPUT_PULL_DOWN, SPEED_2MHZ
 #define BUTTON_ENTER		A, 8, HIGH, INPUT_PULL_DOWN, SPEED_2MHZ
+*/
+
 #define WATER_LEVER_SENSOR	A, 10, HIGH, INPUT_PULL_DOWN, SPEED_2MHZ
 #define LIGHT_SENSOR		A, 11, HIGH, INPUT_PULL_DOWN, SPEED_2MHZ //сенсор освещенности
 /* end buttons defines */
