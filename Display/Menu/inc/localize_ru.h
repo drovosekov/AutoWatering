@@ -86,8 +86,8 @@
 #define SYMB_DRIB				0
 #define SYMB_DEGREE				1
 #define SYMB_MANUAL_REG			2
-#define SYMB_AUTO_REG_FULL		3
-#define SYMB_AUTO_REG_EMPTY		4
+#define SYMB_AUTO_REG_FILL		3
+#define SYMB_AUTO_REG_NoFILL	4
 #define SYMB_BAT_EMPTY			5
 #define SYMB_BAT_50_PERC		6
 #define SYMB_BAT_100_PERC		7

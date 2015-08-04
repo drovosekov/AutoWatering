@@ -87,14 +87,14 @@ void display_default_line1_draw(u8 dot_s){
 		lcd_out(dot_s ? NO_WATER : NO_WATER_SPACE);
 	}else if(regim == DISPLAY_REGIM_WATERING ||
 			 regim == DISPLAY_REGIM_MANUAL_WATERING){
-		lcd_send_data(dot_s ? SYMB_AUTO_REG_EMPTY : SYMB_AUTO_REG_FULL); //пиктограмка активного полива
+		lcd_send_data(dot_s ? SYMB_AUTO_REG_NoFILL : SYMB_AUTO_REG_FILL); //пиктограмка активного полива
 		lcd_out(WATERING_STATE);
 	}else if(get_TIM_state(TIM6)){
 		lcd_send_data(SYMB_MANUAL_REG); //пиктограмка режима полива (ручн)
 		lcd_out(MANUAL_REGIM);
 	}else if(watering_time > 0){
 		if(get_TIM_state(TIM4)){//режим отсчета задержки перед поливом
-			lcd_send_data(SYMB_AUTO_REG_EMPTY);
+			lcd_send_data(SYMB_AUTO_REG_NoFILL);
 		}else{				//режим задржки перед измерением уровня влажности
 			lcd_out(SYMB_CHECK_W_SENSOR);
 		}
