@@ -77,7 +77,7 @@ void init_default_values(void){
 		/* Allow access to BKP Domain */
 		PWR_BackupAccessCmd(ENABLE);
 		/* Reset Backup Domain */
-		//BKP_DeInit(); //уже вызывается в RTC_Init(); повторный вызов сбивает RTC
+		BKP_DeInit();
 
 		//продолжительность полива (сек)
 		result=5;
@@ -142,8 +142,6 @@ void init_all(void){
 
 	init_adc();
 
-	RTC_Init();
-
 	init_tim();
 
 	init_default_values();
@@ -151,6 +149,8 @@ void init_all(void){
 	init_display_default();
 
 	init_bright_contrast();
+
+	init_rtc();
 
     regim = DISPLAY_REGIM_DEFAULT;
 

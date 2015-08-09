@@ -15,28 +15,28 @@
 static const u8 numofdays[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
 
-void RTC_Init(void)
+void init_rtc(void)
 {
 	/* Backup data register value is not correct or not yet programmed (when
        the first time the program is executed) */
 
-	if (BKP_ReadBackupRegister(BKP_DR1) != 0xA5A5)
-	{
+	//if (BKP_ReadBackupRegister(BKP_DR1) != 0xA5A5)
+	//{
 	  /* RTC Configuration */
-		RTC_Configuration();
-	}
-	else
-	{
+		configuration_rtc();
+	//}
+	//else
+	//{
 		RTC_WaitForSynchro();
-	}
+	//}
 }
 
-void RTC_Configuration(void)
+void configuration_rtc(void)
 {
 	/* Allow access to BKP Domain */
 	PWR_BackupAccessCmd(ENABLE);
 	/* Reset Backup Domain */
-	BKP_DeInit();
+	//BKP_DeInit(); //уже вызывается в init_default_values(); повторный вызов сбивает настройки регистров BCKP
 	/* Enable LSE */
 	RCC_LSEConfig(RCC_LSE_ON);
 	/* Wait till LSE is ready */

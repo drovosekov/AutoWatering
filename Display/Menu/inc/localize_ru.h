@@ -4,7 +4,7 @@
 
 #define LOGO_LINE0		" DROVOSEKOV.NET"
 #define LOGO_LINE1		"Автополиватор v1"
-#define LOGO_SHOW_TIME	500	//время показа логотипа в мс
+#define LOGO_SHOW_TIME	1500	//время показа логотипа в мс
 
 #define MENU_COUNT		7	//количество пунктов меню
 #define MENU0 			"Уст.время/дата"

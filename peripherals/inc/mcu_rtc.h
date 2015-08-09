@@ -22,8 +22,8 @@ typedef struct {
 #define TM_RTC_DAYS_IN_YEAR(x)			TM_RTC_LEAP_YEAR(x) ? 366 : 365
 
 
-void RTC_Init(void);
-void RTC_Configuration(void);
+void init_rtc(void);
+void configuration_rtc(void);
 
 //получить время из RTC (текущее или в полночь)
 void RTC_GetTime(RTCTIME *rtc);

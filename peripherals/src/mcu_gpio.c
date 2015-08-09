@@ -11,16 +11,18 @@ void mcu_gpio_deinit()
 	/* Enable PWR and BKP clocks */
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR | RCC_APB1Periph_BKP, ENABLE);
 
-	//разрешаем тактирование таймера
+	//разрешаем тактирование таймеров
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE); //ШИМ для подсветки и контраста экрана
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE); //задержка перед поливом
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM6, ENABLE); //задержка перед отключением ручного режима
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM7, ENABLE); //секундный таймер для инфо экрана
 
+	//разрешаем тактирование портов
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA | RCC_APB2Periph_AFIO, ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC | RCC_APB2Periph_AFIO, ENABLE);
 
+	//настрока выводов МК
 	PIN_CONFIGURATION(ADC_CH0); //датчик влажности грунта
 	PIN_CONFIGURATION(ADC_CH1); //уровень напряжения аккумулятора
 
@@ -28,7 +30,7 @@ void mcu_gpio_deinit()
 
 	PIN_CONFIGURATION(BACKLIGHT_PWM);
 	PIN_CONFIGURATION(CONTRAST_PWM);
-	GPIO_PinRemapConfig(GPIO_FullRemap_TIM3, ENABLE);//альтернативные выходы для таймера (PC8, PC9)
+	//GPIO_PinRemapConfig(GPIO_FullRemap_TIM3, ENABLE);//альтернативные выходы для таймера (PC8, PC9)
 
 	PIN_CONFIGURATION(NO_WATER_LED);
 	PIN_CONFIGURATION(WATERING_RELAY);
@@ -37,19 +39,9 @@ void mcu_gpio_deinit()
 	PIN_CONFIGURATION(LIGHT_RELAY);
 	PIN_CONFIGURATION(LIGHT_SENSOR);
 
-
 	PIN_CONFIGURATION(BUTTONS_PIN_A2);
 	PIN_CONFIGURATION(BUTTONS_PIN_A3);
 	PIN_CONFIGURATION(BUTTONS_PIN_A4);
-	/*
-	PIN_CONFIGURATION(BUTTON_START);
-	PIN_CONFIGURATION(BUTTON_LEFT);
-	PIN_CONFIGURATION(BUTTON_RIGHT);
-	PIN_CONFIGURATION(BUTTON_EXIT);
-	PIN_CONFIGURATION(BUTTON_MENU);
-	PIN_CONFIGURATION(BUTTON_RESET);
-	PIN_CONFIGURATION(BUTTON_ENTER);
-	*/
 
 	PIN_CONFIGURATION(LCD_2X16_RS);
 	PIN_CONFIGURATION(LCD_2X16_E);
