@@ -20,8 +20,8 @@ buttons get_keyboard_state();
 /* end DS18B20 gpio defines */
 
 /* ADC defines */
-#define ADC_CH0				A, 0, HIGH, ANALOG, SPEED_2MHZ
-#define ADC_CH1				A, 7, HIGH, ANALOG, SPEED_2MHZ
+#define ADC_CH0				A, 0, HIGH, ANALOG, SPEED_2MHZ //датчик влажности грунта
+#define ADC_CH1				A, 7, HIGH, ANALOG, SPEED_2MHZ //уровень заряда аккумулятора
 /* end ADC defines */
 
 /* buttons defines */
@@ -29,20 +29,20 @@ buttons get_keyboard_state();
 #define BUTTONS_PIN_A3		A, 3, HIGH, INPUT_PULL_UP, SPEED_2MHZ
 #define BUTTONS_PIN_A4		A, 4, HIGH, INPUT_PULL_UP, SPEED_2MHZ
 
-#define WATER_LEVER_SENSOR	A, 5, HIGH, INPUT_PULL_DOWN, SPEED_2MHZ
-#define LIGHT_SENSOR		A, 6, HIGH, INPUT_PULL_DOWN, SPEED_2MHZ //сенсор освещенности
+#define LIGHT_SENSOR		A, 5, HIGH, INPUT_PULL_DOWN, SPEED_2MHZ //сенсор освещенности
+#define WATER_LEVER_SENSOR	A, 6, HIGH, INPUT_PULL_DOWN, SPEED_2MHZ
 /* end buttons defines */
 
 /* out pins defines */
 #define USER_LED			A, 1, HIGH, ALTERNATE_OUTPUT_PUSH_PULL, SPEED_10MHZ //user LED on STM32F100C8T6 board
 
-#define BACKLIGHT_PWM		B, 0, HIGH, ALTERNATE_OUTPUT_PUSH_PULL, SPEED_10MHZ //альтернативный выход TIM3 CH3
-#define CONTRAST_PWM		B, 1, HIGH, ALTERNATE_OUTPUT_PUSH_PULL, SPEED_10MHZ //альтернативный выход TIM3 CH4
+#define BACKLIGHT_PWM		B, 0, HIGH, ALTERNATE_OUTPUT_PUSH_PULL, SPEED_10MHZ //выход TIM3 CH3
+#define CONTRAST_PWM		B, 1, HIGH, ALTERNATE_OUTPUT_PUSH_PULL, SPEED_10MHZ //выход TIM3 CH4
 
-#define NO_WATER_LED		B, 6, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_2MHZ
-#define LIGHT_RELAY			B, 7, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_2MHZ //реле фоновой подсветки
-#define HUMIDITY_SENSOR		B, 8, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_2MHZ //blue led on the discovery board
-#define WATERING_RELAY		B, 9, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_2MHZ //green led on the discovery board
+#define NO_WATER_LED		B, 6, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_2MHZ //индикатор отсутствия воды в баке
+#define HUMIDITY_SENSOR		B, 7, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_2MHZ //питание датчика влажности грунта
+#define WATERING_RELAY		B, 8, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_2MHZ //реле мотора полива
+#define LIGHT_RELAY			B, 9, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_2MHZ //реле фоновой подсветки
 /* end out pins defines */
 
 /* LCD defines */
