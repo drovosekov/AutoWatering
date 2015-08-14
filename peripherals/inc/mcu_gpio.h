@@ -39,7 +39,7 @@ buttons get_keyboard_state();
 #define BACKLIGHT_PWM		B, 0, HIGH, ALTERNATE_OUTPUT_PUSH_PULL, SPEED_10MHZ //выход TIM3 CH3
 #define CONTRAST_PWM		B, 1, HIGH, ALTERNATE_OUTPUT_PUSH_PULL, SPEED_10MHZ //выход TIM3 CH4
 
-#define NO_WATER_LED		B, 6, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_2MHZ //индикатор отсутствия воды в баке
+#define NO_WATER_LED		B, 2, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_2MHZ //индикатор отсутствия воды в баке
 #define HUMIDITY_SENSOR		B, 7, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_2MHZ //питание датчика влажности грунта
 #define WATERING_RELAY		B, 8, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_2MHZ //реле мотора полива
 #define LIGHT_RELAY			B, 9, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_2MHZ //реле фоновой подсветки
