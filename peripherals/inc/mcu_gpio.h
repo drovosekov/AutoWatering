@@ -30,17 +30,17 @@ buttons get_keyboard_state();
 #define BUTTONS_PIN_A4		A, 4, HIGH, INPUT_PULL_UP, SPEED_2MHZ
 
 #define LIGHT_SENSOR		A, 5, HIGH, INPUT_PULL_DOWN, SPEED_2MHZ //сенсор освещенности
-#define WATER_LEVER_SENSOR	A, 6, HIGH, INPUT_PULL_DOWN, SPEED_2MHZ
+#define WATER_LEVER_SENSOR	A, 10, HIGH, INPUT_PULL_DOWN, SPEED_2MHZ //сенсор уровня воды (геркон)
 /* end buttons defines */
 
 /* out pins defines */
 #define USER_LED			A, 1, HIGH, ALTERNATE_OUTPUT_PUSH_PULL, SPEED_10MHZ //user LED on STM32F100C8T6 board
 
-#define BACKLIGHT_PWM		B, 0, HIGH, ALTERNATE_OUTPUT_PUSH_PULL, SPEED_10MHZ //выход TIM3 CH3
+#define HUMIDITY_SENSOR		B, 0, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_2MHZ //питание датчика влажности грунта
+//#define BACKLIGHT_PWM		B, 0, HIGH, ALTERNATE_OUTPUT_PUSH_PULL, SPEED_10MHZ //выход TIM3 CH3
 #define CONTRAST_PWM		B, 1, HIGH, ALTERNATE_OUTPUT_PUSH_PULL, SPEED_10MHZ //выход TIM3 CH4
 
 #define NO_WATER_LED		B, 2, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_2MHZ //индикатор отсутствия воды в баке
-#define HUMIDITY_SENSOR		C, 13, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_2MHZ //питание датчика влажности грунта
 #define WATERING_RELAY		B, 8, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_2MHZ //реле мотора полива
 #define LIGHT_RELAY			B, 9, HIGH, GENERAL_OUTPUT_PUSH_PULL, SPEED_2MHZ //реле фоновой подсветки
 /* end out pins defines */
