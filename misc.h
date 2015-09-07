@@ -2,6 +2,8 @@
 #ifndef MISC_H_
 #define MISC_H_
 
+#define ARRAY_LENGHT(x)  (sizeof(x) / sizeof((x)[0]))
+
 void SysTick_Handler();
 void delay_ms(u16 ms);
 void delay_for(u16 del);

@@ -137,8 +137,8 @@ void init_all(void){
 	OW_Init();
 
 	//set DS18B20 resolution 9bit
-	u8 data[] = {0xCC, 0x4E, 0, 0, DS18B20_RESOLUTION, 0x48};
-	OW_Send(OW_SEND_RESET, data, sizeof(data), 0, 0, OW_NO_READ);
+	u8 cmd[] = {0xCC, 0x4E, 0, 0, DS18B20_RESOLUTION, 0x48};
+	OW_Send(OW_SEND_RESET, cmd, sizeof(cmd), 0, 0, OW_NO_READ);
 
 	init_adc();
 
